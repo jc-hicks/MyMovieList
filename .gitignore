@@ -32,3 +32,6 @@ bin
 # ingore ide files
 .vscode
 idea/
+src/main/java/model/.LCKMovieRecord.java~
+src/main/java/model/formatters/.LCKMovieRecord.java~
+
