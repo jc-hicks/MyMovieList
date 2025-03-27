@@ -20,5 +20,6 @@ This readme should contain the following information:
 
 * Links to design documents and manuals
 * Instructions on how to run the application
+* [API Website](https://www.omdbapi.com/)
 
 Ask yourself, if you started here in the readme, would you have what you need to work on this project and/or use the application?
