@@ -36,7 +36,8 @@ public final class NetUtils {
      */
     public static String getMovieUrl(String title) {
         try {
-            String encodedTitle = URLEncoder.encode(title, StandardCharsets.UTF_8.toString()); 
+            String encodedTitle = URLEncoder.encode(title, StandardCharsets.UTF_8.toString());
+            System.out.println("Encoded title: " + encodedTitle);
             return String.format(API_URL_FORMAT, API_KEY, encodedTitle);
         } catch (Exception e) {
             System.err.println("Error encoding title: " + e.getMessage());
