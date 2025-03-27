@@ -48,7 +48,7 @@ classDiagram
     movieWatchList --> movieRecord: uses
     myWatchListApp --> watchListController
     myWatchListApp --> IView
-    myWatchListApp --> IMovieRecord
+    myWatchListApp --> movieWatchList
     movieRecord --> NetUtils: uses
 
 ```
