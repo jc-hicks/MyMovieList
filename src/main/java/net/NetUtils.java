@@ -1,4 +1,4 @@
-package net.model;
+package net;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;

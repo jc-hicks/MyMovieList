@@ -3,8 +3,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import net.model.IMovieRecord;
-import net.model.MovieRecord;
+import model.IMovieRecord;
+import model.MovieRecord;
 
 public class MovieRecordTest {
     // Fields declared as the interface type for better flexibility
@@ -15,19 +15,19 @@ public class MovieRecordTest {
     
     @BeforeEach
     void setUp() {
-        testMovie1 = new MovieRecord("Inception", 2010, "Christopher Nolan", "Leonardo DiCaprio, Joseph Gordon-Levitt",
+        testMovie1 = new MovieRecord("Inception", "2010", "Christopher Nolan", "Leonardo DiCaprio, Joseph Gordon-Levitt",
          "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
           "https://example.com/inception.jpg", "8.8", "Action, Sci-Fi", "148 min", "USA");
 
-        testMovie2 = new MovieRecord("The Matrix", 1999, "Lana Wachowski, Lilly Wachowski", "Keanu Reeves, Laurence Fishburne",
+        testMovie2 = new MovieRecord("The Matrix", "1999", "Lana Wachowski, Lilly Wachowski", "Keanu Reeves, Laurence Fishburne",
          "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
           "https://example.com/matrix.jpg", "8.7", "Action, Sci-Fi", "136 min", "USA");
 
-        testMovie3 = new MovieRecord("The Godfather", 1972, "Francis Ford Coppola", "Marlon Brando, Al Pacino",
+        testMovie3 = new MovieRecord("The Godfather", "1972", "Francis Ford Coppola", "Marlon Brando, Al Pacino",
          "An organized crime dynasty's aging patriarch transfers control of his clandestine empire to his reluctant son.",
           "https://example.com/godfather.jpg", "9.2", "Crime, Drama", "175 min", "USA");
 
-        testMovie4 = new MovieRecord("The Godfather", 1972, "Francis Ford Coppola", "Marlon Brando, Al Pacino",
+        testMovie4 = new MovieRecord("The Godfather", "1972", "Francis Ford Coppola", "Marlon Brando, Al Pacino",
          "An organized crime dynasty's aging patriarch transfers control of his clandestine empire to his reluctant son.",
           "https://example.com/godfather.jpg", "9.2", "Crime, Drama", "175 min", "USA");
     }
@@ -41,9 +41,9 @@ public class MovieRecordTest {
 
     @Test
     public void testGetYear() {
-        assertEquals(2010, testMovie1.getYear());
-        assertEquals(1999, testMovie2.getYear());
-        assertEquals(1972, testMovie3.getYear());
+        assertEquals("2010", testMovie1.getYear());
+        assertEquals("1999", testMovie2.getYear());
+        assertEquals("1972", testMovie3.getYear());
     }
 
     @Test
