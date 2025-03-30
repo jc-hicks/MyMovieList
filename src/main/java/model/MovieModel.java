@@ -43,11 +43,11 @@ public class MovieModel implements IMovieModel {
      * @param filter
      * @return List of Movie records that match the criteria
      */
-    public Stream<MRecord> filterWatchList(String filter) {
+    public Stream<MRecord> filterWatchList(String filterType, String filterValue) {
 
-        switch (filter.toLowerCase()) {
-            case "type":
-                return records.stream().filter(m -> m.Year().equals(filter));
+        switch (filterType.toLowerCase()) {
+            case "year":
+                return records.stream().filter(m -> m.Year().equals(filterValue));
             default:
                 return records.stream();
         }

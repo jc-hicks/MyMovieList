@@ -1,6 +1,7 @@
 package model;
 
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import net.NetUtils;
@@ -61,9 +62,23 @@ public class MovieModelTest {
     }
 
     @Test public void testFilterDefault(){
-        Stream<MRecord> recordStream = movieModel.filterWatchList("NON existent");
+        Stream<MRecord> recordStream = movieModel.filterWatchList("nonExistant Type","NON existent");
         List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
         List<String> expected = Arrays.asList("Inception", "Titanic");
+        assertEquals(expected, actual);
+    }
+
+    @Test public void testFilterWatchListYear(){
+        Stream<MRecord> recordStream = movieModel.filterWatchList("year","2010");
+        List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
+        List<String> expected = List.of("Inception");
+        assertEquals(expected, actual);
+    }
+
+    @Test public void testFilterWatchListYearVoid(){
+        Stream<MRecord> recordStream = movieModel.filterWatchList("year","Void");
+        List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
+        List<String> expected = new ArrayList<>();
         assertEquals(expected, actual);
 
     }
