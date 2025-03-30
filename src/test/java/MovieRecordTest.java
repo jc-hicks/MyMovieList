@@ -1,4 +1,5 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -111,4 +112,11 @@ public class MovieRecordTest {
         assertEquals(expectedOutput2, testMovie2.movieToString());
         assertEquals(expectedOutput3, testMovie3.movieToString());
     }
+
+    @Test
+    public void testHashCodeMethod() {
+        assertEquals(testMovie3.hashCode(), testMovie4.hashCode());
+        assertNotEquals(testMovie1.hashCode(), testMovie2.hashCode());
+    }
+
 }

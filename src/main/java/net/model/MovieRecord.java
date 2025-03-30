@@ -1,5 +1,8 @@
 package net.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 public class MovieRecord implements IMovieRecord {
     /** Title of the movie. */
     private String title;
@@ -159,6 +162,39 @@ public class MovieRecord implements IMovieRecord {
     public String movieToString() {
         return String.format("Title: %s\nYear: %.0f\nDirector: %s\nCast: %s\nDescription: %s\nPoster URL: %s\nRating: %s\nGenre: %s\nRuntime: %s\nCountry: %s",
                 title, year, director, cast, description, posterUrl, rating, genre, runtime, country);
+    }
+
+    /**
+     * Check if two MovieRecord objects are equal.
+     * 
+     * Two MovieRecord objects are considered equal if their titles, years, directors, cast, description,
+     * poster URLs, ratings, genres, runtimes, and countries are the same.
+     * 
+     * @param obj the object to compare with
+     * @return true if the objects are equal, false otherwise
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        return EqualsBuilder.reflectionEquals(this, obj);
+    }
+
+    /**
+     * Returns the hash code of the MovieRecord object.
+     * 
+     * The hash code is generated based on the title, year, director, cast, description,
+     * poster URL, rating, genre, runtime, and country of the movie.
+     * 
+     * @return the hash code of the MovieRecord object
+     */
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
     }
 
     public static void main(String[] args) {
