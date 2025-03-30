@@ -38,23 +38,60 @@ public class MovieModel implements IMovieModel {
         }
     }
 
+
     /**
-     * Method to filter through the current list of movies in the
-     * @param filter
-     * @return List of Movie records that match the criteria
+     * Method to filter through the current list of movies based on passed criteria.
+     * @param filterType
+     * @param filterValue
+     * @return Stream of movie records
      */
     public Stream<MRecord> filterWatchList(String filterType, String filterValue) {
 
         switch (filterType.toLowerCase()) {
+            case "title":
+                return records.stream().filter(m -> m.Title().equalsIgnoreCase(filterValue));
             case "year":
                 return records.stream().filter(m -> m.Year().equals(filterValue));
+            case "director":
+                return records.stream().filter(m -> m.Director().toLowerCase().contains(filterValue.toLowerCase()));
+            case "genre":
+                return records.stream().filter(m -> m.Genre().toLowerCase().contains(filterValue.toLowerCase()));
+            /*
+            case "actors":
+                return records.stream().filter(m -> m.Actors().toLowerCase().contains(filterValue.toLowerCase()));
+            case "rating":
+                return records.stream().filter(m -> m.imdbRating().equals(filterValue));
+            case "runtime":
+                return records.stream().filter(m -> m.Runtime().equals(filterValue));
+            case "country":
+                return records.stream().filter(m -> m.Country().equalsIgnoreCase(filterValue));
+             */
             default:
-                return records.stream();
+                return records.stream(); // Return all records if filter type is not recognized
         }
     }
 
     @Override
     public List<MRecord> getRecords() {
         return List.copyOf(records);
+    }
+
+
+    /**
+     * Main testing method for JSON file
+     */
+    public static void main(String[] args) {
+
+        List<MRecord> records = new ArrayList<>();
+        IMovieModel movieModel = new MovieModel(new ArrayList<>());
+
+        records.add(movieModel.getRecord("The Matrix"));
+        records.add(movieModel.getRecord("Inception"));
+        records.add(movieModel.getRecord("City of God"));
+        records.add(movieModel.getRecord("Rango"));
+        records.add(movieModel.getRecord("Titanic"));
+
+        IMovieModel.writeRecords(records);
+
     }
 }

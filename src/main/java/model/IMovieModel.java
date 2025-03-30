@@ -18,7 +18,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
  */
 public interface IMovieModel { 
 
-    String DATABASE = "data/movie.json";
+    String DATABASE = "src/main/java/model/data/movie.json";
      
     /**
      * Get the records as a list.
