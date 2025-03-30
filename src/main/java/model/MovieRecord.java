@@ -148,7 +148,7 @@ public class MovieRecord implements IMovieRecord {
     @JsonPropertyOrder({"Title", "Year", "Director", "Actors", "Plot", "Poster", 
         "imdbRating", "Genre", "Runtime", "Country"})
     record MRecord(String Title, String Year, String Director, 
-                String Actors, String Plot,String Poster,String imbdRating,
+                String Actors, String Plot,String Poster,String imdbRating,
                 String Genre,String Runtime,String Country) {
 }
     /**
