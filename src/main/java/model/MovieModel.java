@@ -24,23 +24,21 @@ public class MovieModel implements IMovieModel {
                 return record;
             }
         }
-
-        // If not found, fetch the record from the web
         try {
             String url = NetUtils.getMovieUrl(title); // Get the URL
-            try (InputStream inputStream = NetUtils.getUrlContents(url)) { // Use try-with-resources to auto-close inputStream
+            try (InputStream inputStream = NetUtils.getUrlContents(url)) {
                 JsonMapper mapper = new JsonMapper();
-                return mapper.readValue(inputStream, MRecord.class); // Map JSON to MRecord
+                return mapper.readValue(inputStream, MRecord.class);
             }
         } catch (Exception e) {
-            e.printStackTrace(); // Log the exception (you may want to replace this with proper logging)
-            return null; // Return null if there's an error
+            e.printStackTrace();
+            return null;
         }
     }
 
     @Override
     public List<MRecord> getRecords() {
         return List.copyOf(records);
-
     }
+
 }
