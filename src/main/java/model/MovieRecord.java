@@ -1,7 +1,6 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
@@ -148,17 +147,9 @@ public class MovieRecord implements IMovieRecord {
     @JacksonXmlRootElement(localName = "movie")
     @JsonPropertyOrder({"Title", "Year", "Director", "Actors", "Plot", "Poster", 
         "imdbRating", "Genre", "Runtime", "Country"})
-    record MRecord(
-        @JsonProperty("Title") String title,
-        @JsonProperty("Year") String year,
-        @JsonProperty("Director") String director,
-        @JsonProperty("Actors") String cast,
-        @JsonProperty("Plot") String description,
-        @JsonProperty("Poster") String posterUrl,
-        @JsonProperty("imdbRating") String rating,
-        @JsonProperty("Genre") String genre,
-        @JsonProperty("Runtime") String runtime,
-        @JsonProperty("Country") String country) {
+    record MRecord(String Title, String Year, String Director, 
+                String Cast, String Description,String Poster,String imbdRating,
+                String Genre,String Runtime,String Country) {
 }
     /**
      * Example usage of the MovieRecord class.
