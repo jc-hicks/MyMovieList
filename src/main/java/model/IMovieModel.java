@@ -43,5 +43,5 @@ public interface IMovieModel {
     record MRecord(String Title, String Year, String Director, 
                 String Actors, String Plot,String Poster,String imdbRating,
                 String Genre,String Runtime,String Country) {
-}
+    }
 }

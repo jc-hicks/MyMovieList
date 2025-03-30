@@ -20,8 +20,7 @@ public class MovieRecordManager {
             String url = NetUtils.getMovieUrl(movieTitle);
             InputStream inputStream = NetUtils.getUrlContents(url);
             JsonMapper mapper = new JsonMapper();
-            MRecord movieRecord = mapper.readValue(inputStream, MRecord.class);
-            return movieRecord;
+            return mapper.readValue(inputStream, MRecord.class);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -30,7 +29,7 @@ public class MovieRecordManager {
 
     public static void main(String[] args) {
         MovieRecordManager manager = new MovieRecordManager();
-        MRecord movieRecord = manager.createRecord("Inception");
+        MRecord movieRecord = manager.createRecord("Taylor Swift");
         if (movieRecord != null) {
             System.out.println(movieRecord.toString());
         } else {
