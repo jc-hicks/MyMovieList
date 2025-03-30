@@ -1,6 +1,8 @@
 package model;
 
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import java.util.ArrayList;
+import java.util.stream.Stream;
 import net.NetUtils;
 import org.apache.commons.lang3.ObjectUtils;
 
@@ -33,6 +35,21 @@ public class MovieModel implements IMovieModel {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    /**
+     * Method to filter through the current list of movies in the
+     * @param filter
+     * @return List of Movie records that match the criteria
+     */
+    public Stream<MRecord> filterWatchList(String filter) {
+
+        switch (filter.toLowerCase()) {
+            case "type":
+                return records.stream().filter(m -> m.Year().equals(filter));
+            default:
+                return records.stream();
         }
     }
 

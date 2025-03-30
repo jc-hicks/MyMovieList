@@ -1,6 +1,8 @@
 package model;
 
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import net.NetUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -56,5 +58,13 @@ public class MovieModelTest {
         MRecord result = movieModel.getRecord("Stranger Things");
         System.out.println(result);
         assertEquals("Stranger Things", result.Title());
+    }
+
+    @Test public void testFilterDefault(){
+        Stream<MRecord> recordStream = movieModel.filterWatchList("NON existent");
+        List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
+        List<String> expected = Arrays.asList("Inception", "Titanic");
+        assertEquals(expected, actual);
+
     }
 }
