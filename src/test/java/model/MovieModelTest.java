@@ -57,4 +57,38 @@ public class MovieModelTest {
         System.out.println(result);
         assertEquals("Stranger Things", result.Title());
     }
+
+    @Test
+    public void testRecordsFromJson() {
+        // Path to the test JSON file
+        String testJsonPath = "src/test/java/model/data/movie.json";
+
+        // Load the movie model from the JSON file
+        IMovieModel modelFromJson = IMovieModel.getInstance(testJsonPath);
+
+        // Get records from the loaded model
+        List<IMovieModel.MRecord> records = modelFromJson.getRecords();
+
+        // Verify number of records is correct.
+        assertNotNull(records);
+        assertFalse(records.isEmpty());
+        assertEquals(3, records.size());
+
+        // Check all titles loaded from JSON file.
+        assertTrue(records.stream().anyMatch(r -> r.Title().equals("Stranger Things")));
+        assertTrue(records.stream().anyMatch(r -> r.Title().equals("Inception")));
+        assertTrue(records.stream().anyMatch(r -> r.Title().equals("The Shawshank Redemption")));
+
+        // Get the specific record for "Inception" to verify its details.
+        MRecord inception = records.stream()
+                .filter(r -> r.Title().equals("Inception"))
+                .findFirst()
+                .orElse(null);
+
+        // Verify that the "Inception" record has the expected details.
+        assertNotNull(inception);
+        assertEquals("2010", inception.Year());
+        assertEquals("Christopher Nolan", inception.Director());
+        assertEquals("8.8", inception.imdbRating());
+    }
 }

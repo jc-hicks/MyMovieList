@@ -54,7 +54,7 @@ public interface IMovieModel {
             return new MovieModel(movieRecords);
         } catch (Exception e) {
             e.printStackTrace();
-            return new MovieModel(new ArrayList<>()); // Return empty list instead of null
+            return new MovieModel(new ArrayList<>());
         }
     }
     

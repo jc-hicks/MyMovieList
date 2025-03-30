@@ -18,14 +18,13 @@ public class MovieModel implements IMovieModel {
 
     @Override
     public MRecord getRecord(String title) {
-        // Check the records first
         for (MRecord record : records) {
             if (record.Title().equals(title)) {
                 return record;
             }
         }
         try {
-            String url = NetUtils.getMovieUrl(title); // Get the URL
+            String url = NetUtils.getMovieUrl(title);
             try (InputStream inputStream = NetUtils.getUrlContents(url)) {
                 JsonMapper mapper = new JsonMapper();
                 return mapper.readValue(inputStream, MRecord.class);
