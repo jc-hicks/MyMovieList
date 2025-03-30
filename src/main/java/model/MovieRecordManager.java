@@ -4,7 +4,7 @@ import java.io.InputStream;
 
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
-import model.MovieRecord.MRecord;
+import model.IMovieModel.MRecord;
 import net.NetUtils;
 
 public class MovieRecordManager {
