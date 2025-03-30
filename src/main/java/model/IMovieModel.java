@@ -1,9 +1,15 @@
 package model;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 /**
@@ -12,7 +18,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
  */
 public interface IMovieModel { 
 
-    String DATABASE = "movie.xml";
+    String DATABASE = "data/movie.json";
      
     /**
      * Get the records as a list.
@@ -23,17 +29,33 @@ public interface IMovieModel {
 
     MRecord getRecord(String title);
 
-    static void writeRecords(List<MRecord> records) {
-        // Implementation for writing records to a file or database
+    static MovieModel writeRecords(List<MRecord> records) {
+        try {
+            JsonMapper mapper = new JsonMapper();
+            mapper.writeValue(new File(DATABASE), records);
+
+            return new MovieModel(records);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new MovieModel(new ArrayList<>()); // Return empty list on error
+        }
     }
+
 
     static IMovieModel getInstance() {
         return getInstance(DATABASE);
     }
 
     static IMovieModel getInstance(String database) {
-        // Implementation for getting an instance of the movie model
-        return null;
+        try {
+            JsonMapper mapper = new JsonMapper();
+            InputStream existingRecords = new FileInputStream(database);
+            List<MRecord> movieRecords = mapper.readValue(existingRecords, new TypeReference<List<MRecord>>() { });
+            return new MovieModel(movieRecords);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new MovieModel(new ArrayList<>()); // Return empty list instead of null
+        }
     }
     
     @JsonIgnoreProperties(ignoreUnknown = true)

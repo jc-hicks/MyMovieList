@@ -40,5 +40,4 @@ public class MovieModel implements IMovieModel {
     public List<MRecord> getRecords() {
         return List.copyOf(records);
     }
-
 }
