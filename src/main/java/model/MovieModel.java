@@ -63,27 +63,48 @@ public class MovieModel implements IMovieModel {
                 List<String> ratingCommands = Arrays.stream(filterValue.split(" ")).toList();
                 if (ratingCommands.size() > 1) {
                     String filterOperation = ratingCommands.get(0);
-                    switch (filterOperation) {
-                        case "=":
-                            return records.stream().filter(m -> m.imdbRating().equals(ratingCommands.get(1)));
-                        case ">":
-                            return records.stream().filter(m -> Double.parseDouble(m.imdbRating()) > Double.parseDouble(ratingCommands.get(1)));
-                        case "<":
-                            return records.stream().filter(m -> Double.parseDouble(m.imdbRating()) < Double.parseDouble(ratingCommands.get(1)));
-                        case ">=":
-                            return records.stream().filter(m -> Double.parseDouble(m.imdbRating()) >= Double.parseDouble(ratingCommands.get(1)));
-                        case "<=":
-                            return records.stream().filter(m -> Double.parseDouble(m.imdbRating()) <= Double.parseDouble(ratingCommands.get(1)));
-                        default:
-                            throw new IllegalArgumentException("Invalid filter operation: " + filterOperation);
-                    }
+                  return switch (filterOperation) {
+                    case "=" -> records.stream().filter(m -> m.imdbRating().equals(ratingCommands.get(1)));
+                    case ">" -> records.stream()
+                        .filter(m -> Double.parseDouble(m.imdbRating()) > Double.parseDouble(ratingCommands.get(1)));
+                    case "<" -> records.stream()
+                        .filter(m -> Double.parseDouble(m.imdbRating()) < Double.parseDouble(ratingCommands.get(1)));
+                    case ">=" -> records.stream()
+                        .filter(m -> Double.parseDouble(m.imdbRating()) >= Double.parseDouble(ratingCommands.get(1)));
+                    case "<=" -> records.stream()
+                        .filter(m -> Double.parseDouble(m.imdbRating()) <= Double.parseDouble(ratingCommands.get(1)));
+                    default -> throw new IllegalArgumentException("Invalid filter operation: " + filterOperation);
+                  };
                 }else {
                     throw new IllegalArgumentException("Rating criteria Invalid");
                 }
+            case "runtime":
+                List<String> runtimeCommands = Arrays.stream(filterValue.split(" ")).toList();
+                if (runtimeCommands.size() > 1) {
+                    String filterOperation = runtimeCommands.get(0);
+                    switch (filterOperation) {
+                        case "=":
+                            return records.stream().filter(m -> m.Runtime().split(" ")[0].equals(runtimeCommands.get(1)));
+                        case ">":
+                            return records.stream()
+                                .filter(m -> Double.parseDouble(m.Runtime().split(" ")[0]) > Double.parseDouble(runtimeCommands.get(1)));
+                        case "<":
+                            return records.stream()
+                                .filter(m -> Double.parseDouble(m.Runtime().split(" ")[0]) < Double.parseDouble(runtimeCommands.get(1)));
+                        case ">=":
+                            return records.stream()
+                                .filter(m -> Double.parseDouble(m.Runtime().split(" ")[0]) >= Double.parseDouble(runtimeCommands.get(1)));
+                        case "<=":
+                            return records.stream()
+                                .filter(m -> Double.parseDouble(m.Runtime().split(" ")[0]) <= Double.parseDouble(runtimeCommands.get(1)));
+                        default:
+                            throw new IllegalArgumentException("Invalid filter operation: " + filterOperation);
+                    }
+                } else {
+                    throw new IllegalArgumentException("Runtime criteria Invalid");
+                }
 
                 /*
-            case "runtime":
-                return records.stream().filter(m -> m.Runtime().equals(filterValue));
             case "country":
                 return records.stream().filter(m -> m.Country().equalsIgnoreCase(filterValue));
              */
