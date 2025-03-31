@@ -35,7 +35,7 @@ public class MovieModelTest {
         List<IMovieModel.MRecord> records = Arrays.asList(record1, record2);
 
         // Initialize the MovieModel with mock records
-        movieModel = new MovieModel(records);
+        movieModel = new MovieModel();
     }
 
     @Test
@@ -64,7 +64,7 @@ public class MovieModelTest {
     @Test
     public void testRecordsFromJson() {
         // Path to the test JSON file
-        String testJsonPath = "src/test/java/model/data/movie.json";
+        String testJsonPath = "src/test/java/model/data/testmovies.json";
 
         // Load the movie model from the JSON file
         IMovieModel modelFromJson = IMovieModel.getInstance(testJsonPath);

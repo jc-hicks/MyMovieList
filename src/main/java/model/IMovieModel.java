@@ -40,7 +40,7 @@ public interface IMovieModel {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    } // <-- Missing brace added here
+    } 
 
     /**
      * Method to convert a record to JSON string.
@@ -68,7 +68,7 @@ public interface IMovieModel {
             return new MovieModel(database);
         } catch (Exception e) {
             e.printStackTrace();
-            return new MovieModel(List.of());
+            return new MovieModel();
         }
     }
 

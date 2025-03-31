@@ -16,7 +16,7 @@ import net.NetUtils;
 
 public class MovieModel implements IMovieModel {
 
-    private final List<MRecord> records;
+    private final List<MRecord> records = new ArrayList<>();
 
     /**
      * Creates a MovieModel with an empty records list and loads records from the default database.
@@ -29,17 +29,9 @@ public class MovieModel implements IMovieModel {
      * Creates a MovieModel with an empty records list and loads records from the specified database.
      */
     public MovieModel(String databasePath) {
-        this.records = new ArrayList<>();
         loadFromDatabase(databasePath);
     }
 
-    /**
-     * Creates a MovieModel with the provided records.
-     */
-    public MovieModel(List<MRecord> records) {
-        this.records = new ArrayList<>(records);
-    }
-    
     /**
      * Loads records from the specified database file and adds them to the records list.
      */
@@ -51,6 +43,13 @@ public class MovieModel implements IMovieModel {
             records.addAll(movieRecords);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void addRecord(MRecord record) {
+        if (record != null && records.stream().noneMatch(r -> r.Title().equals(record.Title()))) {
+            records.add(record);
+            saveToDatabase();
         }
     }
 
@@ -72,12 +71,12 @@ public class MovieModel implements IMovieModel {
             try (InputStream inputStream = NetUtils.getUrlContents(url)) {
                 JsonMapper mapper = new JsonMapper();
                 MRecord newRecord = mapper.readValue(inputStream, MRecord.class);
-
-                if (newRecord != null && records.stream().noneMatch(record -> record.Title().equals(newRecord.Title()))) {
-                    records.add(newRecord);
-                    saveToDatabase();
-                }
+                if (newRecord == null || newRecord.Title() == null) {
+                    return null;
+                } else {
+                addRecord(newRecord);
                 return newRecord;
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
