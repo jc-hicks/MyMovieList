@@ -2,8 +2,6 @@ package model;
 
 import static java.lang.Integer.parseInt;
 
-import static java.lang.Integer.parseInt;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -17,13 +15,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import net.NetUtils;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
 import java.util.stream.Stream;
-import net.NetUtils;
 
 public class MovieModel implements IMovieModel {
 
@@ -256,29 +250,6 @@ public class MovieModel implements IMovieModel {
     return movieStream.sorted(comparator).toList();
   }
 
-  @Override
-  public List<MRecord> getRecords() {
-    return List.copyOf(records);
-  }
-
-
-  /**
-   * Main testing method for JSON file
-   */
-  public static void main(String[] args) {
-
-    List<MRecord> records = new ArrayList<>();
-    IMovieModel movieModel = new MovieModel(new ArrayList<>());
-
-    records.add(movieModel.getRecord("The Matrix"));
-    records.add(movieModel.getRecord("Inception"));
-    records.add(movieModel.getRecord("City of God"));
-    records.add(movieModel.getRecord("Rango"));
-    records.add(movieModel.getRecord("Titanic"));
-
-    IMovieModel.writeRecords(records);
-
-  }
     @Override
     public List<MRecord> getRecords() {
         return records;
@@ -295,7 +266,7 @@ public class MovieModel implements IMovieModel {
             System.out.println(jsonOutput);
         }
         
-        MRecord newRecord = movieModel.getRecord("Taylor Swift");
+        MRecord newRecord = movieModel.getRecord("Stranger Things");
         
         if (newRecord != null) {
             System.out.println("Successfully retrieved: " + newRecord.Title());

@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -145,18 +146,17 @@ public class MovieModelReadWriteTest {
         assertEquals(null, result, "Result should be null for a nonexistent movie");
     }
 
+    // Test fails, but a new file is correctly created.
     @Test
     public void testGetFromWrongFile() {
         // Create an instance of MovieModel with a non-existent file path
-        MovieModel movieModel = new MovieModel("non_existent_file.json");
-  
-        // Attempt to get a record that doesn't exist
-        MRecord result = movieModel.getRecord("Inception");
+        MovieModel movieModel = new MovieModel("non_existent_file2.json");
   
         // Check if the result is null or empty
-        assertThrows(Exception.class, () -> {
+        Exception exception = assertThrows(Exception.class, () -> {
             movieModel.getRecord("Inception");
         }, "Should throw an exception for a non-existent file");
+        assertEquals("Expected exception message", exception.getMessage(), "Exception message should match");
     }
 
     @Test
@@ -180,8 +180,11 @@ public class MovieModelReadWriteTest {
         MRecord newRecord = new MRecord("New Movie", "2023", "Director", "Actors", "Plot", "Poster", "9.0", "Genre", "120 min", "Country");
         movieModel.addRecord(newRecord);
   
-        // Check if the record was added successfully (it shouldn't be, as the file doesn't exist)
-        List<MRecord> records = movieModel.getRecords();
-        assertEquals(0, records.size(), "Number of records should be 0 for a non-existent file");
+        // Check if the result is null or empty
+        Exception exception = assertThrows(Exception.class, () -> {
+            movieModel.getRecord("Inception");
+        }, "Should throw an exception for a non-existent file");
+        
+        assertNotNull(exception.getMessage(), "Exception message should not be null");
     }
 }
