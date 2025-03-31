@@ -141,4 +141,83 @@ public class MovieModelTest {
         assertEquals(expected, actual);
 
     }
+
+    @Test
+    public void testFilterWatchListActorSingle(){
+        Stream<MRecord> recordStream = movieModel.filterWatchList("actors","Leonardo DiCaprio");
+        List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+        List<String> expected = List.of("Inception","Titanic");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testFilterWatchListActorInvalid(){
+        Stream<MRecord> recordStream = movieModel.filterWatchList("actors","John Smithington");
+        List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+        List<String> expected = new ArrayList<>();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testFilterWatchListEqualRating(){
+        Stream<MRecord> recordStream = movieModel.filterWatchList("rating","= 8.6");
+        List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+        List<String> expected = List.of("City of God");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testFilterWatchListEqualRatingVoid(){
+        Stream<MRecord> recordStream = movieModel.filterWatchList("rating","= 11");
+        List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+        List<String> expected = new ArrayList<>();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testFilterWatchListGreaterThanRating(){
+        Stream<MRecord> recordStream = movieModel.filterWatchList("rating","> 8.6");
+        List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+        List<String> expected = List.of("Inception", "The Matrix");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testFilterWatchListGreaterThanRatingVoid(){
+        Stream<MRecord> recordStream = movieModel.filterWatchList("rating","> 11");
+        List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+        List<String> expected = new ArrayList<>();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testFilterWatchListLessThanRating(){
+        Stream<MRecord> recordStream = movieModel.filterWatchList("rating", "< 8.5");
+        List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+        List<String> expected = List.of("Titanic", "Rango");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testFilterWatchListGreaterThanOrEqualRating(){
+        Stream<MRecord> recordStream = movieModel.filterWatchList("rating", ">= 8.7");
+        List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+        List<String> expected = List.of("Inception", "The Matrix");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testFilterWatchListLessThanOrEqualRating(){
+        // Assuming filterWatchList method takes a "rating" field and the operation "<="
+        Stream<MRecord> recordStream = movieModel.filterWatchList("rating", "<= 8.6");
+        List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+        List<String> expected = List.of("Titanic","City of God", "Rango");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testFilterWatchListRatingNoFilter(){
+        assertThrows(IllegalArgumentException.class, () -> movieModel.filterWatchList("rating","10"));
+    }
+
 }

@@ -1,14 +1,15 @@
 package model;
 
+import static java.lang.Integer.parseInt;
+
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.stream.Stream;
 import net.NetUtils;
-import org.apache.commons.lang3.ObjectUtils;
 
 import java.io.InputStream;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MovieModel implements IMovieModel {
 
@@ -56,11 +57,31 @@ public class MovieModel implements IMovieModel {
                 return records.stream().filter(m -> m.Director().toLowerCase().contains(filterValue.toLowerCase()));
             case "genre":
                 return records.stream().filter(m -> m.Genre().toLowerCase().contains(filterValue.toLowerCase()));
-            /*
             case "actors":
                 return records.stream().filter(m -> m.Actors().toLowerCase().contains(filterValue.toLowerCase()));
             case "rating":
-                return records.stream().filter(m -> m.imdbRating().equals(filterValue));
+                List<String> ratingCommands = Arrays.stream(filterValue.split(" ")).toList();
+                if (ratingCommands.size() > 1) {
+                    String filterOperation = ratingCommands.get(0);
+                    switch (filterOperation) {
+                        case "=":
+                            return records.stream().filter(m -> m.imdbRating().equals(ratingCommands.get(1)));
+                        case ">":
+                            return records.stream().filter(m -> Double.parseDouble(m.imdbRating()) > Double.parseDouble(ratingCommands.get(1)));
+                        case "<":
+                            return records.stream().filter(m -> Double.parseDouble(m.imdbRating()) < Double.parseDouble(ratingCommands.get(1)));
+                        case ">=":
+                            return records.stream().filter(m -> Double.parseDouble(m.imdbRating()) >= Double.parseDouble(ratingCommands.get(1)));
+                        case "<=":
+                            return records.stream().filter(m -> Double.parseDouble(m.imdbRating()) <= Double.parseDouble(ratingCommands.get(1)));
+                        default:
+                            throw new IllegalArgumentException("Invalid filter operation: " + filterOperation);
+                    }
+                }else {
+                    throw new IllegalArgumentException("Rating criteria Invalid");
+                }
+
+                /*
             case "runtime":
                 return records.stream().filter(m -> m.Runtime().equals(filterValue));
             case "country":
