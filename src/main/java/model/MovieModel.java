@@ -1,20 +1,25 @@
 package model;
 
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import net.NetUtils;
-import org.apache.commons.lang3.ObjectUtils;
-
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import com.fasterxml.jackson.databind.json.JsonMapper;
+
+import net.NetUtils;
 
 public class MovieModel implements IMovieModel {
 
     private final List<MRecord> records;
 
     public MovieModel(List<MRecord> records) {
-        this.records = records;
-    }
+        this.records = new ArrayList<>(records);
+        }
+    
 
     @Override
     public MRecord getRecord(String title) {
@@ -27,7 +32,13 @@ public class MovieModel implements IMovieModel {
             String url = NetUtils.getMovieUrl(title);
             try (InputStream inputStream = NetUtils.getUrlContents(url)) {
                 JsonMapper mapper = new JsonMapper();
-                return mapper.readValue(inputStream, MRecord.class);
+                MRecord newRecord = mapper.readValue(inputStream, MRecord.class);
+
+                if (newRecord != null && records.stream().noneMatch(record -> record.Title().equals(newRecord.Title()))) {
+                    records.add(newRecord);
+                    saveToDatabase();
+                }
+                return newRecord;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -35,8 +46,43 @@ public class MovieModel implements IMovieModel {
         }
     }
 
+    /**
+     * Saves all records to the database file in JSON format
+     */
+    private void saveToDatabase() {
+        try (OutputStream out = new FileOutputStream(new File(DATABASE))) {
+            IMovieModel.writeRecords(records, out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public List<MRecord> getRecords() {
-        return List.copyOf(records);
+        return records;
+    }
+
+    public static void main(String[] args) {
+        IMovieModel movieModel = IMovieModel.getInstance();
+        List<MRecord> records = movieModel.getRecords();
+        System.out.println("Total records: " + records.size());
+        if (!records.isEmpty()) {
+            System.out.println("First record: " + records.get(0).toString());
+            String jsonOutput = IMovieModel.exportRecordAsJson(records.get(0));
+            System.out.println("\nSample JSON output of first record:");
+            System.out.println(jsonOutput);
+        }
+        
+        MRecord newRecord = movieModel.getRecord("Taylor Swift");
+        
+        if (newRecord != null) {
+            System.out.println("Successfully retrieved: " + newRecord.Title());
+        } else {
+            System.out.println("Movie not found or error occurred");
+        }
+        
+        // Print final state
+        records = movieModel.getRecords();
+        System.out.println("\nFinal total records: " + records.size());
     }
 }

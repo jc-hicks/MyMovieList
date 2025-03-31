@@ -1,17 +1,20 @@
 package model;
 
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import net.NetUtils;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.mock;
+
+import com.fasterxml.jackson.databind.json.JsonMapper;
+
 import model.IMovieModel.MRecord;
+import net.NetUtils;
 
 public class MovieModelTest {
 
@@ -91,4 +94,5 @@ public class MovieModelTest {
         assertEquals("Christopher Nolan", inception.Director());
         assertEquals("8.8", inception.imdbRating());
     }
+
 }

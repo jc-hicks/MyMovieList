@@ -1,0 +1,78 @@
+[ {
+  "Title" : "Stranger Things",
+  "Year" : "2016–2025",
+  "Director" : "N/A",
+  "Actors" : "Millie Bobby Brown, Finn Wolfhard, Winona Ryder",
+  "Plot" : "In 1980s Indiana, a group of young friends witness supernatural forces and secret government exploits. As they search for answers, the children unravel a series of extraordinary mysteries.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BMjE2N2MyMzEtNmU5NS00OTI0LTlkNTMtMWM1YWYyNmU4NmY0XkEyXkFqcGc@._V1_SX300.jpg",
+  "imdbRating" : "8.7",
+  "Genre" : "Drama, Fantasy, Horror",
+  "Runtime" : "51 min",
+  "Country" : "United States"
+}, {
+  "Title" : "Inception",
+  "Year" : "2010",
+  "Director" : "Christopher Nolan",
+  "Actors" : "Leonardo DiCaprio, Joseph Gordon-Levitt, Elliot Page",
+  "Plot" : "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
+  "imdbRating" : "8.8",
+  "Genre" : "Action, Adventure, Sci-Fi",
+  "Runtime" : "148 min",
+  "Country" : "United States, United Kingdom"
+}, {
+  "Title" : "The Shawshank Redemption",
+  "Year" : "1994",
+  "Director" : "Frank Darabont",
+  "Actors" : "Tim Robbins, Morgan Freeman, Bob Gunton",
+  "Plot" : "Over the course of several years, two convicts form a friendship, seeking consolation and, eventually, redemption through basic compassion.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGc@._V1_SX300.jpg",
+  "imdbRating" : "9.3",
+  "Genre" : "Drama",
+  "Runtime" : "142 min",
+  "Country" : "United States"
+}, {
+  "Title" : "The Matrix",
+  "Year" : "1999",
+  "Director" : "Lana Wachowski, Lilly Wachowski",
+  "Actors" : "Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss",
+  "Plot" : "When a beautiful stranger leads computer hacker Neo to a forbidding underworld, he discovers the shocking truth--the life he knows is the elaborate deception of an evil cyber-intelligence.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BN2NmN2VhMTQtMDNiOS00NDlhLTliMjgtODE2ZTY0ODQyNDRhXkEyXkFqcGc@._V1_SX300.jpg",
+  "imdbRating" : "8.7",
+  "Genre" : "Action, Sci-Fi",
+  "Runtime" : "136 min",
+  "Country" : "United States, Australia"
+}, {
+  "Title" : "Taylor Swift: The Eras Tour",
+  "Year" : "2023",
+  "Director" : "Sam Wrench",
+  "Actors" : "Taylor Swift, Mike Meadows, Max Bernstein",
+  "Plot" : "Experience the Eras Tour concert, performed by the one and only Taylor Swift.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BM2EzMzU3NTEtOWI3NC00N2VjLWFlZTMtMmJjNDc3ZWRjZTk4XkEyXkFqcGc@._V1_SX300.jpg",
+  "imdbRating" : "8.0",
+  "Genre" : "Documentary, Music, Musical",
+  "Runtime" : "169 min",
+  "Country" : "United States"
+}, {
+  "Title" : "Kevin Hart: What Now?",
+  "Year" : "2016",
+  "Director" : "Leslie Small, Tim Story",
+  "Actors" : "Kevin Hart, Don Cheadle, Halle Berry",
+  "Plot" : "Comedian Kevin Hart performs in front of a crowd of 53,000 people at Philadelphia's outdoor venue, Lincoln Financial Field.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BNzI2MDk3OTA5N15BMl5BanBnXkFtZTgwMDU1MDgxMDI@._V1_SX300.jpg",
+  "imdbRating" : "6.0",
+  "Genre" : "Documentary, Comedy",
+  "Runtime" : "96 min",
+  "Country" : "United States"
+}, {
+  "Title" : "Titanic",
+  "Year" : "1997",
+  "Director" : "James Cameron",
+  "Actors" : "Leonardo DiCaprio, Kate Winslet, Billy Zane",
+  "Plot" : "A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious, ill-fated R.M.S. Titanic.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BYzYyN2FiZmUtYWYzMy00MzViLWJkZTMtOGY1ZjgzNWMwN2YxXkEyXkFqcGc@._V1_SX300.jpg",
+  "imdbRating" : "7.9",
+  "Genre" : "Drama, Romance",
+  "Runtime" : "194 min",
+  "Country" : "United States, Mexico"
+} ]
