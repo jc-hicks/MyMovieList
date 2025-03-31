@@ -1,12 +1,14 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.mock;
@@ -18,81 +20,395 @@ import net.NetUtils;
 
 public class MovieModelTest {
 
-    private MovieModel movieModel;
-    private NetUtils netUtilsMock;
-    private JsonMapper jsonMapperMock;
+  private MovieModel movieModel;
+  private NetUtils netUtilsMock;
+  private JsonMapper jsonMapperMock;
 
-    @BeforeEach
-    public void setUp() {
-        // Prepare mock dependencies
-        netUtilsMock = mock(NetUtils.class);
-        jsonMapperMock = mock(JsonMapper.class);
+  @BeforeEach
+  public void setUp() {
+    // Prepare mock dependencies
+    netUtilsMock = mock(NetUtils.class);
+    jsonMapperMock = mock(JsonMapper.class);
 
-        // Create some mock data for the records
-        MRecord record1 = new MRecord("Inception", "2010", "Christopher Nolan", "Leonardo DiCaprio", "A mind-bending thriller", "poster1", "8.8", "Sci-Fi", "148 minutes", "USA");
-        MRecord record2 = new MRecord("Titanic", "1997", "James Cameron", "Leonardo DiCaprio", "A romantic tragedy", "poster2", "7.8", "Drama", "195 minutes", "USA");
+    // Create some mock data for the records
+    MRecord record1 = new MRecord("Inception", "2010", "Christopher Nolan",
+        "Leonardo DiCaprio, Joseph Gordon-Levitt, Elliot Page",
+        "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task " +
+            "of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to" +
+            " disaster.",
+        "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
+        "8.8", "Action, Adventure, Sci-Fi", "148 min", "United States, United Kingdom");
 
-        List<IMovieModel.MRecord> records = Arrays.asList(record1, record2);
+    MRecord record2 = new MRecord("Titanic", "1997", "James Cameron",
+        "Leonardo DiCaprio, Kate Winslet, Billy Zane",
+        "A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious, ill-fated R" +
+            ".M.S. Titanic.",
+        "https://m.media-amazon.com/images/M/MV5BYzYyN2FiZmUtYWYzMy00MzViLWJkZTMtOGY1ZjgzNWMwN2YxXkEyXkFqcGc@" +
+            "._V1_SX300.jpg",
+        "7.9", "Drama, Romance", "194 min", "United States, Mexico");
+
+    MRecord record3 = new MRecord("The Matrix", "1999", "Lana Wachowski, Lilly Wachowski",
+        "Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss",
+        "When a beautiful stranger leads computer hacker Neo to a forbidding underworld, he discovers the shocking " +
+            "truth--the life he knows is the elaborate deception of an evil cyber-intelligence.",
+        "https://m.media-amazon.com/images/M/MV5BN2NmN2VhMTQtMDNiOS00NDlhLTliMjgtODE2ZTY0ODQyNDRhXkEyXkFqcGc@" +
+            "._V1_SX300.jpg",
+        "8.7", "Action, Sci-Fi", "136 min", "United States, Australia");
+
+    MRecord record4 = new MRecord("City of God", "2002", "Fernando Meirelles, Kátia Lund",
+        "Alexandre Rodrigues, Leandro Firmino, Matheus Nachtergaele",
+        "In the slums of Rio, two kids' paths diverge as one struggles to become a photographer and the other a " +
+            "kingpin.",
+        "https://m.media-amazon.com/images/M/MV5BYjY4NGI5OTUtY2ZlZS00Zjk4LTk5N2MtN2JmYWVjNGNmMGRlXkEyXkFqcGc@" +
+            "._V1_SX300.jpg",
+        "8.6", "Crime, Drama", "130 min", "Brazil, France");
+
+    MRecord record5 = new MRecord("Rango", "2011", "Gore Verbinski",
+        "Johnny Depp, Isla Fisher, Timothy Olyphant",
+        "Rango is an ordinary chameleon who accidentally winds up in the town of Dirt, a lawless outpost in the Wild" +
+            " West in desperate need of a new sheriff.",
+        "https://m.media-amazon.com/images/M/MV5BMTc4NjEyODE1OV5BMl5BanBnXkFtZTcwMjYzNTkxNA@@._V1_SX300.jpg",
+        "7.3", "Animation, Action, Adventure", "107 min", "United States, United Kingdom");
+
+    List<IMovieModel.MRecord> records = Arrays.asList(record1, record2, record3, record4, record5);
 
         // Initialize the MovieModel with mock records
         movieModel = new MovieModel();
     }
 
-    @Test
-    public void testGetRecord1() {
-        // Test when the record is found in the list
-        MRecord result = movieModel.getRecord("Inception");
+  @Test
+  public void testGetRecord1() {
+    // Test when the record is found in the list
+    MRecord result = movieModel.getRecord("Inception");
 
-        assertNotNull(result);  // Ensure the record is found
-        assertEquals("Inception", result.Title()); // Check if the title matches
-        assertEquals("2010", result.Year()); // Check if the year matches
-    }
+    assertNotNull(result);  // Ensure the record is found
+    assertEquals("Inception", result.Title()); // Check if the title matches
+    assertEquals("2010", result.Year()); // Check if the year matches
+  }
 
-    @Test public void testGetRecord2() {
-        MRecord result = movieModel.getRecord("Titanic");
+  @Test
+  public void testGetRecord2() {
+    MRecord result = movieModel.getRecord("Titanic");
 
-        assertEquals("Titanic", result.Title());
-        assertEquals("James Cameron", result.Director());
-    }
+    assertEquals("Titanic", result.Title());
+    assertEquals("James Cameron", result.Director());
+  }
 
-    @Test public void testNonexistentRecord() {
-        MRecord result = movieModel.getRecord("Stranger Things");
-        System.out.println(result);
-        assertEquals("Stranger Things", result.Title());
-    }
+  @Test
+  public void testNonexistentRecord() {
+    MRecord result = movieModel.getRecord("Stranger Things");
+    System.out.println(result);
+    assertEquals("Stranger Things", result.Title());
+  }
 
-    @Test
-    public void testRecordsFromJson() {
-        // Path to the test JSON file
-        String testJsonPath = "src/test/java/model/data/testmovies.json";
+  @Test
+  public void testFilterDefault() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("nonExistant Type", "NON existent");
+    List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
+    List<String> expected = Arrays.asList("Inception", "Titanic", "The Matrix", "City of God", "Rango");
+    assertEquals(expected, actual);
+  }
 
-        // Load the movie model from the JSON file
-        IMovieModel modelFromJson = IMovieModel.getInstance(testJsonPath);
+  @Test
+  public void testFilterWatchListYear() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("year", "= 2010");
+    List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
+    List<String> expected = List.of("Inception");
+    assertEquals(expected, actual);
+  }
 
-        // Get records from the loaded model
-        List<IMovieModel.MRecord> records = modelFromJson.getRecords();
+  @Test
+  public void testFilterWatchListYearVoid() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("year", "Void");
+    List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
+    List<String> expected = new ArrayList<>();
+    assertEquals(expected, actual);
+  }
 
-        // Verify number of records is correct.
-        assertNotNull(records);
-        assertFalse(records.isEmpty());
-        assertEquals(3, records.size());
+  @Test
+  public void testFilterWatchListYearGreater() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("year", "> 2000");
+    List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
+    List<String> expected = List.of("Inception", "City of God", "Rango");
+    assertEquals(expected, actual);
+  }
 
-        // Check all titles loaded from JSON file.
-        assertTrue(records.stream().anyMatch(r -> r.Title().equals("Stranger Things")));
-        assertTrue(records.stream().anyMatch(r -> r.Title().equals("Inception")));
-        assertTrue(records.stream().anyMatch(r -> r.Title().equals("The Shawshank Redemption")));
+  @Test
+  public void testFilterWatchListYearLess() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("year", "< 2000");
+    List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
+    List<String> expected = List.of("Titanic", "The Matrix");
+    assertEquals(expected, actual);
+  }
 
-        // Get the specific record for "Inception" to verify its details.
-        MRecord inception = records.stream()
-                .filter(r -> r.Title().equals("Inception"))
-                .findFirst()
-                .orElse(null);
+  @Test
+  public void testFilterWatchListYearGreaterOrEqual() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("year", ">= 2002");
+    List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
+    List<String> expected = List.of("Inception", "City of God", "Rango");
+    assertEquals(expected, actual);
+  }
 
-        // Verify that the "Inception" record has the expected details.
-        assertNotNull(inception);
-        assertEquals("2010", inception.Year());
-        assertEquals("Christopher Nolan", inception.Director());
-        assertEquals("8.8", inception.imdbRating());
-    }
+  @Test
+  public void testFilterWatchListYearLessOrEqual() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("year", "<= 2002");
+    List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
+    List<String> expected = List.of("Titanic", "The Matrix", "City of God");
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testFilterWatchListGenre() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("genre", "sci-fi");
+    List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
+    List<String> expected = List.of("Inception", "The Matrix");
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testFilterWatchListGenreVoid() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("genre", "Void");
+    List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+    List<String> expected = new ArrayList<>();
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testFilterWatchListSingleDirector() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("director", "Gore Verbinski");
+    List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+    List<String> expected = List.of("Rango");
+    assertEquals(expected, actual);
+  }
+
+
+  @Test
+  public void testFilterWatchListDirectorMultiDirector() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("director", "Lana Wachowski");
+    List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+    List<String> expected = List.of("The Matrix");
+    assertEquals(expected, actual);
+
+  }
+
+  @Test
+  public void testFilterWatchListActorSingle() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("actors", "Leonardo DiCaprio");
+    List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+    List<String> expected = List.of("Inception", "Titanic");
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testFilterWatchListActorInvalid() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("actors", "John Smithington");
+    List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+    List<String> expected = new ArrayList<>();
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testFilterWatchListEqualRating() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("rating", "= 8.6");
+    List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+    List<String> expected = List.of("City of God");
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testFilterWatchListEqualRatingVoid() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("rating", "= 11");
+    List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+    List<String> expected = new ArrayList<>();
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testFilterWatchListGreaterThanRating() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("rating", "> 8.6");
+    List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+    List<String> expected = List.of("Inception", "The Matrix");
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testFilterWatchListGreaterThanRatingVoid() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("rating", "> 11");
+    List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+    List<String> expected = new ArrayList<>();
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testFilterWatchListLessThanRating() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("rating", "< 8.5");
+    List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+    List<String> expected = List.of("Titanic", "Rango");
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testFilterWatchListGreaterThanOrEqualRating() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("rating", ">= 8.7");
+    List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+    List<String> expected = List.of("Inception", "The Matrix");
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testFilterWatchListLessThanOrEqualRating() {
+    // Assuming filterWatchList method takes a "rating" field and the operation "<="
+    Stream<MRecord> recordStream = movieModel.filterWatchList("rating", "<= 8.6");
+    List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+    List<String> expected = List.of("Titanic", "City of God", "Rango");
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testFilterWatchListRatingNoFilter() {
+    assertThrows(IllegalArgumentException.class, () -> movieModel.filterWatchList("rating", "10"));
+  }
+
+  @Test
+  public void testFilterWatchListEqualRuntimeVoid() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("runtime", "= 3000");
+    List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+    List<String> expected = new ArrayList<>();
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testFilterWatchListEqualRuntime() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("runtime", "= 107");
+    List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+    List<String> expected = List.of("Rango");
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testFilterWatchListGreaterThanRuntime() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("runtime", "> 110");
+    List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+    List<String> expected = List.of("Inception", "Titanic", "The Matrix", "City of God");
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testFilterWatchListLessThanRuntime() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("runtime", "< 130");
+    List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+    List<String> expected = List.of("Rango");
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testFilterWatchListGreaterThanOrEqualRuntime() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("runtime", ">= 130");
+    List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+    List<String> expected = List.of("Inception", "Titanic", "The Matrix", "City of God");
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testFilterWatchListLessThanOrEqualRuntime() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("runtime", "<= 190");
+    List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+    List<String> expected = List.of("Inception", "The Matrix", "City of God", "Rango");
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testFilterWatchListCountry() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("country", "United States");
+    List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+    List<String> expected = List.of("Inception", "Titanic", "The Matrix", "Rango");
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testFilterWatchListCountryVoid() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("country", "Void");
+    List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+    List<String> expected = new ArrayList<>();
+    assertEquals(expected, actual);
+
+  }
+
+  @Test
+  public void testSortWatchListTitleDesc() {
+    Stream<MRecord> recordStream = movieModel.getRecords().stream();
+    List<MRecord> sortedRecords = movieModel.sortMovieList(recordStream, "desc", "title");
+    List<String> actual = sortedRecords.stream().map(MRecord::Title).toList();
+    List<String> expected = List.of("City of God", "Inception", "Rango", "The Matrix", "Titanic");
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testSortWatchListTitleAsc() {
+    Stream<MRecord> recordStream = movieModel.getRecords().stream();
+    List<MRecord> sortedRecords = movieModel.sortMovieList(recordStream, "asc", "title");
+    List<String> actual = sortedRecords.stream().map(MRecord::Title).toList();
+    List<String> expected = List.of("Titanic", "The Matrix", "Rango", "Inception", "City of God");
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testSortWatchListNull() {
+    assertThrows(IllegalArgumentException.class, () -> movieModel.sortMovieList(null, "asc", "title"));
+  }
+
+  @Test
+  public void testSortWatchListYearDesc() {
+    Stream<MRecord> recordStream = movieModel.getRecords().stream();
+    List<MRecord> sortedRecords = movieModel.sortMovieList(recordStream, "desc", "year");
+    List<String> actual = sortedRecords.stream().map(MRecord::Title).toList();
+    List<String> expected = List.of("Rango", "Inception", "City of God", "The Matrix", "Titanic");
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testSortWatchListYearAsc() {
+    Stream<MRecord> recordStream = movieModel.getRecords().stream();
+    List<MRecord> sortedRecords = movieModel.sortMovieList(recordStream, "asc", "year");
+    List<String> actual = sortedRecords.stream().map(MRecord::Title).toList();
+    List<String> expected = List.of("Titanic", "The Matrix", "City of God", "Inception", "Rango");
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testSortWatchListRatingDesc() {
+    Stream<MRecord> recordStream = movieModel.getRecords().stream();
+    List<MRecord> sortedRecords = movieModel.sortMovieList(recordStream, "desc", "rating");
+    List<String> actual = sortedRecords.stream().map(MRecord::Title).toList();
+    List<String> expected = List.of("Inception", "The Matrix", "City of God", "Titanic", "Rango");
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testSortWatchListRatingAsc() {
+    Stream<MRecord> recordStream = movieModel.getRecords().stream();
+    List<MRecord> sortedRecords = movieModel.sortMovieList(recordStream, "asc", "rating");
+    List<String> actual = sortedRecords.stream().map(MRecord::Title).toList();
+    List<String> expected = List.of("Rango", "Titanic", "City of God", "The Matrix", "Inception");
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testSortWatchListRuntimeDesc() {
+    Stream<MRecord> recordStream = movieModel.getRecords().stream();
+    List<MRecord> sortedRecords = movieModel.sortMovieList(recordStream, "desc", "runtime");
+    List<String> actual = sortedRecords.stream().map(MRecord::Title).toList();
+    List<String> expected = List.of("Titanic", "Inception", "The Matrix", "City of God", "Rango");
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testSortWatchListRuntimeAsc() {
+    Stream<MRecord> recordStream = movieModel.getRecords().stream();
+    List<MRecord> sortedRecords = movieModel.sortMovieList(recordStream, "asc", "runtime");
+    List<String> actual = sortedRecords.stream().map(MRecord::Title).toList();
+    List<String> expected = List.of("Rango", "City of God", "The Matrix", "Inception", "Titanic");
+    assertEquals(expected, actual);
+  }
 
 }
