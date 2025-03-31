@@ -37,6 +37,10 @@ public class MovieModel implements IMovieModel {
      */
     private void loadFromDatabase(String databasePath) {
         try {
+            if (!new File(databasePath).exists()) {
+                new File(databasePath).createNewFile();
+                return;
+            }
             JsonMapper mapper = new JsonMapper();
             InputStream existingRecords = new FileInputStream(databasePath);
             List<MRecord> movieRecords = mapper.readValue(existingRecords, new TypeReference<List<MRecord>>() { });
@@ -101,7 +105,7 @@ public class MovieModel implements IMovieModel {
     }
 
     public static void main(String[] args) {
-        IMovieModel movieModel = IMovieModel.getInstance();
+        IMovieModel movieModel = IMovieModel.getInstance("jahnsfijnaiuefiuahwnef");
         List<MRecord> records = movieModel.getRecords();
         System.out.println("Total records: " + records.size());
         if (!records.isEmpty()) {

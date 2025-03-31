@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -20,11 +21,11 @@ public class MovieModelReadWriteTest {
     private Path tempFilePath;
   
     @BeforeEach
-    //This setup is useful before each test to set up a dummy xml file as it is annoying to do it every time
+    //This setup is useful before each test to set up a dummy json file as it is annoying to do it every time
     void setUp() throws IOException {
   
       //resolves string into a path directory within tempDir
-      tempFilePath = tempDir.resolve("test.xml");
+      tempFilePath = tempDir.resolve("test.json");
   
       //Dummy data because empty file caused issues with creation of DNModel
       String dummyData = """
@@ -68,11 +69,11 @@ public class MovieModelReadWriteTest {
     }
 
     @Test
-    public void TestReadRecordsFromXML() {
+    public void TestReadRecordsFromJSON() {
         // Create an instance of MovieModel with the temporary file path
         MovieModel movieModel = new MovieModel(tempFilePath.toString());
   
-        // Read records from the XML file
+        // Read records from the json file
         List<MRecord> records = movieModel.getRecords();
   
         // Check if the number of records is as expected
@@ -83,11 +84,11 @@ public class MovieModelReadWriteTest {
     }
 
     @Test
-    public void TestWriteRecordsToXML(){
+    public void TestWriteRecordsToJSON(){
         // Create an instance of MovieModel with the temporary file path
         MovieModel movieModel = new MovieModel(tempFilePath.toString());
   
-        // Read records from the XML file
+        // Read records from the json file
         List<MRecord> records = movieModel.getRecords();
   
         // Check if the number of records is as expected
@@ -147,13 +148,15 @@ public class MovieModelReadWriteTest {
     @Test
     public void testGetFromWrongFile() {
         // Create an instance of MovieModel with a non-existent file path
-        MovieModel movieModel = new MovieModel("non_existent_file.xml");
+        MovieModel movieModel = new MovieModel("non_existent_file.json");
   
         // Attempt to get a record that doesn't exist
         MRecord result = movieModel.getRecord("Inception");
   
         // Check if the result is null or empty
-        assertEquals(null, result, "Result should be null for a nonexistent movie");
+        assertThrows(Exception.class, () -> {
+            movieModel.getRecord("Inception");
+        }, "Should throw an exception for a non-existent file");
     }
 
     @Test
@@ -166,5 +169,19 @@ public class MovieModelReadWriteTest {
   
         // Check if the result is null or empty
         assertEquals(null, result, "Result should be null for a nonexistent movie");
+    }
+
+    @Test
+    public void testWritingToANonexistentFile() {
+        // Create an instance of MovieModel with a non-existent file path
+        MovieModel movieModel = new MovieModel("non_existent_file.json");
+  
+        // Attempt to write records to a non-existent file
+        MRecord newRecord = new MRecord("New Movie", "2023", "Director", "Actors", "Plot", "Poster", "9.0", "Genre", "120 min", "Country");
+        movieModel.addRecord(newRecord);
+  
+        // Check if the record was added successfully (it shouldn't be, as the file doesn't exist)
+        List<MRecord> records = movieModel.getRecords();
+        assertEquals(0, records.size(), "Number of records should be 0 for a non-existent file");
     }
 }
