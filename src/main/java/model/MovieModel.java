@@ -5,6 +5,8 @@ import static java.lang.Integer.parseInt;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import net.NetUtils;
 
@@ -47,6 +49,10 @@ public class MovieModel implements IMovieModel {
      * @return Stream of movie records
      */
     public Stream<MRecord> filterWatchList(String filterType, String filterValue) {
+
+        if(filterType == null || filterValue == null) {
+            throw new IllegalArgumentException("filterType and value cannot be null");
+        }
 
         switch (filterType.toLowerCase()) {
             case "title":
@@ -117,6 +123,59 @@ public class MovieModel implements IMovieModel {
             default:
                 return records.stream(); // Return all records if filter type is not recognized
         }
+    }
+
+    public List<MRecord> sortMovieList(Stream<MRecord> movieStream,String ascOrDesc, String column) {
+
+        // Error handling for null parameters passed
+        if(movieStream == null || ascOrDesc == null || column == null) {
+            throw new IllegalArgumentException("Invalid arguments for Sorting Movies");
+        }
+
+        // Creating Comparator
+        Comparator<MRecord> comparator;
+
+
+        // Switch statement to determine what kind of comparison we need
+        switch(column.toLowerCase()){
+            case "title":
+                if(ascOrDesc.equals("desc")) {
+                    comparator = Comparator.comparing(MRecord::Title);
+                    break;
+                }else if(ascOrDesc.equals("asc")) {
+                    comparator = Comparator.comparing(MRecord::Title).reversed();
+                    break;
+                }
+            case "year":
+                if(ascOrDesc.equals("desc")) {
+                    comparator = Comparator.comparing(MRecord::Year).reversed();
+                    break;
+                } else if(ascOrDesc.equals("asc")) {
+                    comparator = Comparator.comparing(MRecord::Year);
+                    break;
+                }
+            case "rating":
+                if(ascOrDesc.equals("desc")) {
+                    comparator = Comparator.comparing(MRecord::imdbRating).reversed();
+                    break;
+                } else if(ascOrDesc.equals("asc")) {
+                    comparator = Comparator.comparing(MRecord::imdbRating);
+                    break;
+                }
+            case "runtime":
+                if(ascOrDesc.equals("desc")) {
+                    comparator = Comparator.comparing(MRecord::Runtime).reversed();
+                    break;
+                } else if(ascOrDesc.equals("asc")) {
+                    comparator = Comparator.comparing(MRecord::Runtime);
+                    break;
+                }
+
+            default:
+                throw new IllegalArgumentException("Invalid parameters for sorting movies...");
+        }
+
+        return movieStream.sorted(comparator).toList();
     }
 
     @Override
