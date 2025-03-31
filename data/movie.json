@@ -75,4 +75,15 @@
   "Genre" : "Drama, Romance",
   "Runtime" : "194 min",
   "Country" : "United States, Mexico"
+}, {
+  "Title" : "Aliens",
+  "Year" : "1986",
+  "Director" : "James Cameron",
+  "Actors" : "Sigourney Weaver, Michael Biehn, Carrie Henn",
+  "Plot" : "Decades after surviving the Nostromo incident, Ellen Ripley is sent out to re-establish contact with a terraforming colony but finds herself battling the Alien Queen and her offspring.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BZjIyNGJhYzYtN2I1My00OTVhLWEyMzItZTVjNDMzOTVkYWViXkEyXkFqcGc@._V1_SX300.jpg",
+  "imdbRating" : "8.4",
+  "Genre" : "Action, Adventure, Horror",
+  "Runtime" : "137 min",
+  "Country" : "United Kingdom, United States"
 } ]
