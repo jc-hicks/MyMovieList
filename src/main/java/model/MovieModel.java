@@ -1,23 +1,22 @@
 package model;
 
-import static java.lang.Integer.parseInt;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Stream;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import net.NetUtils;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.stream.Stream;
 
 public class MovieModel implements IMovieModel {
 
@@ -41,17 +40,27 @@ public class MovieModel implements IMovieModel {
      * Loads records from the specified database file and adds them to the records list.
      */
     private void loadFromDatabase(String databasePath) {
+        File file = new File(databasePath);
+    
         try {
-            if (!new File(databasePath).exists()) {
-                new File(databasePath).createNewFile();
+            if (!file.exists()) {
+                file.createNewFile();
+                try (OutputStream out = new FileOutputStream(file)) {
+                    out.write("[]".getBytes()); 
+                }
+            }
+    
+            if (file.length() == 0) {
                 return;
             }
-            JsonMapper mapper = new JsonMapper();
-            InputStream existingRecords = new FileInputStream(databasePath);
-            List<MRecord> movieRecords = mapper.readValue(existingRecords, new TypeReference<List<MRecord>>() { });
-            records.addAll(movieRecords);
+    
+            try (InputStream existingRecords = new FileInputStream(file)) {
+                JsonMapper mapper = new JsonMapper();
+                List<MRecord> movieRecords = mapper.readValue(existingRecords, new TypeReference<List<MRecord>>() {});
+                records.addAll(movieRecords);
+            }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error loading records from database: " + e.getMessage());
         }
     }
 
@@ -70,6 +79,9 @@ public class MovieModel implements IMovieModel {
      */
     @Override
     public MRecord getRecord(String title) {
+        if (title == null) {
+            return null;
+        }
         for (MRecord record : records) {
             if (record.Title().equals(title)) {
                 return record;
@@ -80,14 +92,10 @@ public class MovieModel implements IMovieModel {
             try (InputStream inputStream = NetUtils.getUrlContents(url)) {
                 JsonMapper mapper = new JsonMapper();
                 MRecord newRecord = mapper.readValue(inputStream, MRecord.class);
-                if (newRecord == null || newRecord.Title() == null) {
-                    return null;
-                } else {
                 addRecord(newRecord);
                 return newRecord;
                 }
-            }
-        } catch (Exception e) {
+            } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

@@ -7,6 +7,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -143,7 +144,20 @@ public class MovieModelReadWriteTest {
         MRecord result = movieModel.getRecord(null);
   
         // Check if the result is null or empty
-        assertEquals(null, result, "Result should be null for a nonexistent movie");
+        assertNull(result, "Result should be null for a nonexistent movie");
+    }
+
+    @Test
+    public void testGetRecordwithStringNull() {
+        // Create an instance of MovieModel with the temporary file path
+        MovieModel movieModel = new MovieModel(tempFilePath.toString());
+  
+        // Attempt to get a record with a null title
+        MRecord result = movieModel.getRecord("null");
+  
+        // Check if the result matches the expected movie record
+        assertEquals("MRecord[Title=Null, Year=2009, Director=Jacob Richardson, Actors=Jacob Richardson, Plot=The character in this surrealist short film takes a medicine called \"Null\" that has very existential adverse effects., Poster=https://m.media-amazon.com/images/M/MV5BMjA0OTAzODY2MF5BMl5BanBnXkFtZTcwNjA2NzMzMg@@._V1_SX300.jpg, imdbRating=7.4, Genre=Short, Horror, Runtime=4 min, Country=United States]", 
+        result.toString(), "Result should match the expected movie record for 'null'");
     }
 
     // Test fails, but a new file is correctly created.
