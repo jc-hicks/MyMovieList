@@ -267,4 +267,21 @@ public class MovieModelTest {
         List<String> expected = List.of("Inception","The Matrix","City of God","Rango");
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void testFilterWatchListCountry(){
+        Stream<MRecord> recordStream = movieModel.filterWatchList("country","United States");
+        List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+        List<String> expected = List.of("Inception", "Titanic","The Matrix","Rango");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testFilterWatchListCountryVoid(){
+        Stream<MRecord> recordStream = movieModel.filterWatchList("country","Void");
+        List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
+        List<String> expected = new ArrayList<>();
+        assertEquals(expected, actual);
+
+    }
 }
