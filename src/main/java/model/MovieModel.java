@@ -52,7 +52,18 @@ public class MovieModel implements IMovieModel {
             case "title":
                 return records.stream().filter(m -> m.Title().equalsIgnoreCase(filterValue));
             case "year":
-                return records.stream().filter(m -> m.Year().equals(filterValue));
+                List<String> yearCommands = Arrays.asList(filterValue.split(" "));
+                if (yearCommands.size() > 1) {
+                    String filterOperation = yearCommands.get(0);
+                    return switch (filterOperation) {
+                        case "=" -> records.stream().filter(m -> m.Year().equals(yearCommands.get(1)));
+                        case ">" -> records.stream().filter(m -> parseInt(m.Year()) > parseInt(yearCommands.get(1)));
+                        case "<" -> records.stream().filter(m -> parseInt(m.Year()) < parseInt(yearCommands.get(1)));
+                        case ">=" -> records.stream().filter(m -> parseInt(m.Year()) >= parseInt(yearCommands.get(1)));
+                        case "<=" -> records.stream().filter(m -> parseInt(m.Year()) <= parseInt(yearCommands.get(1)));
+                        default -> throw new IllegalStateException("Unexpected year filter value: " + yearCommands.get(1));
+                    };
+                }
             case "director":
                 return records.stream().filter(m -> m.Director().toLowerCase().contains(filterValue.toLowerCase()));
             case "genre":

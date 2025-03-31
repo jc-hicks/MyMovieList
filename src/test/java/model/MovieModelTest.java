@@ -96,7 +96,7 @@ public class MovieModelTest {
     }
 
     @Test public void testFilterWatchListYear(){
-        Stream<MRecord> recordStream = movieModel.filterWatchList("year","2010");
+        Stream<MRecord> recordStream = movieModel.filterWatchList("year","= 2010");
         List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
         List<String> expected = List.of("Inception");
         assertEquals(expected, actual);
@@ -106,6 +106,38 @@ public class MovieModelTest {
         Stream<MRecord> recordStream = movieModel.filterWatchList("year","Void");
         List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
         List<String> expected = new ArrayList<>();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testFilterWatchListYearGreater(){
+        Stream<MRecord> recordStream = movieModel.filterWatchList("year","> 2000");
+        List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
+        List<String> expected = List.of("Inception","City of God","Rango");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testFilterWatchListYearLess(){
+        Stream<MRecord> recordStream = movieModel.filterWatchList("year","< 2000");
+        List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
+        List<String> expected = List.of("Titanic","The Matrix");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testFilterWatchListYearGreaterOrEqual(){
+        Stream<MRecord> recordStream = movieModel.filterWatchList("year",">= 2002");
+        List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
+        List<String> expected = List.of("Inception","City of God","Rango");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testFilterWatchListYearLessOrEqual(){
+        Stream<MRecord> recordStream = movieModel.filterWatchList("year","<= 2002");
+        List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
+        List<String> expected = List.of("Titanic","The Matrix","City of God");
         assertEquals(expected, actual);
     }
 
