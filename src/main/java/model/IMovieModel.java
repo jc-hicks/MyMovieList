@@ -67,7 +67,6 @@ public interface IMovieModel {
         try {
             return new MovieModel(database);
         } catch (Exception e) {
-            e.printStackTrace();
             return new MovieModel();
         }
     }

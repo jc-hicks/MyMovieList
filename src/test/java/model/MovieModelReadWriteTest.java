@@ -163,14 +163,10 @@ public class MovieModelReadWriteTest {
     // Test fails, but a new file is correctly created.
     @Test
     public void testGetFromWrongFile() {
-        // Create an instance of MovieModel with a non-existent file path
-        MovieModel movieModel = new MovieModel("non_existent_file2.json");
-  
-        // Check if the result is null or empty
-        Exception exception = assertThrows(Exception.class, () -> {
-            movieModel.getRecord("Inception");
+        // Check that attempting to create a MovieModel with a non-existent file path throws RuntimeException
+        assertThrows(RuntimeException.class, () -> {
+            new MovieModel("non_existent_file2.json");
         }, "Should throw an exception for a non-existent file");
-        assertEquals("Expected exception message", exception.getMessage(), "Exception message should match");
     }
 
     @Test
@@ -187,18 +183,11 @@ public class MovieModelReadWriteTest {
 
     @Test
     public void testWritingToANonexistentFile() {
-        // Create an instance of MovieModel with a non-existent file path
-        MovieModel movieModel = new MovieModel("non_existent_file.json");
-  
-        // Attempt to write records to a non-existent file
-        MRecord newRecord = new MRecord("New Movie", "2023", "Director", "Actors", "Plot", "Poster", "9.0", "Genre", "120 min", "Country", "True");
-        movieModel.addRecord(newRecord);
-  
-        // Check if the result is null or empty
-        Exception exception = assertThrows(Exception.class, () -> {
-            movieModel.getRecord("Inception");
+        // Check that attempting to create a MovieModel with a non-existent file path throws RuntimeException
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            new MovieModel("non_existent_file.json");
         }, "Should throw an exception for a non-existent file");
         
         assertNotNull(exception.getMessage(), "Exception message should not be null");
-    }
+}
 }

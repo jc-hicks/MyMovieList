@@ -21,6 +21,7 @@ import net.NetUtils;
 public class MovieModel implements IMovieModel {
 
     private final List<MRecord> records = new ArrayList<>();
+    public String databasePath;
 
     /**
      * Creates a MovieModel with an empty records list and loads records from
@@ -35,29 +36,46 @@ public class MovieModel implements IMovieModel {
      * the specified database.
      */
     public MovieModel(String databasePath) {
-        loadFromDatabase(databasePath);
+        File file = new File(databasePath);
+        if (!file.exists()) {
+            throw new RuntimeException("Database file does not exist: " + databasePath);
+        }
+        try {
+            loadFromDatabase(databasePath);
+        } catch (IOException e) {
+            throw new RuntimeException("Error loading database: " + e.getMessage(), e);
+        }
     }
 
     /**
      * Loads records from the specified database file and adds them to the
      * records list.
      */
-    private void loadFromDatabase(String databasePath) {
+    private void loadFromDatabase(String databasePath) throws IOException {
         File file = new File(databasePath);
+        
+        if (file.length() == 0) {
+            return;
+        }
+        
         try (InputStream existingRecords = new FileInputStream(file)) {
             JsonMapper mapper = new JsonMapper();
-            List<MRecord> movieRecords = mapper.readValue(existingRecords, new TypeReference<List<MRecord>>() {
-            });
+            List<MRecord> movieRecords = mapper.readValue(existingRecords, 
+                    new TypeReference<List<MRecord>>() {});
             records.addAll(movieRecords);
         } catch (Exception e) {
-            System.err.println("Error loading records from database: " + e.getMessage());
+            throw new IOException("Error loading records from database: " + e.getMessage(), e);
         }
     }
 
     public void addRecord(MRecord record) {
         if (record != null && records.stream().noneMatch(r -> r.Title().equals(record.Title()))) {
             records.add(record);
-            saveToDatabase();
+            try {
+                saveToDatabase();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -98,11 +116,19 @@ public class MovieModel implements IMovieModel {
     /**
      * Saves all records to the database file in JSON format
      */
-    private void saveToDatabase() {
-        try (OutputStream out = new FileOutputStream(new File(DATABASE))) {
+    private void saveToDatabase() throws IOException {
+        File dbFile = new File(DATABASE);
+        
+        File parentDir = dbFile.getParentFile();
+        if (parentDir != null && !parentDir.exists()) {
+            throw new IOException("Cannot save to database: directory " + 
+                    parentDir.getAbsolutePath() + " does not exist");
+        }
+        
+        try (OutputStream out = new FileOutputStream(dbFile)) {
             IMovieModel.writeRecords(records, out);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException("Error saving records to database: " + e.getMessage(), e);
         }
     }
 
