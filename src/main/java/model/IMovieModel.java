@@ -75,9 +75,9 @@ public interface IMovieModel {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @JacksonXmlRootElement(localName = "movie")
     @JsonPropertyOrder({"Title", "Year", "Director", "Actors", "Plot", "Poster",
-            "imdbRating", "Genre", "Runtime", "Country"})
+            "imdbRating", "Genre", "Runtime", "Country", "Response"})
     record MRecord(String Title, String Year, String Director,
                    String Actors, String Plot, String Poster, String imdbRating,
-                   String Genre, String Runtime, String Country) {
+                   String Genre, String Runtime, String Country, String Response) {
     }
 }

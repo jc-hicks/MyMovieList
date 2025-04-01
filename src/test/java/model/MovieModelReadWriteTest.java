@@ -97,7 +97,7 @@ public class MovieModelReadWriteTest {
         assertEquals(3, records.size(), "Number of records should be 3");
   
         // Add a new record to the model
-        MRecord newRecord = new MRecord("New Movie", "2023", "Director", "Actors", "Plot", "Poster", "9.0", "Genre", "120 min", "Country");
+        MRecord newRecord = new MRecord("New Movie", "2023", "Director", "Actors", "Plot", "Poster", "9.0", "Genre", "120 min", "Country", "True");
         movieModel.addRecord(newRecord);
   
         // Read records again after adding a new one
@@ -119,7 +119,7 @@ public class MovieModelReadWriteTest {
         MRecord result = movieModel.getRecord("uiqawehfiuqwbwnaeilufnqlaiwuewfnaqwilwuefniulwaqefiulqawehfiu");
   
         // Check if the result is null or empty
-        assertEquals(null, result, "Result should be null for a nonexistent movie");
+        assertNull(result);
 
     }
 
@@ -156,7 +156,7 @@ public class MovieModelReadWriteTest {
         MRecord result = movieModel.getRecord("null");
   
         // Check if the result matches the expected movie record
-        assertEquals("MRecord[Title=Null, Year=2009, Director=Jacob Richardson, Actors=Jacob Richardson, Plot=The character in this surrealist short film takes a medicine called \"Null\" that has very existential adverse effects., Poster=https://m.media-amazon.com/images/M/MV5BMjA0OTAzODY2MF5BMl5BanBnXkFtZTcwNjA2NzMzMg@@._V1_SX300.jpg, imdbRating=7.4, Genre=Short, Horror, Runtime=4 min, Country=United States]", 
+        assertEquals("MRecord[Title=Null, Year=2009, Director=Jacob Richardson, Actors=Jacob Richardson, Plot=The character in this surrealist short film takes a medicine called \"Null\" that has very existential adverse effects., Poster=https://m.media-amazon.com/images/M/MV5BMjA0OTAzODY2MF5BMl5BanBnXkFtZTcwNjA2NzMzMg@@._V1_SX300.jpg, imdbRating=7.4, Genre=Short, Horror, Runtime=4 min, Country=United States, Response=True]", 
         result.toString(), "Result should match the expected movie record for 'null'");
     }
 
@@ -191,7 +191,7 @@ public class MovieModelReadWriteTest {
         MovieModel movieModel = new MovieModel("non_existent_file.json");
   
         // Attempt to write records to a non-existent file
-        MRecord newRecord = new MRecord("New Movie", "2023", "Director", "Actors", "Plot", "Poster", "9.0", "Genre", "120 min", "Country");
+        MRecord newRecord = new MRecord("New Movie", "2023", "Director", "Actors", "Plot", "Poster", "9.0", "Genre", "120 min", "Country", "True");
         movieModel.addRecord(newRecord);
   
         // Check if the result is null or empty
