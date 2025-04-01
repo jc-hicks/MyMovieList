@@ -21,6 +21,8 @@ import net.NetUtils;
 public class MovieModel implements IMovieModel {
 
     private final List<MRecord> records = new ArrayList<>();
+    private final List<MRecord> watchList = new ArrayList<>();
+    private String databasePath;
 
     /**
      * Creates a MovieModel with an empty records list and loads records from
@@ -35,29 +37,52 @@ public class MovieModel implements IMovieModel {
      * the specified database.
      */
     public MovieModel(String databasePath) {
-        loadFromDatabase(databasePath);
+        this.databasePath = databasePath;
+        File file = new File(databasePath);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException("Error creating database file: " + e.getMessage(), e);
+            }
+        } else { 
+            try {
+                loadFromDatabase(databasePath);
+            } catch (IOException e) {
+                throw new RuntimeException("Error loading database: " + e.getMessage(), e);
+            }
+        }
     }
 
     /**
      * Loads records from the specified database file and adds them to the
      * records list.
      */
-    private void loadFromDatabase(String databasePath) {
+    private void loadFromDatabase(String databasePath) throws IOException {
         File file = new File(databasePath);
+        
+        if (file.length() == 0) {
+            return;
+        }
+        
         try (InputStream existingRecords = new FileInputStream(file)) {
             JsonMapper mapper = new JsonMapper();
-            List<MRecord> movieRecords = mapper.readValue(existingRecords, new TypeReference<List<MRecord>>() {
-            });
+            List<MRecord> movieRecords = mapper.readValue(existingRecords, 
+                    new TypeReference<List<MRecord>>() {});
             records.addAll(movieRecords);
         } catch (Exception e) {
-            System.err.println("Error loading records from database: " + e.getMessage());
+            throw new IOException("Error loading records from database: " + e.getMessage(), e);
         }
     }
 
     public void addRecord(MRecord record) {
         if (record != null && records.stream().noneMatch(r -> r.Title().equals(record.Title()))) {
             records.add(record);
-            saveToDatabase();
+            try {
+                saveToDatabase();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -95,12 +120,78 @@ public class MovieModel implements IMovieModel {
         return null;
     }
 
+    private void saveToDatabase() throws IOException {
+        if (this.databasePath != null) {
+            saveToDatabase(this.databasePath);
+        } else {
+            saveToDatabase(DATABASE);
+        }
+    }
+
     /**
      * Saves all records to the database file in JSON format
      */
-    private void saveToDatabase() {
-        try (OutputStream out = new FileOutputStream(new File(DATABASE))) {
+    private void saveToDatabase(String filePath) throws IOException {
+        File dbFile = new File(filePath);
+        
+        File parentDir = dbFile.getParentFile();
+        if (parentDir != null && !parentDir.exists()) {
+            throw new IOException("Cannot save to database: directory " + 
+                    parentDir.getAbsolutePath() + " does not exist");
+        }
+        
+        try (OutputStream out = new FileOutputStream(dbFile)) {
             IMovieModel.writeRecords(records, out);
+        } catch (IOException e) {
+            throw new IOException("Error saving records to database: " + e.getMessage(), e);
+        }
+    }
+
+    public void addToWatchList(MRecord record) {
+        if (record != null && watchList.stream().noneMatch(r -> r.Title().equals(record.Title()))) {
+            watchList.add(record);
+        }
+    }
+
+    public void removeFromWatchList(MRecord record) {
+        if (record != null) {
+            watchList.removeIf(r -> r.Title().equals(record.Title()));
+        }
+    }
+
+    public List<MRecord> getWatchList() {
+        return this.watchList;
+    }
+
+    public void addFromRecordsToWatchList(String title) {
+        MRecord record = getRecord(title);
+        if (record != null && watchList.stream().noneMatch(r -> r.Title().equals(record.Title()))) {
+            watchList.add(record);
+        }
+    }
+
+    public void saveWatchListToFile() {
+        String filePath = IMovieModel.WATCHLIST_DATABASE;
+        if (filePath == null || filePath.isEmpty()) {
+            throw new IllegalArgumentException("Invalid file path for watch list");
+        }
+        try (OutputStream out = new FileOutputStream(filePath)) {
+            IMovieModel.writeRecords(watchList, out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadWatchListFromFile() {
+        String filePath = IMovieModel.WATCHLIST_DATABASE;
+        if (filePath == null || filePath.isEmpty()) {
+            throw new IllegalArgumentException("Invalid file path for watch list");
+        }
+        try (InputStream in = new FileInputStream(filePath)) {
+            JsonMapper mapper = new JsonMapper();
+            List<MRecord> watchListRecords = mapper.readValue(in, 
+                    new TypeReference<List<MRecord>>() {});
+            watchList.addAll(watchListRecords);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -124,7 +215,7 @@ public class MovieModel implements IMovieModel {
             case "title":
                 return records.stream().filter(m -> m.Title().equalsIgnoreCase(filterValue));
             case "year":
-                List<String> yearCommands = Arrays.asList(filterValue.split(" "));
+                List<String> yearCommands = Arrays.asList(filterValue.split(""));
                 if (yearCommands.size() > 1) {
                     String filterOperation = yearCommands.get(0);
                     return switch (filterOperation) {
@@ -273,6 +364,13 @@ public class MovieModel implements IMovieModel {
     @Override
     public List<MRecord> getRecords() {
         return records;
+    }
+
+    public static void main(String[] args) {
+        MovieModel movieModel = new MovieModel();
+        for (MRecord movie : movieModel.getRecords()) {
+            System.out.println(movie.Title() + " (" + movie.Year() + ")");
+        }
     }
 }
 

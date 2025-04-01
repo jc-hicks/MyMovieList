@@ -62,7 +62,7 @@ public class MovieModelTest {
   public void testFilterDefault() {
     Stream<MRecord> recordStream = movieModel.filterWatchList("nonExistant Type", "NON existent");
     List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
-    List<String> expected = Arrays.asList("Inception", "Titanic", "The Matrix", "City of God", "Rango");
+    List<String> expected = Arrays.asList("Inception", "Titanic", "The Matrix", "City of God", "Rango", "Stranger Things");
     assertEquals(expected, actual);
   }
 
@@ -184,7 +184,7 @@ public class MovieModelTest {
   public void testFilterWatchListGreaterThanRating() {
     Stream<MRecord> recordStream = movieModel.filterWatchList("rating", "> 8.6");
     List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
-    List<String> expected = List.of("Inception", "The Matrix");
+    List<String> expected = List.of("Inception", "The Matrix", "Stranger Things");
     assertEquals(expected, actual);
   }
 
@@ -208,7 +208,7 @@ public class MovieModelTest {
   public void testFilterWatchListGreaterThanOrEqualRating() {
     Stream<MRecord> recordStream = movieModel.filterWatchList("rating", ">= 8.7");
     List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
-    List<String> expected = List.of("Inception", "The Matrix");
+    List<String> expected = List.of("Inception", "The Matrix", "Stranger Things");
     assertEquals(expected, actual);
   }
 
@@ -254,7 +254,7 @@ public class MovieModelTest {
   public void testFilterWatchListLessThanRuntime() {
     Stream<MRecord> recordStream = movieModel.filterWatchList("runtime", "< 130");
     List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
-    List<String> expected = List.of("Rango");
+    List<String> expected = List.of("Rango", "Stranger Things");
     assertEquals(expected, actual);
   }
 
@@ -270,7 +270,7 @@ public class MovieModelTest {
   public void testFilterWatchListLessThanOrEqualRuntime() {
     Stream<MRecord> recordStream = movieModel.filterWatchList("runtime", "<= 190");
     List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
-    List<String> expected = List.of("Inception", "The Matrix", "City of God", "Rango");
+    List<String> expected = List.of("Inception", "The Matrix", "City of God", "Rango","Stranger Things");
     assertEquals(expected, actual);
   }
 
@@ -278,7 +278,7 @@ public class MovieModelTest {
   public void testFilterWatchListCountry() {
     Stream<MRecord> recordStream = movieModel.filterWatchList("country", "United States");
     List<String> actual = recordStream.map(MRecord::Title).collect(Collectors.toList());
-    List<String> expected = List.of("Inception", "Titanic", "The Matrix", "Rango");
+    List<String> expected = List.of("Inception", "Titanic", "The Matrix", "Rango", "Stranger Things");
     assertEquals(expected, actual);
   }
 
@@ -296,7 +296,7 @@ public class MovieModelTest {
     Stream<MRecord> recordStream = movieModel.getRecords().stream();
     List<MRecord> sortedRecords = movieModel.sortMovieList(recordStream, "desc", "title");
     List<String> actual = sortedRecords.stream().map(MRecord::Title).toList();
-    List<String> expected = List.of("City of God", "Inception", "Rango", "The Matrix", "Titanic");
+    List<String> expected = List.of("City of God", "Inception", "Rango", "Stranger Things", "The Matrix", "Titanic");
     assertEquals(expected, actual);
   }
 
@@ -305,7 +305,7 @@ public class MovieModelTest {
     Stream<MRecord> recordStream = movieModel.getRecords().stream();
     List<MRecord> sortedRecords = movieModel.sortMovieList(recordStream, "asc", "title");
     List<String> actual = sortedRecords.stream().map(MRecord::Title).toList();
-    List<String> expected = List.of("Titanic", "The Matrix", "Rango", "Inception", "City of God");
+    List<String> expected = List.of("Titanic", "The Matrix", "Stranger Things", "Rango", "Inception", "City of God");
     assertEquals(expected, actual);
   }
 
@@ -319,7 +319,7 @@ public class MovieModelTest {
     Stream<MRecord> recordStream = movieModel.getRecords().stream();
     List<MRecord> sortedRecords = movieModel.sortMovieList(recordStream, "desc", "year");
     List<String> actual = sortedRecords.stream().map(MRecord::Title).toList();
-    List<String> expected = List.of("Rango", "Inception", "City of God", "The Matrix", "Titanic");
+    List<String> expected = List.of("Stranger Things","Rango", "Inception", "City of God", "The Matrix", "Titanic");
     assertEquals(expected, actual);
   }
 
@@ -328,7 +328,7 @@ public class MovieModelTest {
     Stream<MRecord> recordStream = movieModel.getRecords().stream();
     List<MRecord> sortedRecords = movieModel.sortMovieList(recordStream, "asc", "year");
     List<String> actual = sortedRecords.stream().map(MRecord::Title).toList();
-    List<String> expected = List.of("Titanic", "The Matrix", "City of God", "Inception", "Rango");
+    List<String> expected = List.of("Titanic", "The Matrix", "City of God", "Inception", "Rango", "Stranger Things");
     assertEquals(expected, actual);
   }
 
@@ -337,7 +337,7 @@ public class MovieModelTest {
     Stream<MRecord> recordStream = movieModel.getRecords().stream();
     List<MRecord> sortedRecords = movieModel.sortMovieList(recordStream, "desc", "rating");
     List<String> actual = sortedRecords.stream().map(MRecord::Title).toList();
-    List<String> expected = List.of("Inception", "The Matrix", "City of God", "Titanic", "Rango");
+    List<String> expected = List.of("Inception", "The Matrix", "Stranger Things", "City of God", "Titanic", "Rango");
     assertEquals(expected, actual);
   }
 
@@ -346,7 +346,7 @@ public class MovieModelTest {
     Stream<MRecord> recordStream = movieModel.getRecords().stream();
     List<MRecord> sortedRecords = movieModel.sortMovieList(recordStream, "asc", "rating");
     List<String> actual = sortedRecords.stream().map(MRecord::Title).toList();
-    List<String> expected = List.of("Rango", "Titanic", "City of God", "The Matrix", "Inception");
+    List<String> expected = List.of("Rango", "Titanic", "City of God", "The Matrix", "Stranger Things", "Inception");
     assertEquals(expected, actual);
   }
 
@@ -355,7 +355,7 @@ public class MovieModelTest {
     Stream<MRecord> recordStream = movieModel.getRecords().stream();
     List<MRecord> sortedRecords = movieModel.sortMovieList(recordStream, "desc", "runtime");
     List<String> actual = sortedRecords.stream().map(MRecord::Title).toList();
-    List<String> expected = List.of("Titanic", "Inception", "The Matrix", "City of God", "Rango");
+    List<String> expected = List.of("Stranger Things","Titanic", "Inception", "The Matrix", "City of God", "Rango");
     assertEquals(expected, actual);
   }
 
@@ -364,7 +364,7 @@ public class MovieModelTest {
     Stream<MRecord> recordStream = movieModel.getRecords().stream();
     List<MRecord> sortedRecords = movieModel.sortMovieList(recordStream, "asc", "runtime");
     List<String> actual = sortedRecords.stream().map(MRecord::Title).toList();
-    List<String> expected = List.of("Rango", "City of God", "The Matrix", "Inception", "Titanic");
+    List<String> expected = List.of("Rango", "City of God", "The Matrix", "Inception", "Titanic","Stranger Things");
     assertEquals(expected, actual);
   }
 

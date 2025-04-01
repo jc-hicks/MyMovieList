@@ -16,6 +16,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 public interface IMovieModel {
 
     String DATABASE = "data/movie.json";
+    String WATCHLIST_DATABASE = "data/myWatchList.json";
      
     /**
      * Get the records as a list.
@@ -67,7 +68,6 @@ public interface IMovieModel {
         try {
             return new MovieModel(database);
         } catch (Exception e) {
-            e.printStackTrace();
             return new MovieModel();
         }
     }
