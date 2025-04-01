@@ -27,6 +27,7 @@ public class MovieModel implements IMovieModel {
     /**
      * Creates a MovieModel with an empty records list and loads records from
      * the default database.
+     * @see IMovieModel#DATABASE
      */
     public MovieModel() {
         this(DATABASE);
@@ -35,6 +36,7 @@ public class MovieModel implements IMovieModel {
     /**
      * Creates a MovieModel with an empty records list and loads records from
      * the specified database.
+     * @param databasePath the path to the database file
      */
     public MovieModel(String databasePath) {
         this.databasePath = databasePath;
@@ -57,6 +59,7 @@ public class MovieModel implements IMovieModel {
     /**
      * Loads records from the specified database file and adds them to the
      * records list.
+     * @param databasePath the path to the database file
      */
     private void loadFromDatabase(String databasePath) throws IOException {
         File file = new File(databasePath);
@@ -75,6 +78,11 @@ public class MovieModel implements IMovieModel {
         }
     }
 
+    /**
+     * Adds a movie record to the records list if it does not already exist.
+     * @param record
+     * 
+     */
     public void addRecord(MRecord record) {
         if (record != null && records.stream().noneMatch(r -> r.Title().equals(record.Title()))) {
             records.add(record);
@@ -120,6 +128,10 @@ public class MovieModel implements IMovieModel {
         return null;
     }
 
+    /**
+     * Saves all records to the default database file in JSON format.
+     *
+     */
     private void saveToDatabase() throws IOException {
         if (this.databasePath != null) {
             saveToDatabase(this.databasePath);
@@ -130,6 +142,8 @@ public class MovieModel implements IMovieModel {
 
     /**
      * Saves all records to the database file in JSON format
+     * 
+     * @param filePath the path to the database file
      */
     private void saveToDatabase(String filePath) throws IOException {
         File dbFile = new File(filePath);
@@ -147,22 +161,38 @@ public class MovieModel implements IMovieModel {
         }
     }
 
+    /**
+     * Adds a movie record to the watch list if it does not already exist.
+     * @param record the movie record to add
+     */
     public void addToWatchList(MRecord record) {
         if (record != null && watchList.stream().noneMatch(r -> r.Title().equals(record.Title()))) {
             watchList.add(record);
         }
     }
 
+    /**
+     * Removes a movie record from the watch list.
+     * @param record the movie record to remove
+     */
     public void removeFromWatchList(MRecord record) {
         if (record != null) {
             watchList.removeIf(r -> r.Title().equals(record.Title()));
         }
     }
 
+    /**
+     * Removes a movie record from the watch list by title.
+     * @param title the title of the movie to remove
+     */
     public List<MRecord> getWatchList() {
         return this.watchList;
     }
 
+    /**
+     * Adds a movie record to the watch list by title if it does not already
+     * @param title - the title of the movie to add
+     */
     public void addFromRecordsToWatchList(String title) {
         MRecord record = getRecord(title);
         if (record != null && watchList.stream().noneMatch(r -> r.Title().equals(record.Title()))) {
@@ -170,6 +200,10 @@ public class MovieModel implements IMovieModel {
         }
     }
 
+    /**
+     * Saves the watch list to a file in JSON format.
+     * 
+     */
     public void saveWatchListToFile() {
         String filePath = IMovieModel.WATCHLIST_DATABASE;
         if (filePath == null || filePath.isEmpty()) {
@@ -182,6 +216,9 @@ public class MovieModel implements IMovieModel {
         }
     }
 
+    /**
+     * Loads the watch list from a file.
+     */
     public void loadWatchListFromFile() {
         String filePath = IMovieModel.WATCHLIST_DATABASE;
         if (filePath == null || filePath.isEmpty()) {
@@ -195,6 +232,48 @@ public class MovieModel implements IMovieModel {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Sets the rating of a movie in the watch list by title.
+     * @param title the title of the movie
+     * @param rating the new rating to set
+     */
+    public void setMovieRating(String title, String rating) {
+        if (title == null || title.isEmpty() || rating == null || rating.isEmpty()) {
+            throw new IllegalArgumentException("Title and rating cannot be null or empty");
+        }
+        for (MRecord record : watchList) {
+            if (record.Title().equals(title)) {
+                MRecord swapRecord = new MRecord(record.Title(), record.Year(), record.Director(), record.Actors(), record.Plot(), record.Poster(), rating, record.Genre(), record.Runtime(), record.Country(), record.Response());
+                watchList.remove(record);
+                watchList.add(swapRecord);
+                try {
+                    saveToDatabase();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return;
+            }
+        }
+    }
+
+    /**
+     * Retrieves a movie record from the watch list by title.
+     * @param title the title of the movie to retrieve
+     * @return the movie record, or null if not found
+     */
+    public MRecord getRecordFromWatchList(String title) {
+        if (title == null || title.isEmpty()) {
+            throw new IllegalArgumentException("Title cannot be null or empty");
+        }
+        for (MRecord record : watchList) {
+            if (record.Title().equals(title)) {
+                return record;
+            }
+        }
+        System.out.println("Movie not found in watch list.");
+        return null;
     }
 
     /**
