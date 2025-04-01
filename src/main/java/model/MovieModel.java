@@ -170,6 +170,33 @@ public class MovieModel implements IMovieModel {
         }
     }
 
+    public void saveWatchListToFile() {
+        String filePath = IMovieModel.WATCHLIST_DATABASE;
+        if (filePath == null || filePath.isEmpty()) {
+            throw new IllegalArgumentException("Invalid file path for watch list");
+        }
+        try (OutputStream out = new FileOutputStream(filePath)) {
+            IMovieModel.writeRecords(watchList, out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadWatchListFromFile() {
+        String filePath = IMovieModel.WATCHLIST_DATABASE;
+        if (filePath == null || filePath.isEmpty()) {
+            throw new IllegalArgumentException("Invalid file path for watch list");
+        }
+        try (InputStream in = new FileInputStream(filePath)) {
+            JsonMapper mapper = new JsonMapper();
+            List<MRecord> watchListRecords = mapper.readValue(in, 
+                    new TypeReference<List<MRecord>>() {});
+            watchList.addAll(watchListRecords);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Method to filter through the current list of movies based on passed
      * criteria.

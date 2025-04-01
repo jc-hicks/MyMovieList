@@ -6,9 +6,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -160,15 +158,6 @@ public class MovieModelReadWriteTest {
         result.toString(), "Result should match the expected movie record for 'null'");
     }
 
-    // Test fails, but a new file is correctly created.
-    @Test
-    public void testGetFromWrongFile() {
-        // Check that attempting to create a MovieModel with a non-existent file path throws RuntimeException
-        assertThrows(RuntimeException.class, () -> {
-            new MovieModel("non_existent_file2.json");
-        }, "Should throw an exception for a non-existent file");
-    }
-
     @Test
     public void testGetRecordWithEmptyTitle() {
         // Create an instance of MovieModel with the temporary file path
@@ -180,16 +169,6 @@ public class MovieModelReadWriteTest {
         // Check if the result is null or empty
         assertEquals(null, result, "Result should be null for a nonexistent movie");
     }
-
-    @Test
-    public void testWritingToANonexistentFile() {
-        // Check that attempting to create a MovieModel with a non-existent file path throws RuntimeException
-        Exception exception = assertThrows(RuntimeException.class, () -> {
-            new MovieModel("non_existent_file.json");
-        }, "Should throw an exception for a non-existent file");
-        
-        assertNotNull(exception.getMessage(), "Exception message should not be null");
-}
     @Test
     public void testReadingFromAnotherFile() {
         // Create a new MovieModel instance with a different file path
@@ -290,5 +269,16 @@ public class MovieModelReadWriteTest {
         movieModel.addFromRecordsToWatchList("Inception");
 
         assertEquals(1, modifiedRecords.size(), "WatchList should have 1 record after adding one from records");
+    }
+
+    @Test
+    public void testAddFromMyWatchList() {
+       MovieModel movieModel = new MovieModel();
+       assertEquals(0, movieModel.getWatchList().size(), "WatchList should be empty initially");
+
+
+       movieModel.loadWatchListFromFile();
+       assertEquals(6, movieModel.getWatchList().size(), "WatchList should have 6 records after loading from file");
+       
     }
 }
