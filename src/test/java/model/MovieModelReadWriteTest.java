@@ -201,4 +201,94 @@ public class MovieModelReadWriteTest {
         // Check if the number of records is as expected (assuming another_file.json has 0 records)
         assertEquals(6, records.size(), "Number of records should be 6 in another_file.json");
     }
+
+    @Test
+    public void testAddToWatchList() {
+        // Create an instance of MovieModel with the temporary file path
+        MovieModel movieModel = new MovieModel("data/testreadwrite.json");
+  
+        // Read records from the json file
+        List<MRecord> records = movieModel.getRecords();
+  
+        // Check if the number of records is as expected
+        assertEquals(6, records.size(), "Number of records should be 6");
+
+        // Check size of watchList.
+        assertEquals(0, movieModel.getWatchList().size(), "WatchList should be empty initially");
+  
+        // Add a new record to the WatchList
+        MRecord newRecord = new MRecord("New Movie", "2023", "Director", "Actors", "Plot", "Poster", "9.0", "Genre", "120 min", "Country", "True");
+        MRecord newRecord1 = new MRecord("New Movie1", "2023", "Director", "Actors", "Plot", "Poster", "9.0", "Genre", "120 min", "Country", "True");
+        MRecord newRecord2 = new MRecord("New Movie2", "2023", "Director", "Actors", "Plot", "Poster", "9.0", "Genre", "120 min", "Country", "True");
+        MRecord newRecord3 = new MRecord("New Movie3", "2023", "Director", "Actors", "Plot", "Poster", "9.0", "Genre", "120 min", "Country", "True");
+        movieModel.addToWatchList(newRecord);
+        movieModel.addToWatchList(newRecord1);
+        movieModel.addToWatchList(newRecord2);
+        movieModel.addToWatchList(newRecord3);
+  
+        // Read records again after adding a new one
+        List<MRecord> updatedRecords = movieModel.getWatchList();
+  
+        // Check if the number of records is updated correctly
+        assertEquals(4, updatedRecords.size(), "Number of records should be 4 after adding a new one");
+  
+        // Check if the last record's title is as expected
+        assertEquals("New Movie3", updatedRecords.get(3).Title(), "Last record's title should be 'New Movie3'");
+    }
+
+    @Test
+    public void testRemoveFromWatchlist() {
+        // Create an instance of MovieModel with the temporary file path
+        MovieModel movieModel = new MovieModel("data/testreadwrite.json");
+  
+        // Read records from the json file
+        List<MRecord> records = movieModel.getRecords();
+  
+        // Check if the number of records is as expected
+        assertEquals(6, records.size(), "Number of records should be 6");
+
+        // Check size of watchList.
+        assertEquals(0, movieModel.getWatchList().size(), "WatchList should be empty initially");
+  
+        // Add a new record to the WatchList
+        MRecord newRecord = new MRecord("First Movie", "2023", "Director", "Actors", "Plot", "Poster", "9.0", "Genre", "120 min", "Country", "True");
+        MRecord newRecord1 = new MRecord("New Movie1", "2023", "Director", "Actors", "Plot", "Poster", "9.0", "Genre", "120 min", "Country", "True");
+        movieModel.addToWatchList(newRecord);
+        movieModel.addToWatchList(newRecord1);
+  
+        // Read records again after adding a new one
+        List<MRecord> updatedRecords = movieModel.getWatchList();
+  
+        // Check if the number of records is updated correctly
+        assertEquals(2, updatedRecords.size(), "Number of records should be 2 after adding a new one");
+
+        movieModel.removeFromWatchList(newRecord1);
+        // Read records again after removing a record
+        updatedRecords = movieModel.getWatchList();
+        assertEquals(1, movieModel.getWatchList().size(), "WatchList should have 1 record after removing one");
+  
+        // Check if the last record's title is as expected
+        assertEquals("First Movie", updatedRecords.get(0).Title(), "Last record's title should be 'New Movie3'");
+    }
+
+    @Test
+    public void testAddFromRecords() {
+        // Create an instance of MovieModel with the temporary file path
+        MovieModel movieModel = new MovieModel("data/testreadwrite.json");
+  
+        // Read records from the json file
+        List<MRecord> records = movieModel.getRecords();
+  
+        // Check if the number of records is as expected
+        assertEquals(6, records.size(), "Number of records should be 6");
+
+        // Check size of watchList.
+        assertEquals(0, movieModel.getWatchList().size(), "WatchList should be empty initially");
+
+        // Add a new record to the WatchList from the Records
+        List<MRecord> modifiedRecords = movieModel.getWatchList();
+        movieModel.addFromRecordsToWatchList("Inception");
+
+        assertEquals(1, modifiedRecords.size(), "WatchList should have 1 record after adding one from records");
+    }
 }

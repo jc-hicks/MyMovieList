@@ -21,6 +21,7 @@ import net.NetUtils;
 public class MovieModel implements IMovieModel {
 
     private final List<MRecord> records = new ArrayList<>();
+    private final List<MRecord> watchList = new ArrayList<>();
     private String databasePath;
 
     /**
@@ -50,14 +51,6 @@ public class MovieModel implements IMovieModel {
             } catch (IOException e) {
                 throw new RuntimeException("Error loading database: " + e.getMessage(), e);
             }
-        }
-    }
-
-    private void loadFromDatabase() throws IOException {
-        if (this.databasePath != null) {
-            loadFromDatabase(this.databasePath);
-        } else {
-            loadFromDatabase(DATABASE);
         }
     }
 
@@ -151,6 +144,29 @@ public class MovieModel implements IMovieModel {
             IMovieModel.writeRecords(records, out);
         } catch (IOException e) {
             throw new IOException("Error saving records to database: " + e.getMessage(), e);
+        }
+    }
+
+    public void addToWatchList(MRecord record) {
+        if (record != null && watchList.stream().noneMatch(r -> r.Title().equals(record.Title()))) {
+            watchList.add(record);
+        }
+    }
+
+    public void removeFromWatchList(MRecord record) {
+        if (record != null) {
+            watchList.removeIf(r -> r.Title().equals(record.Title()));
+        }
+    }
+
+    public List<MRecord> getWatchList() {
+        return this.watchList;
+    }
+
+    public void addFromRecordsToWatchList(String title) {
+        MRecord record = getRecord(title);
+        if (record != null && watchList.stream().noneMatch(r -> r.Title().equals(record.Title()))) {
+            watchList.add(record);
         }
     }
 
@@ -321,6 +337,13 @@ public class MovieModel implements IMovieModel {
     @Override
     public List<MRecord> getRecords() {
         return records;
+    }
+
+    public static void main(String[] args) {
+        MovieModel movieModel = new MovieModel();
+        for (MRecord movie : movieModel.getRecords()) {
+            System.out.println(movie.Title() + " (" + movie.Year() + ")");
+        }
     }
 }
 
