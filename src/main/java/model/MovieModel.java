@@ -21,7 +21,7 @@ import net.NetUtils;
 public class MovieModel implements IMovieModel {
 
     private final List<MRecord> records = new ArrayList<>();
-    public String databasePath;
+    private String databasePath;
 
     /**
      * Creates a MovieModel with an empty records list and loads records from
@@ -36,14 +36,28 @@ public class MovieModel implements IMovieModel {
      * the specified database.
      */
     public MovieModel(String databasePath) {
+        this.databasePath = databasePath;
         File file = new File(databasePath);
         if (!file.exists()) {
-            throw new RuntimeException("Database file does not exist: " + databasePath);
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException("Error creating database file: " + e.getMessage(), e);
+            }
+        } else { 
+            try {
+                loadFromDatabase(databasePath);
+            } catch (IOException e) {
+                throw new RuntimeException("Error loading database: " + e.getMessage(), e);
+            }
         }
-        try {
-            loadFromDatabase(databasePath);
-        } catch (IOException e) {
-            throw new RuntimeException("Error loading database: " + e.getMessage(), e);
+    }
+
+    private void loadFromDatabase() throws IOException {
+        if (this.databasePath != null) {
+            loadFromDatabase(this.databasePath);
+        } else {
+            loadFromDatabase(DATABASE);
         }
     }
 
@@ -113,11 +127,19 @@ public class MovieModel implements IMovieModel {
         return null;
     }
 
+    private void saveToDatabase() throws IOException {
+        if (this.databasePath != null) {
+            saveToDatabase(this.databasePath);
+        } else {
+            saveToDatabase(DATABASE);
+        }
+    }
+
     /**
      * Saves all records to the database file in JSON format
      */
-    private void saveToDatabase() throws IOException {
-        File dbFile = new File(DATABASE);
+    private void saveToDatabase(String filePath) throws IOException {
+        File dbFile = new File(filePath);
         
         File parentDir = dbFile.getParentFile();
         if (parentDir != null && !parentDir.exists()) {
@@ -150,7 +172,7 @@ public class MovieModel implements IMovieModel {
             case "title":
                 return records.stream().filter(m -> m.Title().equalsIgnoreCase(filterValue));
             case "year":
-                List<String> yearCommands = Arrays.asList(filterValue.split(" "));
+                List<String> yearCommands = Arrays.asList(filterValue.split(""));
                 if (yearCommands.size() > 1) {
                     String filterOperation = yearCommands.get(0);
                     return switch (filterOperation) {

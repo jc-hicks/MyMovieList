@@ -190,4 +190,15 @@ public class MovieModelReadWriteTest {
         
         assertNotNull(exception.getMessage(), "Exception message should not be null");
 }
+    @Test
+    public void testReadingFromAnotherFile() {
+        // Create a new MovieModel instance with a different file path
+        MovieModel movieModel = new MovieModel("data/testreadwrite.json");
+  
+        // Read records from the new file
+        List<MRecord> records = movieModel.getRecords();
+  
+        // Check if the number of records is as expected (assuming another_file.json has 0 records)
+        assertEquals(6, records.size(), "Number of records should be 6 in another_file.json");
+    }
 }
