@@ -27,7 +27,7 @@ public class MovieModelReadWriteTest {
       //resolves string into a path directory within tempDir
       tempFilePath = tempDir.resolve("test.json");
   
-      //Dummy data because empty file caused issues with creation of DNModel
+      //Dummy data because empty file caused issues with creation of MRecord objects
       String dummyData = """
             [ {
                 "Title" : "Stranger Things",
