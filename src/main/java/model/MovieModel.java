@@ -226,13 +226,13 @@ public class MovieModel implements IMovieModel {
                         case "=" ->
                             records.stream().filter(m -> multiYearParse(m.Year()).equals(yearCommands.get(1)));
                         case ">" ->
-                            records.stream().filter(m -> parseInt(m.Year()) > parseInt(yearCommands.get(1)));
+                            records.stream().filter(m -> parseInt(multiYearParse(m.Year())) > parseInt(yearCommands.get(1)));
                         case "<" ->
-                            records.stream().filter(m -> parseInt(m.Year()) < parseInt(yearCommands.get(1)));
+                            records.stream().filter(m -> parseInt(multiYearParse(m.Year())) < parseInt(yearCommands.get(1)));
                         case ">=" ->
-                            records.stream().filter(m -> parseInt(m.Year()) >= parseInt(yearCommands.get(1)));
+                            records.stream().filter(m -> parseInt(multiYearParse(m.Year())) >= parseInt(yearCommands.get(1)));
                         case "<=" ->
-                            records.stream().filter(m -> parseInt(m.Year()) <= parseInt(yearCommands.get(1)));
+                            records.stream().filter(m -> parseInt(multiYearParse(m.Year())) <= parseInt(yearCommands.get(1)));
                         default ->
                             throw new IllegalStateException("Unexpected year filter value: " + yearCommands.get(1));
                     };
@@ -371,14 +371,9 @@ public class MovieModel implements IMovieModel {
      * @return pilot year in string form.
      */
     private static String multiYearParse(String inputYear){
-        if (inputYear.contains("-")) {
-            //DEBUG DELETE ME
-            System.out.println("Input year contains '-'");
 
-            List<String> years = Arrays.asList(inputYear.split("-"));
-            //DEBUG DELETE ME
-            System.out.println(years);
-
+        if (inputYear.contains("–")) {
+            List<String> years = Arrays.asList(inputYear.split("–"));
             return years.get(0);
         }
         else{
@@ -392,11 +387,5 @@ public class MovieModel implements IMovieModel {
         return records;
     }
 
-    public static void main(String[] args) {
-        MovieModel movieModel = new MovieModel("data/testmovies.json");
-        String years = multiYearParse("2016-2026");
-        System.out.println();
-
-    }
 }
 

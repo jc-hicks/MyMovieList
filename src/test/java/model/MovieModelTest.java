@@ -86,7 +86,7 @@ public class MovieModelTest {
   public void testFilterWatchListYearGreater() {
     Stream<MRecord> recordStream = movieModel.filterWatchList("year", "> 2000");
     List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
-    List<String> expected = List.of("Inception", "City of God", "Rango");
+    List<String> expected = List.of("Inception", "City of God", "Rango", "Stranger Things");
     assertEquals(expected, actual);
   }
 
@@ -102,7 +102,7 @@ public class MovieModelTest {
   public void testFilterWatchListYearGreaterOrEqual() {
     Stream<MRecord> recordStream = movieModel.filterWatchList("year", ">= 2002");
     List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
-    List<String> expected = List.of("Inception", "City of God", "Rango");
+    List<String> expected = List.of("Inception", "City of God", "Rango", "Stranger Things");
     assertEquals(expected, actual);
   }
 
