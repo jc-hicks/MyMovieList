@@ -335,10 +335,10 @@ public class MovieModel implements IMovieModel {
                 }
             case "year":
                 if (ascOrDesc.equals("desc")) {
-                    comparator = Comparator.comparing(MRecord::Year).reversed();
+                    comparator = Comparator.comparing((MRecord m)-> parseInt(multiYearParse(m.Year()))).reversed();
                     break;
                 } else if (ascOrDesc.equals("asc")) {
-                    comparator = Comparator.comparing(MRecord::Year);
+                    comparator = Comparator.comparing((MRecord m)-> parseInt(multiYearParse(m.Year())));
                     break;
                 }
             case "rating":
