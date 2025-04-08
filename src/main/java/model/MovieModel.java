@@ -7,10 +7,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import static java.lang.Integer.parseInt;
+
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -294,20 +297,21 @@ public class MovieModel implements IMovieModel {
             case "title":
                 return records.stream().filter(m -> m.Title().equalsIgnoreCase(filterValue));
             case "year":
-                List<String> yearCommands = Arrays.asList(filterValue.split(""));
+                List<String> yearCommands = Arrays.asList(filterValue.split(" "));
+                System.out.println("Year Commands: " + yearCommands);
                 if (yearCommands.size() > 1) {
                     String filterOperation = yearCommands.get(0);
                     return switch (filterOperation) {
                         case "=" ->
-                            records.stream().filter(m -> m.Year().equals(yearCommands.get(1)));
+                            records.stream().filter(m -> multiYearParse(m.Year()).equals(yearCommands.get(1)));
                         case ">" ->
-                            records.stream().filter(m -> parseInt(m.Year()) > parseInt(yearCommands.get(1)));
+                            records.stream().filter(m -> parseInt(multiYearParse(m.Year())) > parseInt(yearCommands.get(1)));
                         case "<" ->
-                            records.stream().filter(m -> parseInt(m.Year()) < parseInt(yearCommands.get(1)));
+                            records.stream().filter(m -> parseInt(multiYearParse(m.Year())) < parseInt(yearCommands.get(1)));
                         case ">=" ->
-                            records.stream().filter(m -> parseInt(m.Year()) >= parseInt(yearCommands.get(1)));
+                            records.stream().filter(m -> parseInt(multiYearParse(m.Year())) >= parseInt(yearCommands.get(1)));
                         case "<=" ->
-                            records.stream().filter(m -> parseInt(m.Year()) <= parseInt(yearCommands.get(1)));
+                            records.stream().filter(m -> parseInt(multiYearParse(m.Year())) <= parseInt(yearCommands.get(1)));
                         default ->
                             throw new IllegalStateException("Unexpected year filter value: " + yearCommands.get(1));
                     };
@@ -410,10 +414,10 @@ public class MovieModel implements IMovieModel {
                 }
             case "year":
                 if (ascOrDesc.equals("desc")) {
-                    comparator = Comparator.comparing(MRecord::Year).reversed();
+                    comparator = Comparator.comparing((MRecord m)-> parseInt(multiYearParse(m.Year()))).reversed();
                     break;
                 } else if (ascOrDesc.equals("asc")) {
-                    comparator = Comparator.comparing(MRecord::Year);
+                    comparator = Comparator.comparing((MRecord m)-> parseInt(multiYearParse(m.Year())));
                     break;
                 }
             case "rating":
@@ -440,16 +444,27 @@ public class MovieModel implements IMovieModel {
         return movieStream.sorted(comparator).toList();
     }
 
+    /**
+     * A private method utilized to simplify tv show year ranges to default to pilot year.
+     * @param inputYear
+     * @return pilot year in string form.
+     */
+    private static String multiYearParse(String inputYear){
+
+        if (inputYear.contains("–")) {
+            List<String> years = Arrays.asList(inputYear.split("–"));
+            return years.get(0);
+        }
+        else{
+            return inputYear;
+        }
+    }
+
+
     @Override
     public List<MRecord> getRecords() {
         return records;
     }
 
-    public static void main(String[] args) {
-        MovieModel movieModel = new MovieModel();
-        for (MRecord movie : movieModel.getRecords()) {
-            System.out.println(movie.Title() + " (" + movie.Year() + ")");
-        }
-    }
 }
 
