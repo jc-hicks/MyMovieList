@@ -1,17 +1,13 @@
 package view;
 
-import javax.swing.*;
-
 public class MyMovieListLauncher {
 
     /**
-     * Main launcher for
-     * @param args
+     * Main launcher for program
      */
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            MyMovieList view = new MyMovieList();
-            view.setVisible(true);
-        });
+        MyMovieList view = new MyMovieList();
+        view.setFeatures(new MockMovieFeatures());
+        view.setVisible(true);
     }
 }

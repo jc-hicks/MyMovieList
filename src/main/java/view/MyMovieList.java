@@ -18,4 +18,9 @@ public class MyMovieList extends JFrame {
         this.add(panel);
     }
 
+    private IMovieFeatures features;
+    public void setFeatures(IMovieFeatures features) {
+        this.features = features;
+    }
+
 }
