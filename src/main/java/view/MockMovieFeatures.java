@@ -53,4 +53,11 @@ public class MockMovieFeatures implements IMovieFeatures{
         System.out.println("Pretending to remove from watchlist: " + title);
     }
 
+
+    @Override
+    public List<IMovieModel.MRecord> sortMovieList(String column, String ascOrDesc) {
+        System.out.println("Pretending to sort by " + column + " in " + ascOrDesc + " order.");
+        return getAllMovies();
+    }
+
 }

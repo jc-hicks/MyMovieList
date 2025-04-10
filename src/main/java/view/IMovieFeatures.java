@@ -12,5 +12,6 @@ public interface IMovieFeatures {
     void removeFromWatchList(String title);
     List<IMovieModel.MRecord> getWatchList();
     List<IMovieModel.MRecord> getAllMovies();
+    List<IMovieModel.MRecord> sortMovieList(String column, String ascOrDesc);
 }
 
