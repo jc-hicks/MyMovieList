@@ -13,19 +13,34 @@ public class IController {
         // start the args controller here
     }
 
-    private void printMovies() {
+    public void printMovies() {
+        // should this be shareMovieList??
     }
 
-    private void lookupMovie() {
+    public void lookupMovie() {
+        // return a list of movie records
     }
 
-    private void lookupWatchlist() {
+    public void lookupWatchlist() {
+        // return a list of movie records
     }
 
-    private void sortMovieList() {
+    public void sortMovieList() {
+        // return sorted movie list
     }
 
-    private void filterMovieList() {
+    public void filterMovieList() {
+        // return filtered movie list
+    }
+
+    public void addMovieToMovieList() {
+        // receive a movie record from the view, and the controller
+        // tells the model to add it to the watchlist
+    }
+
+    public void removeMovieFromMovieList() {
+        // removes a movie record from the view, and the controller
+        // tells the model to remove it from the watchlist
     }
 
 }
