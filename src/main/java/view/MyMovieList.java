@@ -14,6 +14,7 @@ public class MyMovieList extends JFrame {
     private DefaultTableModel tableModel;
     private JButton loadButton;
     private JButton addToWatchListButton;
+    private JButton removeFromWatchListButton;
     /**
      * Main GUI panel.
      */
@@ -42,15 +43,18 @@ public class MyMovieList extends JFrame {
         // Button panel
         JPanel buttonPanel = new JPanel();
         loadButton = new JButton("Load Movies");
-        addToWatchListButton = new JButton("Add to my Watchlist");
+        addToWatchListButton = new JButton("Add to My Watchlist");
+        removeFromWatchListButton = new JButton("Remove from My Watchlist");
 
         buttonPanel.add(loadButton);
         buttonPanel.add(addToWatchListButton);
         panel.add(buttonPanel, BorderLayout.SOUTH);
+        buttonPanel.add(removeFromWatchListButton);
 
         // Button functionality
         loadButton.addActionListener(e -> loadMovies());
         addToWatchListButton.addActionListener(e -> addSelectedMovieToWatchlist());
+        removeFromWatchListButton.addActionListener(e -> removeSelectedMovieFromWatchlist());
 
         this.add(panel);
     }
@@ -77,6 +81,17 @@ public class MyMovieList extends JFrame {
             JOptionPane.showMessageDialog(this, title + " added to your watchlist!");
         } else {
             JOptionPane.showMessageDialog(this, "Please select a movie to add first.");
+        }
+    }
+
+    private void removeSelectedMovieFromWatchlist() {
+        int selectedRow = movieTable.getSelectedRow();
+        if (selectedRow >= 0) {
+            String title = (String) tableModel.getValueAt(selectedRow, 0);
+            features.removeFromWatchList(title);
+            JOptionPane.showMessageDialog(this, title + " removed from your watchlist!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Please select a movie to remove first.");
         }
     }
 }

@@ -43,4 +43,14 @@ public class MockMovieFeatures implements IMovieFeatures{
         System.out.println("Returning fake list of movies");
         return new ArrayList<>();
     }
+
+    /**
+     * Method for GUI functionality in removing a movie from the user's watchlist
+     * @param title
+     */
+    @Override
+    public void removeFromWatchList(String title) {
+        System.out.println("Pretending to remove from watchlist: " + title);
+    }
+
 }
