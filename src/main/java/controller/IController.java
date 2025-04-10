@@ -13,9 +13,11 @@ public class IController {
         // start the args controller here
     }
 
+    // be able to print both the movie list and the watchlist
     private void printMovies() {
     }
 
+    // look up movie by title, add it if it does not exist
     private void lookupMovie() {
     }
 
@@ -26,6 +28,27 @@ public class IController {
     }
 
     private void filterMovieList() {
+    }
+
+    private void filterWatchlist() {
+    }
+
+    private void sortWatchlist() {
+    }
+
+    private void addMovieToWatchlist() {
+    }
+
+    private void removeMovieFromWatchlist() {
+    }
+
+    private void saveWatchlist() {
+    }
+
+    private void loadWatchlist() {
+    }
+
+    private void rateMovie() {
     }
 
 }
