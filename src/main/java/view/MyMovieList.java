@@ -19,6 +19,8 @@ public class MyMovieList extends JFrame {
     private JComboBox<String> sortOrderCombo;
     private JButton sortButton;
     private JButton clearButton;
+    private JList<String> watchListDisplay;
+    private DefaultListModel<String> watchlistModel;
 
 
 
@@ -54,6 +56,12 @@ public class MyMovieList extends JFrame {
         movieTable = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(movieTable);
         panel.add(scrollPane, BorderLayout.CENTER);
+        watchlistModel = new DefaultListModel<>();
+        watchListDisplay = new JList<>(watchlistModel);
+        JScrollPane watchlistScrollPane = new JScrollPane(watchListDisplay);
+        watchlistScrollPane.setBorder(BorderFactory.createTitledBorder("My Movie List"));
+        watchlistScrollPane.setPreferredSize(new Dimension(200, 0));
+        panel.add(watchlistScrollPane, BorderLayout.EAST);
 
         // Sort panel layout
         sortColumnCombo = new JComboBox<>(new String[]{"Year", "Director", "Movie", "IMDBRating"});
@@ -89,6 +97,7 @@ public class MyMovieList extends JFrame {
         clearButton.addActionListener(e -> clearTable());
 
         this.add(panel);
+        updateWatchlistPanel();
     }
 
     /**
@@ -122,6 +131,7 @@ public class MyMovieList extends JFrame {
             String title = (String) tableModel.getValueAt(selectedRow, 0);
             features.addToWatchList(title);
             JOptionPane.showMessageDialog(this, title + " added to your watchlist!");
+            updateWatchlistPanel();
         } else {
             JOptionPane.showMessageDialog(this, "Please select a movie to add first.");
         }
@@ -166,5 +176,17 @@ public class MyMovieList extends JFrame {
 
     private void clearTable() {
         tableModel.setRowCount(0);  // Clears all table rows
+    }
+
+
+    private void updateWatchlistPanel() {
+        if (features == null) return;
+
+        List<IMovieModel.MRecord> watchlist = features.getWatchList();
+        watchlistModel.clear();
+
+        for (IMovieModel.MRecord record : watchlist) {
+            watchlistModel.addElement(record.Title());
+        }
     }
 }
