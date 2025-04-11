@@ -18,6 +18,8 @@ public class MyMovieList extends JFrame {
     private JComboBox<String> sortColumnCombo;
     private JComboBox<String> sortOrderCombo;
     private JButton sortButton;
+    private JButton clearButton;
+
 
 
     /**
@@ -48,13 +50,13 @@ public class MyMovieList extends JFrame {
         JPanel sortPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
         // Table layout
-        tableModel = new DefaultTableModel(new String[]{"Title", "Year", "Director", "Genre", "imdbRating"}, 0);
+        tableModel = new DefaultTableModel(new String[]{"Year", "Director", "Movie", "IMDBRating"}, 0);
         movieTable = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(movieTable);
         panel.add(scrollPane, BorderLayout.CENTER);
 
         // Sort panel layout
-        sortColumnCombo = new JComboBox<>(new String[]{"Title", "Year", "ImdbRating"});
+        sortColumnCombo = new JComboBox<>(new String[]{"Year", "Director", "Movie", "IMDBRating"});
         sortOrderCombo = new JComboBox<>(new String[]{"Ascending", "Descending"});
         sortButton = new JButton("Sort");
 
@@ -63,11 +65,13 @@ public class MyMovieList extends JFrame {
         loadButton = new JButton("Load Movies");
         addToWatchListButton = new JButton("Add to My Watchlist");
         removeFromWatchListButton = new JButton("Remove from My Watchlist");
+        clearButton = new JButton("Clear Table");
 
         buttonPanel.add(loadButton);
         buttonPanel.add(addToWatchListButton);
         panel.add(buttonPanel, BorderLayout.SOUTH);
         buttonPanel.add(removeFromWatchListButton);
+        buttonPanel.add(clearButton);
 
         sortPanel.add(new JLabel("Sort by: "));
         sortPanel.add(sortColumnCombo);
@@ -81,6 +85,8 @@ public class MyMovieList extends JFrame {
         addToWatchListButton.addActionListener(e -> addSelectedMovieToWatchlist());
         removeFromWatchListButton.addActionListener(e -> removeSelectedMovieFromWatchlist());
         sortButton.addActionListener(e -> sortMovieList());
+        clearButton.addActionListener(e -> tableModel.setRowCount(0));
+        clearButton.addActionListener(e -> clearTable());
 
         this.add(panel);
     }
@@ -156,5 +162,9 @@ public class MyMovieList extends JFrame {
                     movie.imdbRating()
             });
         }
+    }
+
+    private void clearTable() {
+        tableModel.setRowCount(0);  // Clears all table rows
     }
 }
