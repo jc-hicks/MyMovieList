@@ -52,7 +52,7 @@ public class MyMovieList extends JFrame {
         JPanel sortPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
         // Table layout
-        tableModel = new DefaultTableModel(new String[]{"Year", "Director", "Movie", "IMDBRating"}, 0);
+        tableModel = new DefaultTableModel(new String[]{"Year", "Movie", "Director","IMDBRating"}, 0);
         movieTable = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(movieTable);
         panel.add(scrollPane, BorderLayout.CENTER);
@@ -64,7 +64,7 @@ public class MyMovieList extends JFrame {
         panel.add(watchlistScrollPane, BorderLayout.EAST);
 
         // Sort panel layout
-        sortColumnCombo = new JComboBox<>(new String[]{"Year", "Director", "Movie", "IMDBRating"});
+        sortColumnCombo = new JComboBox<>(new String[]{"Year", "Title", "Director","IMDBRating"});
         sortOrderCombo = new JComboBox<>(new String[]{"Ascending", "Descending"});
         sortButton = new JButton("Sort");
 
@@ -115,8 +115,8 @@ public class MyMovieList extends JFrame {
         for (IMovieModel.MRecord movie : movies) {
             tableModel.addRow(new Object[]{
                     movie.Year(),
+                    movie.Title(),
                     movie.Director(),
-                    movie.Genre(),
                     movie.imdbRating()
             });
         }
@@ -165,10 +165,9 @@ public class MyMovieList extends JFrame {
 
         for (IMovieModel.MRecord movie : sorted) {
             tableModel.addRow(new Object[]{
-                    movie.Title(),
                     movie.Year(),
+                    movie.Title(),
                     movie.Director(),
-                    movie.Genre(),
                     movie.imdbRating()
             });
         }
