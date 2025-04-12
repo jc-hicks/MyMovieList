@@ -130,7 +130,10 @@ public class MyMovieList extends JFrame {
         if (selectedRow >= 0) {
             String title = (String) tableModel.getValueAt(selectedRow, 1);
             String imdbRating = (String) tableModel.getValueAt(selectedRow, 3);
-            String display = title + " (" + imdbRating + ")";
+            String year = (String) tableModel.getValueAt(selectedRow, 0);
+            String display = title + " (" + year + ", * " + imdbRating + ")";
+            System.out.println("Adding to watchlist: " + display);
+
             features.addToWatchList(title);
             JOptionPane.showMessageDialog(this, title + " added to your watchlist!");
             updateWatchlistPanel();
