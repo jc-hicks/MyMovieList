@@ -52,7 +52,7 @@ public class MyMovieList extends JFrame {
         JPanel sortPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
         // Table layout
-        tableModel = new DefaultTableModel(new String[]{"Year", "Movie", "Director","IMDBRating"}, 0);
+        tableModel = new DefaultTableModel(new String[]{"Year", "Title", "Director","IMDBRating"}, 0);
         movieTable = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(movieTable);
         panel.add(scrollPane, BorderLayout.CENTER);
