@@ -30,7 +30,7 @@ public class MyMovieList extends JFrame {
     public MyMovieList() {
         super("My Movie List");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(800, 600);
+        this.setSize(900, 700);
         this.setLocationRelativeTo(null);
 
         initUI();
@@ -128,7 +128,9 @@ public class MyMovieList extends JFrame {
     private void addSelectedMovieToWatchlist() {
         int selectedRow = movieTable.getSelectedRow();
         if (selectedRow >= 0) {
-            String title = (String) tableModel.getValueAt(selectedRow, 0);
+            String title = (String) tableModel.getValueAt(selectedRow, 1);
+            String imdbRating = (String) tableModel.getValueAt(selectedRow, 3);
+            String display = title + " (" + imdbRating + ")";
             features.addToWatchList(title);
             JOptionPane.showMessageDialog(this, title + " added to your watchlist!");
             updateWatchlistPanel();
@@ -143,9 +145,12 @@ public class MyMovieList extends JFrame {
     private void removeSelectedMovieFromWatchlist() {
         int selectedRow = movieTable.getSelectedRow();
         if (selectedRow >= 0) {
-            String title = (String) tableModel.getValueAt(selectedRow, 0);
+            String title = (String) tableModel.getValueAt(selectedRow, 1);
+            String imdbRating = (String) tableModel.getValueAt(selectedRow, 3);
+            String display = title + " (" + imdbRating + ")";
             features.removeFromWatchList(title);
             JOptionPane.showMessageDialog(this, title + " removed from your watchlist!");
+            updateWatchlistPanel();
         } else {
             JOptionPane.showMessageDialog(this, "Please select a movie to remove first.");
         }
@@ -185,7 +190,8 @@ public class MyMovieList extends JFrame {
         watchlistModel.clear();
 
         for (IMovieModel.MRecord record : watchlist) {
-            watchlistModel.addElement(record.Title());
+            String display = record.Title() + " (" + record.Year() + ")";
+            watchlistModel.addElement(display);
         }
     }
 }
