@@ -460,6 +460,21 @@ public class MovieModel implements IMovieModel {
         }
     }
 
+    /**
+     * Utilized to get listing of all ratings of current movies in watchlist.
+     * @return List of movie ratings
+     */
+    public List<Double> getMovieDistributions(){
+
+        List<Double> ratings = new ArrayList<>();
+
+        for (MRecord record : records) {
+            ratings.add(Double.parseDouble(record.imdbRating()));
+        }
+
+        return ratings.stream().sorted().collect(Collectors.toList());
+    }
+
 
     @Override
     public List<MRecord> getRecords() {

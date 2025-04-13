@@ -368,4 +368,11 @@ public class MovieModelTest {
     assertEquals(expected, actual);
   }
 
+  @Test
+  public void testGetMovieDistributions(){
+    List<Double> actual = movieModel.getMovieDistributions();
+    List<Double> expected = List.of(7.3, 7.9, 8.6, 8.7, 8.7, 8.8);
+    assertEquals(expected, actual);
+  }
+
 }
