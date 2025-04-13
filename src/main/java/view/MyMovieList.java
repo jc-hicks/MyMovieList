@@ -52,8 +52,8 @@ public class MyMovieList extends JFrame {
         JPanel sortPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JTextField searchField = new JTextField(20);
         JButton searchButton = new JButton("Search");
+        JButton searchButtonOne = new JButton(" \uD83D\uDD0D Search");
         JPanel topPanel = new JPanel();
-        JButton searchButtonOne = new JButton("Search");
 
         // Table layout
         tableModel = new DefaultTableModel(new String[]{"Year", "Title", "Director","IMDBRating"}, 0);
