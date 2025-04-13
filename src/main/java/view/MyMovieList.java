@@ -21,6 +21,7 @@ public class MyMovieList extends JFrame {
     private JButton clearButton;
     private JList<String> watchListDisplay;
     private DefaultListModel<String> watchlistModel;
+    private JTextField searchField;
 
 
 
@@ -42,6 +43,7 @@ public class MyMovieList extends JFrame {
      */
     public void setFeatures(IMovieFeatures features) {
         this.features = features;
+        ((RealMovieFeatures) features).loadWatchlistOnStartup();
     }
 
     /**
@@ -50,7 +52,6 @@ public class MyMovieList extends JFrame {
     private void initUI() {
         JPanel panel = new JPanel(new BorderLayout());
         JPanel sortPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JTextField searchField = new JTextField(20);
         JButton searchButton = new JButton("Search");
         JButton searchButtonOne = new JButton(" \uD83D\uDD0D Search");
         JPanel topPanel = new JPanel();
@@ -68,6 +69,7 @@ public class MyMovieList extends JFrame {
         watchlistScrollPane.setBorder(BorderFactory.createTitledBorder("My Movie List"));
         watchlistScrollPane.setPreferredSize(new Dimension(400, 0));
         panel.add(watchlistScrollPane, BorderLayout.EAST);
+        searchField = new JTextField(20);
 
         // top panel
         topPanel.add(new JLabel("Search"));
@@ -117,6 +119,8 @@ public class MyMovieList extends JFrame {
                 refreshMovieTable();            // show new results
             }
         });
+        searchButton.addActionListener(e -> searchMoviesFromInput());
+        searchField.addActionListener(e -> searchMoviesFromInput());
 
         this.add(panel);
         updateWatchlistPanel();
@@ -266,6 +270,28 @@ public class MyMovieList extends JFrame {
                 JOptionPane.showMessageDialog(this, "Please select a movie first.");
                 // The controller needs to have this: void setMyRating(String title, String rating);
             }
+        }
+    }
+
+    private void searchMoviesFromInput() {
+        String query = searchField.getText().trim();
+        if (!query.isEmpty()) {
+            features.searchMovie(query);
+            refreshMovieTable();
+        }
+    }
+
+    private void refreshMovieTable() {
+        tableModel.setRowCount(0);
+        List<IMovieModel.MRecord> updateMovies = features.getAllMovies();
+
+        for (IMovieModel.MRecord mRecord : updateMovies) {
+            tableModel.addRow(new Object[]{
+                    mRecord.Year(),
+                    mRecord.Title(),
+                    mRecord.Director(),
+                    mRecord.imdbRating()
+            });
         }
     }
 }

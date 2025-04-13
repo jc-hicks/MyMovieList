@@ -17,6 +17,10 @@ public class RealMovieFeatures implements IMovieFeatures {
         this.model = IMovieModel.getInstance();  // Loads from movie.json
     }
 
+    public void loadWatchlistOnStartup() {
+        ((MovieModel) model).loadWatchListFromFile();
+    }
+
     @Override
     public void searchMovie(String title) {
         model.getRecord(title);   // Get and add to record list
@@ -55,18 +59,23 @@ public class RealMovieFeatures implements IMovieFeatures {
 
     @Override
     public void saveWatchList() {
-        System.out.println("Pretending to save watchlist.");
+        ((MovieModel) model).saveWatchListToFile();
     }
 
     @Override
     public void setMyRating(String title, String rating) {
-        System.out.println("Feature not implemented: setMyRating(" + title + ", " + rating + ")");
+        ((MovieModel) model).setMovieRating(title, rating);
     }
 
     @Override
     public String getMyRating(String title) {
-        return "N/A";
+        IMovieModel.MRecord record = ((MovieModel) model).getRecordFromWatchList(title);
+        return (record != null) ? record.imdbRating() : "N/A";
     }
 
+    @Override
+    public List<IMovieModel.MRecord> filterMovieList(String field, String criteria) {
+        return ((MovieModel) model).filterWatchList(field, criteria).toList();
+    }
 
 }

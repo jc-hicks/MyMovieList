@@ -16,5 +16,6 @@ public interface IMovieFeatures {
     List<IMovieModel.MRecord> sortMovieList(String column, String ascOrDesc);
     void setMyRating(String title, String rating);
     String getMyRating(String title);
+    List<IMovieModel.MRecord> filterMovieList(String field, String criteria);
 }
 
