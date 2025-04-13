@@ -62,4 +62,11 @@ public class RealMovieFeatures implements IMovieFeatures {
     public void setMyRating(String title, String rating) {
         System.out.println("Feature not implemented: setMyRating(" + title + ", " + rating + ")");
     }
+
+    @Override
+    public String getMyRating(String title) {
+        return "N/A";
+    }
+
+
 }

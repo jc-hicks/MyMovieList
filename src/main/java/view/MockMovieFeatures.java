@@ -69,4 +69,9 @@ public class MockMovieFeatures implements IMovieFeatures{
     public void setMyRating(String title, String rating) {
         System.out.println("Pretending to rate movie: " + title + " as " + rating);
     }
+
+    @Override
+    public String getMyRating(String title) {
+        return null;
+    }
 }

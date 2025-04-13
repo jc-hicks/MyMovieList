@@ -50,6 +50,10 @@ public class MyMovieList extends JFrame {
     private void initUI() {
         JPanel panel = new JPanel(new BorderLayout());
         JPanel sortPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JTextField searchField = new JTextField(20);
+        JButton searchButton = new JButton("Search");
+        JPanel topPanel = new JPanel();
+        JButton searchButtonOne = new JButton("Search");
 
         // Table layout
         tableModel = new DefaultTableModel(new String[]{"Year", "Title", "Director","IMDBRating"}, 0);
@@ -64,6 +68,12 @@ public class MyMovieList extends JFrame {
         watchlistScrollPane.setBorder(BorderFactory.createTitledBorder("My Movie List"));
         watchlistScrollPane.setPreferredSize(new Dimension(400, 0));
         panel.add(watchlistScrollPane, BorderLayout.EAST);
+
+        // top panel
+        topPanel.add(new JLabel("Search"));
+        topPanel.add(searchField);
+        topPanel.add(searchButton);
+        panel.add(topPanel, BorderLayout.NORTH);
 
         // Sort panel layout
         sortColumnCombo = new JComboBox<>(new String[]{"Year", "Title", "Director","IMDBRating"});
@@ -100,9 +110,31 @@ public class MyMovieList extends JFrame {
         rateItem.addActionListener(e -> rateSelectedMovie());
         popupMenu.add(rateItem);
         movieTable.setComponentPopupMenu(popupMenu);
+        searchButton.addActionListener(e -> {
+            String query = searchField.getText().trim();
+            if (!query.isEmpty()) {
+                features.searchMovie(query);    // calls API or model
+                refreshMovieTable();            // show new results
+            }
+        });
 
         this.add(panel);
         updateWatchlistPanel();
+    }
+
+    private void refreshMovieTable() {
+        tableModel.setRowCount(0);
+
+        List <IMovieModel.MRecord> updateMovies = features.getAllMovies();
+
+        for (IMovieModel.MRecord mRecord : updateMovies) {
+            tableModel.addRow(new Object[]{
+                    mRecord.Year(),
+                    mRecord.Title(),
+                    mRecord.Director(),
+                    mRecord.imdbRating()
+            });
+        }
     }
 
     /**
@@ -200,7 +232,16 @@ public class MyMovieList extends JFrame {
         watchlistModel.clear();
 
         for (IMovieModel.MRecord record : watchlist) {
-            String display = "MOVIE: " + record.Title() + ", YEAR: " + record.Year() + ", IMDB Rating: " + record.imdbRating();
+            String rating = features.getMyRating(record.Title());
+            String imdb = record.imdbRating();
+            String display;
+            if (rating != null && !rating.isEmpty()) {
+                display = String.format("%s (%s, IMDB: %s, My Rating: ⭐ %s)",
+                        record.Title(), record.Year(), imdb, rating);
+            } else {
+                display = String.format("%x (%s, IMDB: %s)",
+                        record.Title(), record.Year(), imdb);
+            }
             watchlistModel.addElement(display);
         }
     }
