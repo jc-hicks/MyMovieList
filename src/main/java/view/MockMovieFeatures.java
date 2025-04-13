@@ -60,4 +60,13 @@ public class MockMovieFeatures implements IMovieFeatures{
         return getAllMovies();
     }
 
+    @Override
+    public void saveWatchList() {
+        System.out.println("Pretending to save watchlist.");
+    }
+
+    @Override
+    public void setMyRating(String title, String rating) {
+        System.out.println("Pretending to rate movie: " + title + " as " + rating);
+    }
 }

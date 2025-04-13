@@ -52,4 +52,14 @@ public class RealMovieFeatures implements IMovieFeatures {
                 column.toLowerCase()
         );
     }
+
+    @Override
+    public void saveWatchList() {
+        System.out.println("Pretending to save watchlist.");
+    }
+
+    @Override
+    public void setMyRating(String title, String rating) {
+        System.out.println("Feature not implemented: setMyRating(" + title + ", " + rating + ")");
+    }
 }

@@ -54,13 +54,15 @@ public class MyMovieList extends JFrame {
         // Table layout
         tableModel = new DefaultTableModel(new String[]{"Year", "Title", "Director","IMDBRating"}, 0);
         movieTable = new JTable(tableModel);
+        JPopupMenu popupMenu = new JPopupMenu();
+        JMenuItem rateItem = new JMenuItem("Rate this movie");
         JScrollPane scrollPane = new JScrollPane(movieTable);
         panel.add(scrollPane, BorderLayout.CENTER);
         watchlistModel = new DefaultListModel<>();
         watchListDisplay = new JList<>(watchlistModel);
         JScrollPane watchlistScrollPane = new JScrollPane(watchListDisplay);
         watchlistScrollPane.setBorder(BorderFactory.createTitledBorder("My Movie List"));
-        watchlistScrollPane.setPreferredSize(new Dimension(200, 0));
+        watchlistScrollPane.setPreferredSize(new Dimension(400, 0));
         panel.add(watchlistScrollPane, BorderLayout.EAST);
 
         // Sort panel layout
@@ -95,6 +97,9 @@ public class MyMovieList extends JFrame {
         sortButton.addActionListener(e -> sortMovieList());
         clearButton.addActionListener(e -> tableModel.setRowCount(0));
         clearButton.addActionListener(e -> clearTable());
+        rateItem.addActionListener(e -> rateSelectedMovie());
+        popupMenu.add(rateItem);
+        movieTable.setComponentPopupMenu(popupMenu);
 
         this.add(panel);
         updateWatchlistPanel();
@@ -135,6 +140,7 @@ public class MyMovieList extends JFrame {
             System.out.println("Adding to watchlist: " + display);
 
             features.addToWatchList(title);
+            features.saveWatchList();
             JOptionPane.showMessageDialog(this, title + " added to your watchlist!");
             updateWatchlistPanel();
         } else {
@@ -152,6 +158,7 @@ public class MyMovieList extends JFrame {
             String imdbRating = (String) tableModel.getValueAt(selectedRow, 3);
             String display = title + " (" + imdbRating + ")";
             features.removeFromWatchList(title);
+            features.saveWatchList();
             JOptionPane.showMessageDialog(this, title + " removed from your watchlist!");
             updateWatchlistPanel();
         } else {
@@ -193,8 +200,31 @@ public class MyMovieList extends JFrame {
         watchlistModel.clear();
 
         for (IMovieModel.MRecord record : watchlist) {
-            String display = record.Title() + " (" + record.Year() + ")";
+            String display = "MOVIE: " + record.Title() + ", YEAR: " + record.Year() + ", IMDB Rating: " + record.imdbRating();
             watchlistModel.addElement(display);
+        }
+    }
+
+    private void rateSelectedMovie() {
+        int selectedRow = movieTable.getSelectedRow();
+        if (selectedRow >= 0) {
+            String title = (String) tableModel.getValueAt(selectedRow, 1);
+
+            String rating = JOptionPane.showInputDialog(
+                    this,
+                    "Enter your rating for \"" + title + "\":",
+                    "Rate Movie",
+                    JOptionPane.PLAIN_MESSAGE
+            );
+
+            if (rating != null && !rating.trim().isEmpty()) {
+                features.setMyRating(title, rating); // controller/model handles this
+                JOptionPane.showMessageDialog(this,
+                        "You rated \"" + title + "\" with " + rating + "*");
+            } else {
+                JOptionPane.showMessageDialog(this, "Please select a movie first.");
+                // The controller needs to have this: void setMyRating(String title, String rating);
+            }
         }
     }
 }

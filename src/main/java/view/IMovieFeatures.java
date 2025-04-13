@@ -10,8 +10,10 @@ public interface IMovieFeatures {
     void searchMovie(String title);
     void addToWatchList(String title);
     void removeFromWatchList(String title);
+    void saveWatchList();
     List<IMovieModel.MRecord> getWatchList();
     List<IMovieModel.MRecord> getAllMovies();
     List<IMovieModel.MRecord> sortMovieList(String column, String ascOrDesc);
+    void setMyRating(String title, String rating);
 }
 
