@@ -68,7 +68,7 @@ public class MyMovieList extends JFrame {
         JTextField filterInput = new JTextField(15);
         JButton filterButton = new JButton("Filter");
 
-        filterPanel.add(new JLabel("Filger by"));
+        filterPanel.add(new JLabel("Filter by"));
         filterPanel.add(filterField);
         filterPanel.add(filterInput);
         filterPanel.add(filterButton);
