@@ -94,4 +94,40 @@
   "Runtime" : "N/A",
   "Country" : "India",
   "Response" : "True"
+}, {
+  "Title" : "Oppenheimer",
+  "Year" : "2023",
+  "Director" : "Christopher Nolan",
+  "Actors" : "Cillian Murphy, Emily Blunt, Matt Damon",
+  "Plot" : "A dramatization of the life story of J. Robert Oppenheimer, the physicist who had a large hand in the development of the atomic bombs that brought an end to World War II.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BN2JkMDc5MGQtZjg3YS00NmFiLWIyZmQtZTJmNTM5MjVmYTQ4XkEyXkFqcGc@._V1_SX300.jpg",
+  "imdbRating" : "8.3",
+  "Genre" : "Biography, Drama, History",
+  "Runtime" : "180 min",
+  "Country" : "United States, United Kingdom",
+  "Response" : "True"
+}, {
+  "Title" : "Alien",
+  "Year" : "1979",
+  "Director" : "Ridley Scott",
+  "Actors" : "Sigourney Weaver, Tom Skerritt, John Hurt",
+  "Plot" : "After investigating a mysterious transmission of unknown origin, the crew of a commercial spacecraft encounters a deadly lifeform.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BN2NhMDk2MmEtZDQzOC00MmY5LThhYzAtMDdjZGFjOGZjMjdjXkEyXkFqcGc@._V1_SX300.jpg",
+  "imdbRating" : "8.5",
+  "Genre" : "Horror, Sci-Fi",
+  "Runtime" : "117 min",
+  "Country" : "United Kingdom, United States",
+  "Response" : "True"
+}, {
+  "Title" : "The Lord of the Rings: The Fellowship of the Ring",
+  "Year" : "2001",
+  "Director" : "Peter Jackson",
+  "Actors" : "Elijah Wood, Ian McKellen, Orlando Bloom",
+  "Plot" : "A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BNzIxMDQ2YTctNDY4MC00ZTRhLTk4ODQtMTVlOWY4NTdiYmMwXkEyXkFqcGc@._V1_SX300.jpg",
+  "imdbRating" : "8.9",
+  "Genre" : "Adventure, Drama, Fantasy",
+  "Runtime" : "178 min",
+  "Country" : "New Zealand, United States, United Kingdom",
+  "Response" : "True"
 } ]

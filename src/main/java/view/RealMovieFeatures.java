@@ -23,9 +23,13 @@ public class RealMovieFeatures implements IMovieFeatures {
 
     @Override
     public void searchMovie(String title) {
+        System.out.println("searchMovie called with: " + title);
         IMovieModel.MRecord result = model.getRecord(title);
         if (result != null && !model.getRecords().contains(result)) {
             model.getRecords().add(result);
+            System.out.println("Added " + result.Title() + "to records list");
+        } else {
+            System.out.println("No record returned or already exists");
         }
     }
 
