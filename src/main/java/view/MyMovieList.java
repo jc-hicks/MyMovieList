@@ -121,7 +121,7 @@ public class MyMovieList extends JFrame {
         panel.add(topPanel, BorderLayout.NORTH);
 
         // Sort panel layout
-        sortColumnCombo = new JComboBox<>(new String[]{"Year", "Title", "Director","IMDBRating"});
+        sortColumnCombo = new JComboBox<>(new String[]{"Year", "Title", "Director","Rating"});
         sortOrderCombo = new JComboBox<>(new String[]{"Ascending", "Descending"});
         sortButton = new JButton("Sort");
 

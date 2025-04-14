@@ -14,9 +14,14 @@ public class Controller implements IMovieFeatures {
 
     private final IMovieModel model;
 
+    /**
+     * Constructor for the Controller taking in an IMovieModel.
+     * @param model
+     */
     public Controller(IMovieModel model) {
         this.model = model;  // Loads from movie.json
     }
+
 
     public void loadWatchlistOnStartup() {
         ((MovieModel) model).loadWatchListFromFile();
