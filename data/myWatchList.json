@@ -5,9 +5,21 @@
   "Actors" : "Leonardo DiCaprio, Joseph Gordon-Levitt",
   "Plot" : "A thief who steals corporate secrets...",
   "Poster" : "https://m.media-amazon.com/images/M/...",
-  "imdbRating" : "10.0",
+  "imdbRating" : "10",
   "Genre" : "Action, Adventure, Sci-Fi",
   "Runtime" : "148 min",
   "Country" : "USA",
   "Response" : "True"
+}, {
+  "Title" : "Rango",
+  "Year" : "2011",
+  "Director" : "Gore Verbinski",
+  "Actors" : "Johnny Depp, Isla Fisher, Timothy Olyphant",
+  "Plot" : "Rango is an ordinary chameleon who accidentally winds up in the town of Dirt, a lawless outpost in the Wild West in desperate need of a new sheriff.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BMTc4NjEyODE1OV5BMl5BanBnXkFtZTcwMjYzNTkxNA@@._V1_SX300.jpg",
+  "imdbRating" : "7.3",
+  "Genre" : "Animation, Action, Adventure",
+  "Runtime" : "107 min",
+  "Country" : "United States, United Kingdom",
+  "Response" : null
 } ]

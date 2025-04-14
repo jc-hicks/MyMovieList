@@ -116,11 +116,12 @@ public class MovieModel implements IMovieModel {
         }
         try {
             String url = NetUtils.getMovieUrl(title);
+            System.out.println("Trying API UR: " + url); // seeing why not pulling from API
             try (InputStream inputStream = NetUtils.getUrlContents(url)) {
                 JsonMapper mapper = new JsonMapper();
                 MRecord newRecord = mapper.readValue(inputStream, MRecord.class);
-                if (newRecord.Response().equals("True")) {
-                  addRecord(newRecord);
+                if ("True".equalsIgnoreCase(newRecord.Response())) {  // RUBEN: if response is 'null' will skip record, movie.json has "Title: Inception, Response: null" will not show in GUI
+                  addRecord(newRecord);                     // changed from (newRecord.Response().equals("True")) -> ("True".equalsIgnoreCase(newRecord.Response()))
                   return newRecord;
                 }
             }

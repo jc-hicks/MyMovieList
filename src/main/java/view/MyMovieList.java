@@ -81,7 +81,7 @@ public class MyMovieList extends JFrame {
 
         // BUTTON PANEL
         JPanel buttonPanel = new JPanel();
-        loadButton = new JButton("Load Movies");
+        loadButton = new JButton("Load All IMDB Movies");
         addToWatchListButton = new JButton("Add to My Watchlist");
         removeFromWatchListButton = new JButton("Remove from My Watchlist");
         clearButton = new JButton("Clear Table");

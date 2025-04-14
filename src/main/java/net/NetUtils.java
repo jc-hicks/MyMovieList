@@ -58,7 +58,7 @@ public final class NetUtils {
             URL url = new URL(urlStr);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
-            con.setRequestProperty("Content-Type", "application/xml");
+            con.setRequestProperty("Content-Type", "application/json");  // RUBEN: changed to JSON from XML
             con.setConnectTimeout(5000);
             con.setReadTimeout(5000);
             con.setRequestProperty("User-Agent",

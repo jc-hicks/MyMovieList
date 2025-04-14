@@ -23,7 +23,7 @@ public class RealMovieFeatures implements IMovieFeatures {
 
     @Override
     public void searchMovie(String title) {
-        model.getRecord(title);   // Get and add to record list
+        model.getRecord(title);   // Get and add from record list
     }
 
     @Override
