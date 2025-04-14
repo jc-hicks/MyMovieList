@@ -14,7 +14,7 @@ public class MyMovieListLauncher {
         MovieModel movieModel = new MovieModel();
         IMovieController controller = new Controller(movieModel);
         MyMovieList view = new MyMovieList();
-//        view.setFeatures(controller);
+        view.setFeatures(controller);
 //        view.setFeatures(new RealMovieFeatures());  remember: Use RealMovieFeatures to access IMDBs API
         view.setVisible(true);
     }
