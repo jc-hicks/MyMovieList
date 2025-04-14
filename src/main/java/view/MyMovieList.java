@@ -149,7 +149,7 @@ public class MyMovieList extends JFrame {
                 refreshMovieTable();            // show new results
             }
         });
-        searchButton.addActionListener(e -> searchMoviesFromInput());
+
         searchField.addActionListener(e -> searchMoviesFromInput());
         filterButton.addActionListener(e -> {
             String field = (String) filterField.getSelectedItem();
@@ -162,6 +162,14 @@ public class MyMovieList extends JFrame {
                             record.Year(), record.Title(), record.Director(), record.imdbRating()
                     });
                 }
+            }
+        });
+
+        searchButtonOne.addActionListener(e -> {
+            String query = searchField.getText().trim();
+            if (!query.isEmpty()) {
+                features.searchMovie(query);
+                refreshMovieTable();
             }
         });
 
@@ -323,4 +331,6 @@ public class MyMovieList extends JFrame {
             refreshMovieTable();
         }
     }
+
+
 }

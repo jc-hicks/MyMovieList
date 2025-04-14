@@ -23,7 +23,10 @@ public class RealMovieFeatures implements IMovieFeatures {
 
     @Override
     public void searchMovie(String title) {
-        model.getRecord(title);   // Get and add from record list
+        IMovieModel.MRecord result = model.getRecord(title);
+        if (result != null && !model.getRecords().contains(result)) {
+            model.getRecords().add(result);
+        }
     }
 
     @Override
@@ -77,4 +80,5 @@ public class RealMovieFeatures implements IMovieFeatures {
     public List<IMovieModel.MRecord> filterMovieList(String field, String criteria) {
         return ((MovieModel) model).filterWatchList(field, criteria).toList();
     }
+
 }

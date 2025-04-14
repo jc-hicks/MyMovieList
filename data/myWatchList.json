@@ -22,4 +22,16 @@
   "Runtime" : "107 min",
   "Country" : "United States, United Kingdom",
   "Response" : null
+}, {
+  "Title" : "City of God",
+  "Year" : "2002",
+  "Director" : "Fernando Meirelles, Kátia Lund",
+  "Actors" : "Alexandre Rodrigues, Leandro Firmino, Matheus Nachtergaele",
+  "Plot" : "In the slums of Rio, two kids' paths diverge as one struggles to become a photographer and the other a kingpin.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BYjY4NGI5OTUtY2ZlZS00Zjk4LTk5N2MtN2JmYWVjNGNmMGRlXkEyXkFqcGc@._V1_SX300.jpg",
+  "imdbRating" : "8.6",
+  "Genre" : "Crime, Drama",
+  "Runtime" : "130 min",
+  "Country" : "Brazil, France",
+  "Response" : null
 } ]
