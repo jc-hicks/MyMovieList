@@ -27,7 +27,7 @@ public class MovieModelReadWriteTest {
       //resolves string into a path directory within tempDir
       tempFilePath = tempDir.resolve("test.json");
   
-      //Dummy data because empty file caused issues with creation of DNModel
+      //Dummy data because empty file caused issues with creation of MRecord objects
       String dummyData = """
             [ {
                 "Title" : "Stranger Things",
@@ -280,5 +280,40 @@ public class MovieModelReadWriteTest {
        movieModel.loadWatchListFromFile();
        assertEquals(6, movieModel.getWatchList().size(), "WatchList should have 6 records after loading from file");
        
+    }
+
+    @Test
+    public void testChangeMovieRating() {
+        MovieModel movieModel = new MovieModel("data/testreadwrite.json");
+        
+        MRecord inceptionMovie = new MRecord("Inception", "2010", "Christopher Nolan", 
+            "Leonardo DiCaprio, Joseph Gordon-Levitt", "A thief who steals corporate secrets...", 
+            "https://m.media-amazon.com/images/M/...", "8.8", "Action, Adventure, Sci-Fi", 
+            "148 min", "USA", "True");
+        movieModel.addRecord(inceptionMovie);
+        
+        movieModel.addToWatchList(inceptionMovie);
+        movieModel.setMovieRating("Inception", "10.0");
+        movieModel.saveWatchListToFile();
+        
+        assertEquals("10.0", movieModel.getRecordFromWatchList("Inception").imdbRating(), 
+            "Movie rating should be updated to 10.0");
+    }
+
+    @Test
+    public void testSaveToWatchlistFile() {
+        MovieModel movieModel = new MovieModel("data/testreadwrite.json");
+        
+        MRecord inceptionMovie = new MRecord("Inception", "2010", "Christopher Nolan", 
+            "Leonardo DiCaprio, Joseph Gordon-Levitt", "A thief who steals corporate secrets...", 
+            "https://m.media-amazon.com/images/M/...", "8.8", "Action, Adventure, Sci-Fi", 
+            "148 min", "USA", "True");
+        movieModel.addRecord(inceptionMovie);
+        
+        movieModel.addToWatchList(inceptionMovie);
+        movieModel.setMovieRating("Inception", "10.0");
+        movieModel.saveWatchListToFile();
+        
+        assertEquals(1, movieModel.getWatchList().size(), "WatchList should have 1 record after saving to file");
     }
 }
