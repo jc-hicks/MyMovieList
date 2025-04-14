@@ -43,7 +43,10 @@ public class MyMovieList extends JFrame {
      */
     public void setFeatures(IMovieFeatures features) {
         this.features = features;
-        ((RealMovieFeatures) features).loadWatchlistOnStartup();
+        if (features instanceof RealMovieFeatures real) {
+            real.loadWatchlistOnStartup();
+        }
+        updateWatchlistPanel();
     }
 
     /**
@@ -55,6 +58,20 @@ public class MyMovieList extends JFrame {
         JButton searchButton = new JButton("Search");
         JButton searchButtonOne = new JButton(" \uD83D\uDD0D Search");
         JPanel topPanel = new JPanel();
+
+        // Filter panel layout
+        JPanel filterPanel = new JPanel();
+        JComboBox<String> filterField = new JComboBox<>(
+                new String[]{"Title", "Year", "Director",
+                        "Genre", "Actors", "Rating",
+                        "Runtime", "Country"});
+        JTextField filterInput = new JTextField(15);
+        JButton filterButton = new JButton("Filter");
+
+        filterPanel.add(new JLabel("Filger by"));
+        filterPanel.add(filterField);
+        filterPanel.add(filterInput);
+        filterPanel.add(filterButton);
 
         // Table layout
         tableModel = new DefaultTableModel(new String[]{"Year", "Title", "Director","IMDBRating"}, 0);
@@ -81,6 +98,7 @@ public class MyMovieList extends JFrame {
         sortColumnCombo = new JComboBox<>(new String[]{"Year", "Title", "Director","IMDBRating"});
         sortOrderCombo = new JComboBox<>(new String[]{"Ascending", "Descending"});
         sortButton = new JButton("Sort");
+        panel.add(filterPanel, BorderLayout.AFTER_LAST_LINE);
 
         // Buttons on the panel
         JPanel buttonPanel = new JPanel();
@@ -121,6 +139,19 @@ public class MyMovieList extends JFrame {
         });
         searchButton.addActionListener(e -> searchMoviesFromInput());
         searchField.addActionListener(e -> searchMoviesFromInput());
+        filterButton.addActionListener(e -> {
+            String field = (String) filterField.getSelectedItem();
+            String input = filterInput.getText().trim();
+            if (!input.isEmpty()) {
+                List<IMovieModel.MRecord> filtered = features.filterMovieList(field.toLowerCase(), input);
+                tableModel.setRowCount(0);
+                for (IMovieModel.MRecord record : filtered) {
+                    tableModel.addRow(new Object[]{
+                            record.Year(), record.Title(), record.Director(), record.imdbRating()
+                    });
+                }
+            }
+        });
 
         this.add(panel);
         updateWatchlistPanel();
@@ -278,20 +309,6 @@ public class MyMovieList extends JFrame {
         if (!query.isEmpty()) {
             features.searchMovie(query);
             refreshMovieTable();
-        }
-    }
-
-    private void refreshMovieTable() {
-        tableModel.setRowCount(0);
-        List<IMovieModel.MRecord> updateMovies = features.getAllMovies();
-
-        for (IMovieModel.MRecord mRecord : updateMovies) {
-            tableModel.addRow(new Object[]{
-                    mRecord.Year(),
-                    mRecord.Title(),
-                    mRecord.Director(),
-                    mRecord.imdbRating()
-            });
         }
     }
 }

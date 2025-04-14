@@ -74,4 +74,10 @@ public class MockMovieFeatures implements IMovieFeatures{
     public String getMyRating(String title) {
         return null;
     }
+
+    @Override
+    public List<IMovieModel.MRecord> filterMovieList(String field, String criteria) {
+        System.out.println("Pretending to filter movies by " + field + " with " + criteria);
+        return new ArrayList<>();
+    }
 }

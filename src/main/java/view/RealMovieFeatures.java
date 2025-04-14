@@ -77,5 +77,4 @@ public class RealMovieFeatures implements IMovieFeatures {
     public List<IMovieModel.MRecord> filterMovieList(String field, String criteria) {
         return ((MovieModel) model).filterWatchList(field, criteria).toList();
     }
-
 }
