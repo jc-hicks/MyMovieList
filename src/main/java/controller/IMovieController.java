@@ -1,4 +1,4 @@
-package view;
+package controller;
 
 import java.util.List;
 import model.IMovieModel;
@@ -6,7 +6,7 @@ import model.IMovieModel;
 /**
  * This interface defines the features expected in the GUI from a controller-like object
  */
-public interface IMovieFeatures {
+public interface IMovieController {
     void searchMovie(String title);
     void addToWatchList(String title);
     void removeFromWatchList(String title);

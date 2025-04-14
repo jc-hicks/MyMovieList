@@ -1,6 +1,7 @@
 package view;
 
 import controller.Controller;
+import controller.IMovieController;
 import model.IMovieModel;
 
 import javax.swing.*;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class MyMovieList extends JFrame {
 
-    private IMovieFeatures features;
+    private IMovieController features;
     private JTable movieTable;
     private DefaultTableModel tableModel;
     private JButton loadButton;
@@ -45,7 +46,7 @@ public class MyMovieList extends JFrame {
      *
      * @param features
      */
-    public void setFeatures(IMovieFeatures features) {
+    public void setFeatures(IMovieController features) {
         this.features = features;
         if (features instanceof Controller real) {
             real.loadWatchlistOnStartup();

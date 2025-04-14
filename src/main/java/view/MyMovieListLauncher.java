@@ -1,6 +1,7 @@
 package view;
 
 import controller.Controller;
+import controller.IMovieController;
 import model.MovieModel;
 
 public class MyMovieListLauncher {
@@ -9,10 +10,11 @@ public class MyMovieListLauncher {
      * Main launcher for program
      */
     public static void main(String[] args) {
-        MyMovieList view = new MyMovieList();
+
         MovieModel movieModel = new MovieModel();
-        IMovieFeatures controller = new Controller(movieModel);
-        view.setFeatures(controller);
+        IMovieController controller = new Controller(movieModel);
+        MyMovieList view = new MyMovieList();
+//        view.setFeatures(controller);
 //        view.setFeatures(new RealMovieFeatures());  remember: Use RealMovieFeatures to access IMDBs API
         view.setVisible(true);
     }

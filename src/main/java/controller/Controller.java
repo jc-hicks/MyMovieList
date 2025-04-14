@@ -4,13 +4,12 @@ package controller;
 import model.IMovieModel;
 import model.MovieModel;
 import java.util.List;
-import view.IMovieFeatures;
 
 
 /**
  * This class connects the GUI to the real data model for add/remove/search/sort functionality
  */
-public class Controller implements IMovieFeatures {
+public class Controller implements IMovieController {
 
     private final IMovieModel model;
 

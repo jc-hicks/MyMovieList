@@ -1,10 +1,11 @@
 package view;
 
+import controller.IMovieController;
 import model.IMovieModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MockMovieFeatures implements IMovieFeatures{
+public class MockMovieFeatures implements IMovieController {
 
     /**
      * Method for GUI functionality in searching records
