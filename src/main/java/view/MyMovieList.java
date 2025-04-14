@@ -22,6 +22,9 @@ public class MyMovieList extends JFrame {
     private JList<String> watchListDisplay;
     private DefaultListModel<String> watchlistModel;
     private JTextField searchField;
+    private JPanel bottomPanel;
+    private JTextField filterInput;
+    private JButton filterButton;
 
 
 
@@ -53,25 +56,47 @@ public class MyMovieList extends JFrame {
      *
      */
     private void initUI() {
+        // MAIN PANEL
         JPanel panel = new JPanel(new BorderLayout());
-        JPanel sortPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JButton searchButton = new JButton("Search");
-        JButton searchButtonOne = new JButton(" \uD83D\uDD0D Search");
-        JPanel topPanel = new JPanel();
 
-        // Filter panel layout
+        // SEARCH BAR PANEL
+        JPanel topPanel = new JPanel();
+        JButton searchButton = new JButton("Search");
+        JButton searchButtonOne = new JButton("Search API");
+        searchField = new JTextField(20);
+        JPanel sortPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+        // FILTER PANEL
+        filterInput = new JTextField(15);
+        filterButton = new JButton("Search IMDB");
         JPanel filterPanel = new JPanel();
         JComboBox<String> filterField = new JComboBox<>(
                 new String[]{"Title", "Year", "Director",
                         "Genre", "Actors", "Rating",
                         "Runtime", "Country"});
-        JTextField filterInput = new JTextField(15);
-        JButton filterButton = new JButton("Filter");
-
-        filterPanel.add(new JLabel("Filter by"));
+        filterPanel.add(new JLabel("Filter Source List By:"));
         filterPanel.add(filterField);
         filterPanel.add(filterInput);
         filterPanel.add(filterButton);
+
+        // BUTTON PANEL
+        JPanel buttonPanel = new JPanel();
+        loadButton = new JButton("Load Movies");
+        addToWatchListButton = new JButton("Add to My Watchlist");
+        removeFromWatchListButton = new JButton("Remove from My Watchlist");
+        clearButton = new JButton("Clear Table");
+        buttonPanel.add(loadButton);
+        buttonPanel.add(addToWatchListButton);
+        buttonPanel.add(removeFromWatchListButton);
+        buttonPanel.add(clearButton);
+
+
+        // BOTTOM PANEL
+        bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
+        bottomPanel.add(filterPanel);
+        bottomPanel.add(buttonPanel);
+        panel.add(bottomPanel, BorderLayout.SOUTH);
 
         // Table layout
         tableModel = new DefaultTableModel(new String[]{"Year", "Title", "Director","IMDBRating"}, 0);
@@ -98,21 +123,8 @@ public class MyMovieList extends JFrame {
         sortColumnCombo = new JComboBox<>(new String[]{"Year", "Title", "Director","IMDBRating"});
         sortOrderCombo = new JComboBox<>(new String[]{"Ascending", "Descending"});
         sortButton = new JButton("Sort");
-        panel.add(filterPanel, BorderLayout.AFTER_LAST_LINE);
 
         // Buttons on the panel
-        JPanel buttonPanel = new JPanel();
-        loadButton = new JButton("Load Movies");
-        addToWatchListButton = new JButton("Add to My Watchlist");
-        removeFromWatchListButton = new JButton("Remove from My Watchlist");
-        clearButton = new JButton("Clear Table");
-
-        buttonPanel.add(loadButton);
-        buttonPanel.add(addToWatchListButton);
-        panel.add(buttonPanel, BorderLayout.SOUTH);
-        buttonPanel.add(removeFromWatchListButton);
-        buttonPanel.add(clearButton);
-
         sortPanel.add(new JLabel("Sort by: "));
         sortPanel.add(sortColumnCombo);
         sortPanel.add(sortOrderCombo);
