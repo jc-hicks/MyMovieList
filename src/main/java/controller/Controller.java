@@ -1,20 +1,21 @@
-package view;
+package controller;
 
 
 import model.IMovieModel;
 import model.MovieModel;
 import java.util.List;
+import view.IMovieFeatures;
 
 
 /**
  * This class connects the GUI to the real data model for add/remove/search/sort functionality
  */
-public class RealMovieFeatures implements IMovieFeatures {
+public class Controller implements IMovieFeatures {
 
     private final IMovieModel model;
 
-    public RealMovieFeatures() {
-        this.model = IMovieModel.getInstance();  // Loads from movie.json
+    public Controller(IMovieModel model) {
+        this.model = model;  // Loads from movie.json
     }
 
     public void loadWatchlistOnStartup() {

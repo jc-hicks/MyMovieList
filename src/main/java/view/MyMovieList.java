@@ -1,5 +1,6 @@
 package view;
 
+import controller.Controller;
 import model.IMovieModel;
 
 import javax.swing.*;
@@ -46,7 +47,7 @@ public class MyMovieList extends JFrame {
      */
     public void setFeatures(IMovieFeatures features) {
         this.features = features;
-        if (features instanceof RealMovieFeatures real) {
+        if (features instanceof Controller real) {
             real.loadWatchlistOnStartup();
         }
         updateWatchlistPanel();
