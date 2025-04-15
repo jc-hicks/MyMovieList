@@ -128,6 +128,30 @@ public class MyMovieList extends JFrame {
             }
         });
 
+        // === Mouse Right-Click Add Rating ===
+        watchListDisplay.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                if (SwingUtilities.isRightMouseButton(evt)) {
+                    int index = watchListDisplay.locationToIndex(evt.getPoint());
+                    if (index >= 0) {
+                        String selected = watchListDisplay.getModel().getElementAt(index);
+                        String title = selected.split(" \\(")[0];
+                        String newRating = JOptionPane.showInputDialog(
+                                MyMovieList.this,
+                                "Enter your personal rating for: " + title,
+                                "Rate Movie",
+                                JOptionPane.PLAIN_MESSAGE
+                        );
+                        if (newRating != null && !newRating.isBlank()) {
+                            features.setMyRating(title, newRating.trim());
+                            updateWatchlistPanel();
+                        }
+                    }
+                }
+            }
+        });
+
+
         loadButton.addActionListener(e -> loadMovies());
         addToWatchListButton.addActionListener(e -> addSelectedMovieToWatchlist());
         removeFromWatchListButton.addActionListener(e -> removeSelectedMovieFromWatchlist());

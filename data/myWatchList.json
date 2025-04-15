@@ -46,4 +46,16 @@
   "Runtime" : "178 min",
   "Country" : "New Zealand, United States, United Kingdom",
   "Response" : "True"
+}, {
+  "Title" : "The Count of Monte Cristo",
+  "Year" : "2002",
+  "Director" : "Kevin Reynolds",
+  "Actors" : "Jim Caviezel, Guy Pearce, Christopher Adamson",
+  "Plot" : "A young man, falsely imprisoned by his jealous \"friend\", escapes and uses a hidden treasure to exact his revenge.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BYjQ3NWUxNDMtNGUyYS00M2E4LThmYjgtZmQ3YTU4ZWZlNTk0XkEyXkFqcGc@._V1_SX300.jpg",
+  "imdbRating" : "7.7",
+  "Genre" : "Action, Adventure, Drama",
+  "Runtime" : "131 min",
+  "Country" : "Ireland, Switzerland, United Kingdom, United States",
+  "Response" : "True"
 } ]
