@@ -58,4 +58,16 @@
   "Runtime" : "131 min",
   "Country" : "Ireland, Switzerland, United Kingdom, United States",
   "Response" : "True"
+}, {
+  "Title" : "Transformers",
+  "Year" : "2007",
+  "Director" : "Michael Bay",
+  "Actors" : "Shia LaBeouf, Megan Fox, Josh Duhamel",
+  "Plot" : "An ancient struggle between two Cybertronian races, the heroic Autobots and the evil Decepticons, comes to Earth, with a clue to the ultimate power held by a teenager.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BZjM3ZDA2YmItMzhiMi00ZGI3LTg3ZGQtOTk3Nzk0MDY0ZDZhXkEyXkFqcGc@._V1_SX300.jpg",
+  "imdbRating" : "7.1",
+  "Genre" : "Action, Adventure, Sci-Fi",
+  "Runtime" : "144 min",
+  "Country" : "United States",
+  "Response" : "True"
 } ]
