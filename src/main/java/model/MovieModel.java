@@ -311,6 +311,17 @@ public class MovieModel implements IMovieModel {
             throw new IllegalArgumentException("filterType and value cannot be null");
         }
 
+//        Stream<MRecord> filterMovieStream = records.stream().filter(r ->
+//            !r.Title().equals("N/A") &&
+//            !r.Year().equals("N/A") &&
+//            !r.Director().equals("N/A") &&
+//            !r.Genre().equals("N/A") &&
+//            !r.Actors().equals("N/A") &&
+//            !r.imdbRating().equals("N/A") &&
+//            !r.Runtime().equals("N/A") &&
+//            !r.Country().equals("N/A")
+//        );
+
         switch (filterType.toLowerCase()) {
             case "title":
                 return records.stream().filter(m -> m.Title().equalsIgnoreCase(filterValue));
@@ -349,7 +360,7 @@ public class MovieModel implements IMovieModel {
                             records.stream().filter(m -> m.imdbRating().equals(ratingCommands.get(1)));
                         case ">" ->
                             records.stream()
-                            .filter(m -> Double.parseDouble(m.imdbRating()) > Double.parseDouble(ratingCommands.get(1)));
+                            .filter(m -> !m.imdbRating().equals("N/A") && Double.parseDouble(m.imdbRating()) > Double.parseDouble(ratingCommands.get(1)));
                         case "<" ->
                             records.stream()
                             .filter(m -> Double.parseDouble(m.imdbRating()) < Double.parseDouble(ratingCommands.get(1)));
