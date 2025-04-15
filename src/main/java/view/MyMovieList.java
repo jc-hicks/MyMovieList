@@ -169,6 +169,14 @@ public class MyMovieList extends JFrame {
             }
         });
 
+        submitApiKeyButton.addActionListener(e -> {
+            String query = apiKeyField.getText().trim();
+            if (!query.isEmpty()) {
+                controller.modelSetAPIKey(query);
+            }
+            apiKeyField.setText("");
+        });
+
         filterButton.addActionListener(e -> {
             String field = (String) filterFieldCombo.getSelectedItem();
             String input = filterInput.getText().trim();
