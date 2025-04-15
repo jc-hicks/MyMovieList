@@ -14,7 +14,6 @@ public class MyMovieListLauncher {
         MovieModel movieModel = new MovieModel();
         IMovieController controller = new Controller(movieModel);
 
-
 //        controller.modelSetAPIKey("OMDB_KEY_REDACTED");
 
         MyMovieList view = new MyMovieList();
