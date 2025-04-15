@@ -36,6 +36,8 @@ public class MyMovieList extends JFrame {
     }
 
     private void initUI() {
+        UIManager.put("Label.foreground", Color.WHITE);
+
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(new Color(30, 30, 30));
 
@@ -52,7 +54,8 @@ public class MyMovieList extends JFrame {
         searchField.setBackground(new Color(60, 60, 60));
         searchField.setCaretColor(Color.WHITE);
         searchButton = new JButton("Search API");
-        searchSubPanel.add(new JLabel("Search:"));
+        JLabel searchLabel = new JLabel("Search");
+        searchSubPanel.add(searchLabel);
         searchSubPanel.add(searchField);
         searchSubPanel.add(searchButton);
 
@@ -62,7 +65,8 @@ public class MyMovieList extends JFrame {
         sortColumnCombo = new JComboBox<>(new String[]{"Year", "Title", "Director", "IMDBRating"});
         sortOrderCombo = new JComboBox<>(new String[]{"Ascending", "Descending"});
         sortButton = new JButton("Sort");
-        sortSubPanel.add(new JLabel("Sort by:"));
+        JLabel sortLabel = new JLabel("Sort by:");
+        sortSubPanel.add(sortLabel);
         sortSubPanel.add(sortColumnCombo);
         sortSubPanel.add(sortOrderCombo);
         sortSubPanel.add(sortButton);
@@ -74,12 +78,19 @@ public class MyMovieList extends JFrame {
         // === Movie Table ===
         tableModel = new DefaultTableModel(new String[]{"Year", "Title", "Director", "IMDBRating"}, 0);
         movieTable = new JTable(tableModel);
+        movieTable.setForeground(Color.WHITE);
+        movieTable.setBackground(new Color(40, 40, 40));
+        movieTable.setSelectionBackground(new Color(70, 130, 180));
+        movieTable.setGridColor(new Color(100, 100, 100));
         JScrollPane tableScrollPane = new JScrollPane(movieTable);
         mainPanel.add(tableScrollPane, BorderLayout.CENTER);
 
         // === Watchlist Panel ===
         watchlistModel = new DefaultListModel<>();
         watchListDisplay = new JList<>(watchlistModel);
+        watchListDisplay.setForeground(new Color(173, 216, 230));
+        watchListDisplay.setBackground(Color.BLACK);
+        watchListDisplay.setSelectionBackground(new Color(100, 149, 237));
         JScrollPane watchlistScrollPane = new JScrollPane(watchListDisplay);
         watchlistScrollPane.setBorder(BorderFactory.createTitledBorder("My Watchlist"));
         watchlistScrollPane.setPreferredSize(new Dimension(400, 0));
@@ -87,7 +98,10 @@ public class MyMovieList extends JFrame {
 
         // === Filter Panel ===
         JPanel filterPanel = new JPanel();
+        filterPanel.setBackground(new Color(40, 40, 40));
         filterInput = new JTextField(15);
+        filterInput.setForeground(Color.WHITE);
+        filterInput.setBackground(new Color(60, 60, 60));
         filterButton = new JButton("Filter");
         filterFieldCombo = new JComboBox<>(new String[]{"Title", "Year", "Director", "Genre", "Actors", "Rating", "Runtime", "Country"});
         filterPanel.add(new JLabel("Filter by:"));
@@ -97,6 +111,7 @@ public class MyMovieList extends JFrame {
 
         // === Bottom Button Panel ===
         JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(new Color(40, 40, 40));
         loadButton = new JButton("Load All Movies");
         addToWatchListButton = new JButton("Add to Watchlist");
         removeFromWatchListButton = new JButton("Remove from Watchlist");
@@ -109,9 +124,24 @@ public class MyMovieList extends JFrame {
         // === Combine Filter + Buttons ===
         bottomPanel = new JPanel();
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
+        buttonPanel.setBackground(new Color(40, 40, 40));
         bottomPanel.add(filterPanel);
         bottomPanel.add(buttonPanel);
         mainPanel.add(bottomPanel, BorderLayout.SOUTH);
+
+        // === Button Styling ===
+        Color buttonBg = new Color(70, 130, 180);
+        Color buttonFg = Color.WHITE;
+        JButton[] allButtons = {
+                searchButton, sortButton, clearButton, loadButton, filterButton,
+                addToWatchListButton, removeFromWatchListButton
+        };
+        for (JButton b : allButtons) {
+            b.setBackground(buttonBg);
+            b.setForeground(buttonFg);
+            b.setFocusPainted(false);
+            b.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        }
 
         // === Action Listeners ===
         searchButton.addActionListener(e -> {
