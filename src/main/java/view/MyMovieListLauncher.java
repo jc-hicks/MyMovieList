@@ -14,11 +14,11 @@ public class MyMovieListLauncher {
         MovieModel movieModel = new MovieModel();
         IMovieController controller = new Controller(movieModel);
 
-//        controller.modelSetAPIKey("OMDB_KEY_REDACTED");
+        controller.modelSetAPIKey("OMDB_KEY_REDACTED");
 
         MyMovieList view = new MyMovieList();
-        view.setFeatures(controller);
-//        view.setFeatures(new RealMovieFeatures());  remember: Use RealMovieFeatures to access IMDBs API
+        view.setController(controller);
+//        view.setController(new RealMovieFeatures());  remember: Use RealMovieFeatures to access IMDBs API
         view.setVisible(true);
     }
 }

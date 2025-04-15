@@ -10,7 +10,7 @@ import java.awt.*;
 import java.util.List;
 
 public class MyMovieList extends JFrame {
-    private IMovieController features;
+    private IMovieController controller;
     private JTable movieTable;
     private DefaultTableModel tableModel;
     private JButton loadButton, addToWatchListButton, removeFromWatchListButton;
@@ -29,9 +29,9 @@ public class MyMovieList extends JFrame {
         initUI();
     }
 
-    public void setFeatures(IMovieController features) {
-        this.features = features;
-        if (features instanceof Controller real) {
+    public void setController(IMovieController controller) {
+        this.controller = controller;
+        if (controller instanceof Controller real) {
             real.loadWatchlistOnStartup();
         }
         updateWatchlistPanel();
@@ -48,7 +48,7 @@ public class MyMovieList extends JFrame {
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
         topPanel.setBackground(new Color(40, 40, 40));
 
-        // === Search Panel ===
+        // === Search Panel & API Key Provisioning ===
         JPanel searchSubPanel = new JPanel();
         searchSubPanel.setBackground(new Color(40, 40, 40));
         searchField = new JTextField(20);
@@ -164,7 +164,7 @@ public class MyMovieList extends JFrame {
             String query = searchField.getText().trim();
             System.out.println("🧠 GUI triggered search for: " + query);
             if (!query.isEmpty()) {
-                features.searchMovie(query);
+                controller.searchMovie(query);
                 refreshMovieTable();
             }
         });
@@ -173,7 +173,7 @@ public class MyMovieList extends JFrame {
             String field = (String) filterFieldCombo.getSelectedItem();
             String input = filterInput.getText().trim();
             if (!input.isEmpty()) {
-                List<IMovieModel.MRecord> filtered = features.filterMovieList(field.toLowerCase(), input);
+                List<IMovieModel.MRecord> filtered = controller.filterMovieList(field.toLowerCase(), input);
                 tableModel.setRowCount(0);
                 for (IMovieModel.MRecord record : filtered) {
                     tableModel.addRow(new Object[]{record.Year(), record.Title(), record.Director(), record.imdbRating()});
@@ -196,7 +196,7 @@ public class MyMovieList extends JFrame {
                                 JOptionPane.PLAIN_MESSAGE
                         );
                         if (newRating != null && !newRating.isBlank()) {
-                            features.setMyRating(title, newRating.trim());
+                            controller.setMyRating(title, newRating.trim());
                             updateWatchlistPanel();
                         }
                     }
@@ -217,7 +217,7 @@ public class MyMovieList extends JFrame {
 
     private void refreshMovieTable() {
         tableModel.setRowCount(0);
-        List<IMovieModel.MRecord> updateMovies = features.getAllMovies();
+        List<IMovieModel.MRecord> updateMovies = controller.getAllMovies();
         System.out.println("🔄 Refreshing table with " + updateMovies.size() + " records");
         for (IMovieModel.MRecord mRecord : updateMovies) {
             tableModel.addRow(new Object[]{mRecord.Year(), mRecord.Title(), mRecord.Director(), mRecord.imdbRating()});
@@ -225,8 +225,8 @@ public class MyMovieList extends JFrame {
     }
 
     private void loadMovies() {
-        if (features == null) return;
-        List<IMovieModel.MRecord> movies = features.getAllMovies();
+        if (controller == null) return;
+        List<IMovieModel.MRecord> movies = controller.getAllMovies();
         tableModel.setRowCount(0);
         for (IMovieModel.MRecord movie : movies) {
             tableModel.addRow(new Object[]{movie.Year(), movie.Title(), movie.Director(), movie.imdbRating()});
@@ -237,8 +237,8 @@ public class MyMovieList extends JFrame {
         int selectedRow = movieTable.getSelectedRow();
         if (selectedRow >= 0) {
             String title = (String) tableModel.getValueAt(selectedRow, 1);
-            features.addToWatchList(title);
-            features.saveWatchList();
+            controller.addToWatchList(title);
+            controller.saveWatchList();
             JOptionPane.showMessageDialog(this, title + " added to your watchlist!");
             updateWatchlistPanel();
         }
@@ -248,19 +248,19 @@ public class MyMovieList extends JFrame {
         int selectedRow = movieTable.getSelectedRow();
         if (selectedRow >= 0) {
             String title = (String) tableModel.getValueAt(selectedRow, 1);
-            features.removeFromWatchList(title);
-            features.saveWatchList();
+            controller.removeFromWatchList(title);
+            controller.saveWatchList();
             JOptionPane.showMessageDialog(this, title + " removed from your watchlist!");
             updateWatchlistPanel();
         }
     }
 
     private void sortMovieList() {
-        if (features == null) return;
+        if (controller == null) return;
         String column = (String) sortColumnCombo.getSelectedItem();
         String order = (String) sortOrderCombo.getSelectedItem();
         String ascOrDesc = order.equals("Ascending") ? "asc" : "desc";
-        List<IMovieModel.MRecord> sorted = features.sortMovieList(column, ascOrDesc);
+        List<IMovieModel.MRecord> sorted = controller.sortMovieList(column, ascOrDesc);
         tableModel.setRowCount(0);
         for (IMovieModel.MRecord movie : sorted) {
             tableModel.addRow(new Object[]{movie.Year(), movie.Title(), movie.Director(), movie.imdbRating()});
@@ -272,11 +272,11 @@ public class MyMovieList extends JFrame {
     }
 
     private void updateWatchlistPanel() {
-        if (features == null) return;
-        List<IMovieModel.MRecord> watchlist = features.getWatchList();
+        if (controller == null) return;
+        List<IMovieModel.MRecord> watchlist = controller.getWatchList();
         watchlistModel.clear();
         for (IMovieModel.MRecord record : watchlist) {
-            String rating = features.getMyRating(record.Title());
+            String rating = controller.getMyRating(record.Title());
             String imdb = record.imdbRating();
             String display = (rating != null && !rating.isEmpty()) ?
                     String.format("%s (%s, IMDB: %s, My Rating: ⭐ %s)", record.Title(), record.Year(), imdb, rating) :

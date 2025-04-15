@@ -46,4 +46,16 @@
   "Runtime" : "122 min",
   "Country" : "United States, United Kingdom",
   "Response" : "True"
+}, {
+  "Title" : "Casablanca",
+  "Year" : "1942",
+  "Director" : "Michael Curtiz",
+  "Actors" : "Humphrey Bogart, Ingrid Bergman, Paul Henreid",
+  "Plot" : "A cynical expatriate American cafe owner struggles to decide whether or not to help his former lover and her fugitive husband escape the Nazis in French Morocco.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BNWEzN2U1YTYtYTQyMS00NTVkLWE2NGQtZWFlMmM0MDNjMmRiXkEyXkFqcGc@._V1_SX300.jpg",
+  "imdbRating" : "8.5",
+  "Genre" : "Drama, Romance, War",
+  "Runtime" : "102 min",
+  "Country" : "United States",
+  "Response" : "True"
 } ]
