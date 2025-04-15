@@ -178,4 +178,16 @@
   "Runtime" : "95 min",
   "Country" : "United Kingdom, South Africa, United States, India",
   "Response" : "True"
+}, {
+  "Title" : "Twilight",
+  "Year" : "2008",
+  "Director" : "Catherine Hardwicke",
+  "Actors" : "Kristen Stewart, Robert Pattinson, Billy Burke",
+  "Plot" : "When Bella Swan moves to a small town in the Pacific Northwest, she falls in love with Edward Cullen, a mysterious classmate who reveals himself to be a 108-year-old vampire.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BMTQ2NzUxMTAxN15BMl5BanBnXkFtZTcwMzEyMTIwMg@@._V1_SX300.jpg",
+  "imdbRating" : "5.3",
+  "Genre" : "Drama, Fantasy, Romance",
+  "Runtime" : "122 min",
+  "Country" : "United States, United Kingdom",
+  "Response" : "True"
 } ]

@@ -1,5 +1,7 @@
 package view;
 
+import controller.Controller;
+import controller.IMovieController;
 import model.IMovieModel;
 
 import javax.swing.*;
@@ -8,7 +10,7 @@ import java.awt.*;
 import java.util.List;
 
 public class MyMovieList extends JFrame {
-    private IMovieFeatures features;
+    private IMovieController features;
     private JTable movieTable;
     private DefaultTableModel tableModel;
     private JButton loadButton, addToWatchListButton, removeFromWatchListButton;
@@ -27,9 +29,9 @@ public class MyMovieList extends JFrame {
         initUI();
     }
 
-    public void setFeatures(IMovieFeatures features) {
+    public void setFeatures(IMovieController features) {
         this.features = features;
-        if (features instanceof RealMovieFeatures real) {
+        if (features instanceof Controller real) {
             real.loadWatchlistOnStartup();
         }
         updateWatchlistPanel();
@@ -51,7 +53,7 @@ public class MyMovieList extends JFrame {
         searchSubPanel.setBackground(new Color(40, 40, 40));
         searchField = new JTextField(20);
         searchField.setForeground(Color.WHITE);
-        searchField.setBackground(new Color(60, 60, 60));
+        searchField.setBackground(new Color(0, 0, 0));
         searchField.setCaretColor(Color.WHITE);
         searchButton = new JButton("Search API");
         JLabel searchLabel = new JLabel("Search");
