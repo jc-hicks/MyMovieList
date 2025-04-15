@@ -194,9 +194,10 @@ public class MovieModel implements IMovieModel {
     }
 
     /**
-     * Adds a movie record to the watch list by title if it does not already
+     * Adds a movie record to the watch list by title if it is not already there
      * @param title - the title of the movie to add
      */
+    @Override
     public void addFromRecordsToWatchList(String title) {
         MRecord record = getRecord(title);
         if (record != null && watchList.stream().noneMatch(r -> r.Title().equals(record.Title()))) {
@@ -223,6 +224,7 @@ public class MovieModel implements IMovieModel {
     /**
      * Loads the watch list from a file.
      */
+    @Override
     public void loadWatchListFromFile() {
         String filePath = IMovieModel.WATCHLIST_DATABASE;
         if (filePath == null || filePath.isEmpty()) {

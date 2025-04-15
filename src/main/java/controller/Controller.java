@@ -43,7 +43,7 @@ public class Controller implements IMovieController {
      */
     @Override
     public void addToWatchList(String title) {
-        ((MovieModel) model).addFromRecordsToWatchList(title);
+        model.addFromRecordsToWatchList(title);
     }
 
 

@@ -41,7 +41,18 @@ public interface IMovieModel {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    } 
+    }
+
+    /**
+     * Loads the watch list from a file.
+     */
+    void loadWatchListFromFile();
+
+    /**
+     * Adds a movie record to the watch list by title if it is not already there.
+     * @param title
+     */
+    void addFromRecordsToWatchList(String title);
 
     /**
      * Method to convert a record to JSON string.
