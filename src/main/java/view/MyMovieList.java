@@ -22,7 +22,7 @@ public class MyMovieList extends JFrame {
     public MyMovieList() {
         super("My Movie List");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(900, 700);
+        setSize(900, 500);
         setLocationRelativeTo(null);
         initUI();
     }
@@ -37,10 +37,12 @@ public class MyMovieList extends JFrame {
 
     private void initUI() {
         JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBackground(new Color(30, 30, 30));
 
         // === Combined Top Panel ===
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+        topPanel.setBackground(new Color(40, 40, 40));
 
         // === Search Panel ===
         JPanel searchSubPanel = new JPanel();
