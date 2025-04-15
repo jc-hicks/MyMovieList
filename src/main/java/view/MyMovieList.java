@@ -14,9 +14,9 @@ public class MyMovieList extends JFrame {
     private JTable movieTable;
     private DefaultTableModel tableModel;
     private JButton loadButton, addToWatchListButton, removeFromWatchListButton;
-    private JButton sortButton, clearButton, filterButton, searchButton;
+    private JButton sortButton, clearButton, filterButton, searchButton, submitApiKeyButton;
     private JComboBox<String> sortColumnCombo, sortOrderCombo, filterFieldCombo;
-    private JTextField searchField, filterInput;
+    private JTextField searchField, filterInput, apiKeyField;
     private JList<String> watchListDisplay;
     private DefaultListModel<String> watchlistModel;
     private JPanel bottomPanel;
@@ -55,12 +55,25 @@ public class MyMovieList extends JFrame {
         searchField.setForeground(Color.WHITE);
         searchField.setBackground(new Color(0, 0, 0));
         searchField.setCaretColor(Color.WHITE);
-        searchButton = new JButton("Search API");
+        searchButton = new JButton("Search Movie");
         JLabel searchLabel = new JLabel("Search");
+
+
+        apiKeyField = new JTextField(10);
+        apiKeyField.setForeground(Color.WHITE);
+        apiKeyField.setBackground(new Color(0, 0, 0));
+        apiKeyField.setCaretColor(Color.WHITE);
+        submitApiKeyButton = new JButton("Submit API Key");
+        JLabel apiKeyLabel = new JLabel("API Key");
+
+        searchSubPanel.add(apiKeyField);
+        searchSubPanel.add(submitApiKeyButton);
+        searchSubPanel.add(apiKeyLabel);
+
         searchSubPanel.add(searchLabel);
         searchSubPanel.add(searchField);
         searchSubPanel.add(searchButton);
-        //NOTE: ADD IN TEXTFIELD AND BUTTON TO ADD IN APIKEY
+
 
         // === Sort Panel ===
         JPanel sortSubPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
