@@ -46,7 +46,11 @@ public class MyMovieList extends JFrame {
 
         // === Search Panel ===
         JPanel searchSubPanel = new JPanel();
+        searchSubPanel.setBackground(new Color(40, 40, 40));
         searchField = new JTextField(20);
+        searchField.setForeground(Color.WHITE);
+        searchField.setBackground(new Color(60, 60, 60));
+        searchField.setCaretColor(Color.WHITE);
         searchButton = new JButton("Search API");
         searchSubPanel.add(new JLabel("Search:"));
         searchSubPanel.add(searchField);
