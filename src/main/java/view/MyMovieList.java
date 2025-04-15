@@ -115,7 +115,7 @@ public class MyMovieList extends JFrame {
         loadButton = new JButton("Load All Movies");
         addToWatchListButton = new JButton("Add to Watchlist");
         removeFromWatchListButton = new JButton("Remove from Watchlist");
-        clearButton = new JButton("Clear Table");
+        clearButton = new JButton("Clear Movie Table");   // maybe should be moved to top??
         buttonPanel.add(loadButton);
         buttonPanel.add(addToWatchListButton);
         buttonPanel.add(removeFromWatchListButton);
