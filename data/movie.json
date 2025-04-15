@@ -154,4 +154,28 @@
   "Runtime" : "144 min",
   "Country" : "United States",
   "Response" : "True"
+}, {
+  "Title" : "2012",
+  "Year" : "2009",
+  "Director" : "Roland Emmerich",
+  "Actors" : "John Cusack, Thandiwe Newton, Chiwetel Ejiofor",
+  "Plot" : "A frustrated writer struggles to keep his family alive when a series of global catastrophes threatens to annihilate mankind.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BMTY0MjEyODQzMF5BMl5BanBnXkFtZTcwMTczMjQ4Mg@@._V1_SX300.jpg",
+  "imdbRating" : "5.8",
+  "Genre" : "Action, Adventure, Sci-Fi",
+  "Runtime" : "158 min",
+  "Country" : "United States",
+  "Response" : "True"
+}, {
+  "Title" : "Dredd",
+  "Year" : "2012",
+  "Director" : "Pete Travis",
+  "Actors" : "Karl Urban, Olivia Thirlby, Lena Headey",
+  "Plot" : "In a violent, futuristic city where the police have the authority to act as judge, jury and executioner, a cop teams with a trainee to take down a gang that deals the reality-altering drug, SLO-MO.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BODkyNDQzMzUzOF5BMl5BanBnXkFtZTcwODYyMDEyOA@@._V1_SX300.jpg",
+  "imdbRating" : "7.1",
+  "Genre" : "Action, Crime, Sci-Fi",
+  "Runtime" : "95 min",
+  "Country" : "United Kingdom, South Africa, United States, India",
+  "Response" : "True"
 } ]
