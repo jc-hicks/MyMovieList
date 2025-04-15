@@ -94,4 +94,88 @@
   "Runtime" : "N/A",
   "Country" : "India",
   "Response" : "True"
+}, {
+  "Title" : "Oppenheimer",
+  "Year" : "2023",
+  "Director" : "Christopher Nolan",
+  "Actors" : "Cillian Murphy, Emily Blunt, Matt Damon",
+  "Plot" : "A dramatization of the life story of J. Robert Oppenheimer, the physicist who had a large hand in the development of the atomic bombs that brought an end to World War II.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BN2JkMDc5MGQtZjg3YS00NmFiLWIyZmQtZTJmNTM5MjVmYTQ4XkEyXkFqcGc@._V1_SX300.jpg",
+  "imdbRating" : "8.3",
+  "Genre" : "Biography, Drama, History",
+  "Runtime" : "180 min",
+  "Country" : "United States, United Kingdom",
+  "Response" : "True"
+}, {
+  "Title" : "Alien",
+  "Year" : "1979",
+  "Director" : "Ridley Scott",
+  "Actors" : "Sigourney Weaver, Tom Skerritt, John Hurt",
+  "Plot" : "After investigating a mysterious transmission of unknown origin, the crew of a commercial spacecraft encounters a deadly lifeform.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BN2NhMDk2MmEtZDQzOC00MmY5LThhYzAtMDdjZGFjOGZjMjdjXkEyXkFqcGc@._V1_SX300.jpg",
+  "imdbRating" : "8.5",
+  "Genre" : "Horror, Sci-Fi",
+  "Runtime" : "117 min",
+  "Country" : "United Kingdom, United States",
+  "Response" : "True"
+}, {
+  "Title" : "The Lord of the Rings: The Fellowship of the Ring",
+  "Year" : "2001",
+  "Director" : "Peter Jackson",
+  "Actors" : "Elijah Wood, Ian McKellen, Orlando Bloom",
+  "Plot" : "A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BNzIxMDQ2YTctNDY4MC00ZTRhLTk4ODQtMTVlOWY4NTdiYmMwXkEyXkFqcGc@._V1_SX300.jpg",
+  "imdbRating" : "8.9",
+  "Genre" : "Adventure, Drama, Fantasy",
+  "Runtime" : "178 min",
+  "Country" : "New Zealand, United States, United Kingdom",
+  "Response" : "True"
+}, {
+  "Title" : "The Count of Monte Cristo",
+  "Year" : "2002",
+  "Director" : "Kevin Reynolds",
+  "Actors" : "Jim Caviezel, Guy Pearce, Christopher Adamson",
+  "Plot" : "A young man, falsely imprisoned by his jealous \"friend\", escapes and uses a hidden treasure to exact his revenge.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BYjQ3NWUxNDMtNGUyYS00M2E4LThmYjgtZmQ3YTU4ZWZlNTk0XkEyXkFqcGc@._V1_SX300.jpg",
+  "imdbRating" : "7.7",
+  "Genre" : "Action, Adventure, Drama",
+  "Runtime" : "131 min",
+  "Country" : "Ireland, Switzerland, United Kingdom, United States",
+  "Response" : "True"
+}, {
+  "Title" : "Transformers",
+  "Year" : "2007",
+  "Director" : "Michael Bay",
+  "Actors" : "Shia LaBeouf, Megan Fox, Josh Duhamel",
+  "Plot" : "An ancient struggle between two Cybertronian races, the heroic Autobots and the evil Decepticons, comes to Earth, with a clue to the ultimate power held by a teenager.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BZjM3ZDA2YmItMzhiMi00ZGI3LTg3ZGQtOTk3Nzk0MDY0ZDZhXkEyXkFqcGc@._V1_SX300.jpg",
+  "imdbRating" : "7.1",
+  "Genre" : "Action, Adventure, Sci-Fi",
+  "Runtime" : "144 min",
+  "Country" : "United States",
+  "Response" : "True"
+}, {
+  "Title" : "2012",
+  "Year" : "2009",
+  "Director" : "Roland Emmerich",
+  "Actors" : "John Cusack, Thandiwe Newton, Chiwetel Ejiofor",
+  "Plot" : "A frustrated writer struggles to keep his family alive when a series of global catastrophes threatens to annihilate mankind.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BMTY0MjEyODQzMF5BMl5BanBnXkFtZTcwMTczMjQ4Mg@@._V1_SX300.jpg",
+  "imdbRating" : "5.8",
+  "Genre" : "Action, Adventure, Sci-Fi",
+  "Runtime" : "158 min",
+  "Country" : "United States",
+  "Response" : "True"
+}, {
+  "Title" : "Dredd",
+  "Year" : "2012",
+  "Director" : "Pete Travis",
+  "Actors" : "Karl Urban, Olivia Thirlby, Lena Headey",
+  "Plot" : "In a violent, futuristic city where the police have the authority to act as judge, jury and executioner, a cop teams with a trainee to take down a gang that deals the reality-altering drug, SLO-MO.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BODkyNDQzMzUzOF5BMl5BanBnXkFtZTcwODYyMDEyOA@@._V1_SX300.jpg",
+  "imdbRating" : "7.1",
+  "Genre" : "Action, Crime, Sci-Fi",
+  "Runtime" : "95 min",
+  "Country" : "United Kingdom, South Africa, United States, India",
+  "Response" : "True"
 } ]
