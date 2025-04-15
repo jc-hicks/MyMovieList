@@ -179,6 +179,7 @@ public class MovieModel implements IMovieModel {
      * Removes a movie record from the watch list.
      * @param record the movie record to remove
      */
+    @Override
     public void removeFromWatchList(MRecord record) {
         if (record != null) {
             watchList.removeIf(r -> r.Title().equals(record.Title()));
@@ -189,6 +190,7 @@ public class MovieModel implements IMovieModel {
      * Removes a movie record from the watch list by title.
      * @param title the title of the movie to remove
      */
+    @Override
     public List<MRecord> getWatchList() {
         return this.watchList;
     }
@@ -209,6 +211,7 @@ public class MovieModel implements IMovieModel {
      * Saves the watch list to a file in JSON format.
      *
      */
+    @Override
     public void saveWatchListToFile() {
         String filePath = IMovieModel.WATCHLIST_DATABASE;
         if (filePath == null || filePath.isEmpty()) {
@@ -245,6 +248,7 @@ public class MovieModel implements IMovieModel {
      * @param title the title of the movie
      * @param rating the new rating to set
      */
+    @Override
     public void setMovieRating(String title, String rating) {
         if (title == null || title.isEmpty() || rating == null || rating.isEmpty()) {
             throw new IllegalArgumentException("Title and rating cannot be null or empty");
@@ -269,6 +273,7 @@ public class MovieModel implements IMovieModel {
      * @param title the title of the movie to retrieve
      * @return the movie record, or null if not found
      */
+    @Override
     public MRecord getRecordFromWatchList(String title) {
         if (title == null || title.isEmpty()) {
             throw new IllegalArgumentException("Title cannot be null or empty");
@@ -290,6 +295,7 @@ public class MovieModel implements IMovieModel {
      * @param filterValue
      * @return Stream of movie records
      */
+    @Override
     public Stream<MRecord> filterWatchList(String filterType, String filterValue) {
 
         if (filterType == null || filterValue == null) {
@@ -395,6 +401,7 @@ public class MovieModel implements IMovieModel {
      * @param column
      * @return List of movie records sorted in the appropriate order.
      */
+    @Override
     public List<MRecord> sortMovieList(Stream<MRecord> movieStream, String ascOrDesc, String column) {
 
         // Error handling for null parameters passed

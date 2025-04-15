@@ -53,8 +53,8 @@ public class Controller implements IMovieController {
      */
     @Override
     public void removeFromWatchList(String title) {
-        ((MovieModel) model).removeFromWatchList(
-                ((MovieModel) model).getRecordFromWatchList(title)
+        model.removeFromWatchList(
+                model.getRecordFromWatchList(title)
         );
     }
 
@@ -65,7 +65,7 @@ public class Controller implements IMovieController {
      */
     @Override
     public List<IMovieModel.MRecord> getWatchList() {
-        return ((MovieModel) model).getWatchList();
+        return model.getWatchList();
     }
 
 
@@ -87,7 +87,7 @@ public class Controller implements IMovieController {
      */
     @Override
     public List<IMovieModel.MRecord> sortMovieList(String column, String ascOrDesc) {
-        return ((MovieModel) model).sortMovieList(
+        return model.sortMovieList(
                 model.getRecords().stream(),
                 ascOrDesc,
                 column.toLowerCase()
@@ -100,7 +100,7 @@ public class Controller implements IMovieController {
      */
     @Override
     public void saveWatchList() {
-        ((MovieModel) model).saveWatchListToFile();
+        model.saveWatchListToFile();
     }
 
 
@@ -111,7 +111,7 @@ public class Controller implements IMovieController {
      */
     @Override
     public void setMyRating(String title, String rating) {
-        ((MovieModel) model).setMovieRating(title, rating);
+        model.setMovieRating(title, rating);
     }
 
 
@@ -122,7 +122,7 @@ public class Controller implements IMovieController {
      */
     @Override
     public String getMyRating(String title) {
-        IMovieModel.MRecord record = ((MovieModel) model).getRecordFromWatchList(title);
+        IMovieModel.MRecord record = model.getRecordFromWatchList(title);
         return (record != null) ? record.imdbRating() : "N/A";
     }
 
@@ -135,7 +135,7 @@ public class Controller implements IMovieController {
      */
     @Override
     public List<IMovieModel.MRecord> filterMovieList(String field, String criteria) {
-        return ((MovieModel) model).filterWatchList(field, criteria).toList();
+        return model.filterWatchList(field, criteria).toList();
     }
 
 }

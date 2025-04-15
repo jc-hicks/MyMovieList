@@ -1,5 +1,6 @@
 package model;
 
+import controller.IMovieController;
 import java.io.OutputStream;
 import java.util.Collection;
 import java.util.List;
@@ -9,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import java.util.stream.Stream;
 
 /**
  * Interface representing a movie record with its details.
@@ -47,6 +49,61 @@ public interface IMovieModel {
      * Loads the watch list from a file.
      */
     void loadWatchListFromFile();
+
+    /**
+     * Sets the rating of a movie in the watch list by title.
+     * @param title the title of the movie
+     * @param rating the new rating to set
+     */
+    void setMovieRating(String title, String rating);
+
+
+    /**
+     * Method for sorting movies based on user passed column and ordering
+     * criteria.
+     *
+     * @param movieStream
+     * @param ascOrDesc
+     * @param column
+     * @return List of movie records sorted in the appropriate order.
+     */
+    List<MRecord> sortMovieList(Stream<MRecord> movieStream, String ascOrDesc, String column);
+
+    /**
+     * Method to filter through the current list of movies based on passed
+     * criteria.
+     *
+     * @param filterType
+     * @param filterValue
+     * @return Stream of movie records
+     */
+    Stream<MRecord> filterWatchList(String filterType, String filterValue);
+
+    /**
+     * Saves the watch list to a file in JSON format.
+     *
+     */
+    void saveWatchListToFile();
+
+    /**
+     * Removes a movie record from the watch list by title.
+     * @param title the title of the movie to remove
+     */
+    List<MRecord> getWatchList();
+
+    /**
+     * Retrieves a movie record from the watch list by title.
+     * @param title the title of the movie to retrieve
+     * @return the movie record, or null if not found
+     */
+    MRecord getRecordFromWatchList(String watchListTitle);
+
+    /**
+     * Removes a movie record from the watch list.
+     * @param record the movie record to remove
+     */
+    void removeFromWatchList(MRecord record);
+
 
     /**
      * Adds a movie record to the watch list by title if it is not already there.
