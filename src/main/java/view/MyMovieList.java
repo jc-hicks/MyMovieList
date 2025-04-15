@@ -78,7 +78,7 @@ public class MyMovieList extends JFrame {
         // === Sort Panel ===
         JPanel sortSubPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         sortSubPanel.setBackground(new Color(40, 40, 40));
-        sortColumnCombo = new JComboBox<>(new String[]{"Year", "Title", "Director", "IMDBRating"});
+        sortColumnCombo = new JComboBox<>(new String[]{"Year", "Title", "Director", "Rating"});
         sortOrderCombo = new JComboBox<>(new String[]{"Ascending", "Descending"});
         sortButton = new JButton("Sort");
         JLabel sortLabel = new JLabel("Sort by:");
