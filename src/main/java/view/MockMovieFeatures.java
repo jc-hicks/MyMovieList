@@ -1,5 +1,6 @@
 package view;
 
+import controller.IController;
 import controller.IMovieController;
 import model.IMovieModel;
 import java.util.ArrayList;
@@ -34,6 +35,14 @@ public class MockMovieFeatures implements IMovieController {
         System.out.println("Returning fake watchlist");
         return new ArrayList<>();
     }
+
+    /**
+     * Calls the model to set the users API Key.
+     * @param apiKey
+     */
+    public void modelSetAPIKey(String apiKey){
+
+    };
 
     /**
      * Method for GUI functionality In returning all movies in record

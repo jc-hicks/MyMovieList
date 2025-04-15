@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import java.util.stream.Stream;
+import net.NetUtils;
 
 /**
  * Interface representing a movie record with its details.
@@ -103,6 +104,13 @@ public interface IMovieModel {
      * @param record the movie record to remove
      */
     void removeFromWatchList(MRecord record);
+
+
+    /**
+     * Sets the API Key for core functionality.
+     * @param apiKey
+     */
+    void ApiKeySetter(String apiKey);
 
 
     /**

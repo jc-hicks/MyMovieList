@@ -17,5 +17,11 @@ public interface IMovieController {
     void setMyRating(String title, String rating);
     String getMyRating(String title);
     List<IMovieModel.MRecord> filterMovieList(String field, String criteria);
+
+    /**
+     * Calls the model to set the users API Key.
+     * @param apiKey
+     */
+    void modelSetAPIKey(String apiKey);
 }
 

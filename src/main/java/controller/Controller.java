@@ -114,6 +114,14 @@ public class Controller implements IMovieController {
         model.setMovieRating(title, rating);
     }
 
+    /**
+     * Calls the model to set the users API Key.
+     * @param apiKey
+     */
+    @Override
+    public void modelSetAPIKey(String apiKey) {
+        model.ApiKeySetter(apiKey);
+    }
 
     /**
      * Accesses set personal set rating

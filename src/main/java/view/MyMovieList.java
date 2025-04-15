@@ -60,6 +60,7 @@ public class MyMovieList extends JFrame {
         searchSubPanel.add(searchLabel);
         searchSubPanel.add(searchField);
         searchSubPanel.add(searchButton);
+        //NOTE: ADD IN TEXTFIELD AND BUTTON TO ADD IN APIKEY
 
         // === Sort Panel ===
         JPanel sortSubPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));

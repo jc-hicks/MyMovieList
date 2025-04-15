@@ -133,6 +133,15 @@ public class MovieModel implements IMovieModel {
     }
 
     /**
+     * Sets the API Key for core functionality
+     * @param apiKey
+     */
+    @Override
+    public void ApiKeySetter(String apiKey) {
+        NetUtils.setAPIKey(apiKey);
+    }
+
+    /**
      * Saves all records to the default database file in JSON format.
      *
      */
