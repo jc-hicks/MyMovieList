@@ -206,7 +206,7 @@ public class MovieModel implements IMovieModel {
 
     /**
      * Saves the watch list to a file in JSON format.
-     * 
+     *
      */
     public void saveWatchListToFile() {
         String filePath = IMovieModel.WATCHLIST_DATABASE;
@@ -411,6 +411,14 @@ public class MovieModel implements IMovieModel {
                     break;
                 } else if (ascOrDesc.equals("asc")) {
                     comparator = Comparator.comparing(MRecord::Title).reversed();
+                    break;
+                }
+            case "director":
+                if (ascOrDesc.equals("desc")) {
+                    comparator = Comparator.comparing(MRecord::Director);
+                    break;
+                } else if (ascOrDesc.equals("asc")) {
+                    comparator = Comparator.comparing(MRecord::Director).reversed();
                     break;
                 }
             case "year":
