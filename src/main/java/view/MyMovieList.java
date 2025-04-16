@@ -13,7 +13,7 @@ public class MyMovieList extends JFrame {
     private IMovieController controller;
     private JTable movieTable;
     private DefaultTableModel tableModel;
-    private JButton loadButton, addToWatchListButton, removeFromWatchListButton;
+    private JButton loadButton, addToWatchListButton, removeFromWatchListButton, saveOutButton;
     private JButton sortButton, clearButton, filterButton, searchButton, submitApiKeyButton;
     private JComboBox<String> sortColumnCombo, sortOrderCombo, filterFieldCombo;
     private JTextField searchField, filterInput, apiKeyField;
@@ -132,10 +132,12 @@ public class MyMovieList extends JFrame {
         addToWatchListButton = new JButton("Add to Watchlist");
         removeFromWatchListButton = new JButton("Remove from Watchlist");
         clearButton = new JButton("Clear Movie Table");   // maybe should be moved to top??
+        saveOutButton = new JButton("Save WatchList");
         buttonPanel.add(loadButton);
         buttonPanel.add(addToWatchListButton);
         buttonPanel.add(removeFromWatchListButton);
         buttonPanel.add(clearButton);
+        buttonPanel.add(saveOutButton);
 
         // === Combine Filter + Buttons ===
         bottomPanel = new JPanel();
@@ -150,7 +152,7 @@ public class MyMovieList extends JFrame {
         Color buttonFg = Color.WHITE;
         JButton[] allButtons = {
                 searchButton, sortButton, clearButton, loadButton, filterButton,
-                addToWatchListButton, removeFromWatchListButton
+                addToWatchListButton, removeFromWatchListButton, saveOutButton
         };
         for (JButton b : allButtons) {
             b.setBackground(buttonBg);
