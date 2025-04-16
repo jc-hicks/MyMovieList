@@ -13,42 +13,33 @@ public class IController {
         // start the args controller here
     }
 
-    // be able to print both the movie list and the watchlist
-    private void printMovies() {
+    public void printMovies() {
+        // should this be shareMovieList??
     }
 
-    // look up movie by title, add it if it does not exist
-    private void lookupMovie() {
+    public void lookupMovie() {
+        // return a list of movie records
     }
 
-    private void lookupWatchlist() {
+    public void lookupWatchlist() {
+        // return a list of movie records
     }
 
-    private void sortMovieList() {
+    public void sortMovieList() {
+        // return sorted movie list
     }
 
-    private void filterMovieList() {
+    public void filterMovieList() {
+        // return filtered movie list
     }
 
-    private void filterWatchlist() {
+    public void addMovieToMovieList() {
+        // receive a movie record from the view, and the controller
+        // tells the model to add it to the watchlist
     }
 
-    private void sortWatchlist() {
+    public void removeMovieFromMovieList() {
+        // removes a movie record from the view, and the controller
+        // tells the model to remove it from the watchlist
     }
-
-    private void addMovieToWatchlist() {
-    }
-
-    private void removeMovieFromWatchlist() {
-    }
-
-    private void saveWatchlist() {
-    }
-
-    private void loadWatchlist() {
-    }
-
-    private void rateMovie() {
-    }
-
 }

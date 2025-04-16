@@ -5,9 +5,57 @@
   "Actors" : "Leonardo DiCaprio, Joseph Gordon-Levitt",
   "Plot" : "A thief who steals corporate secrets...",
   "Poster" : "https://m.media-amazon.com/images/M/...",
-  "imdbRating" : "10.0",
+  "imdbRating" : "10",
   "Genre" : "Action, Adventure, Sci-Fi",
   "Runtime" : "148 min",
   "Country" : "USA",
+  "Response" : "True"
+}, {
+  "Title" : "Rango",
+  "Year" : "2011",
+  "Director" : "Gore Verbinski",
+  "Actors" : "Johnny Depp, Isla Fisher, Timothy Olyphant",
+  "Plot" : "Rango is an ordinary chameleon who accidentally winds up in the town of Dirt, a lawless outpost in the Wild West in desperate need of a new sheriff.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BMTc4NjEyODE1OV5BMl5BanBnXkFtZTcwMjYzNTkxNA@@._V1_SX300.jpg",
+  "imdbRating" : "7.3",
+  "Genre" : "Animation, Action, Adventure",
+  "Runtime" : "107 min",
+  "Country" : "United States, United Kingdom",
+  "Response" : null
+}, {
+  "Title" : "Transformers",
+  "Year" : "2007",
+  "Director" : "Michael Bay",
+  "Actors" : "Shia LaBeouf, Megan Fox, Josh Duhamel",
+  "Plot" : "An ancient struggle between two Cybertronian races, the heroic Autobots and the evil Decepticons, comes to Earth, with a clue to the ultimate power held by a teenager.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BZjM3ZDA2YmItMzhiMi00ZGI3LTg3ZGQtOTk3Nzk0MDY0ZDZhXkEyXkFqcGc@._V1_SX300.jpg",
+  "imdbRating" : "7.1",
+  "Genre" : "Action, Adventure, Sci-Fi",
+  "Runtime" : "144 min",
+  "Country" : "United States",
+  "Response" : "True"
+}, {
+  "Title" : "Twilight",
+  "Year" : "2008",
+  "Director" : "Catherine Hardwicke",
+  "Actors" : "Kristen Stewart, Robert Pattinson, Billy Burke",
+  "Plot" : "When Bella Swan moves to a small town in the Pacific Northwest, she falls in love with Edward Cullen, a mysterious classmate who reveals himself to be a 108-year-old vampire.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BMTQ2NzUxMTAxN15BMl5BanBnXkFtZTcwMzEyMTIwMg@@._V1_SX300.jpg",
+  "imdbRating" : "5.3",
+  "Genre" : "Drama, Fantasy, Romance",
+  "Runtime" : "122 min",
+  "Country" : "United States, United Kingdom",
+  "Response" : "True"
+}, {
+  "Title" : "Casablanca",
+  "Year" : "1942",
+  "Director" : "Michael Curtiz",
+  "Actors" : "Humphrey Bogart, Ingrid Bergman, Paul Henreid",
+  "Plot" : "A cynical expatriate American cafe owner struggles to decide whether or not to help his former lover and her fugitive husband escape the Nazis in French Morocco.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BNWEzN2U1YTYtYTQyMS00NTVkLWE2NGQtZWFlMmM0MDNjMmRiXkEyXkFqcGc@._V1_SX300.jpg",
+  "imdbRating" : "8.5",
+  "Genre" : "Drama, Romance, War",
+  "Runtime" : "102 min",
+  "Country" : "United States",
   "Response" : "True"
 } ]
