@@ -6,7 +6,11 @@ import model.IMovieModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.awt.*;
+import java.io.File;
 import java.util.List;
 
 public class MyMovieList extends JFrame {
@@ -58,7 +62,6 @@ public class MyMovieList extends JFrame {
         searchButton = new JButton("Search Movie");
         JLabel searchLabel = new JLabel("Search");
 
-
         apiKeyField = new JTextField(10);
         apiKeyField.setForeground(Color.WHITE);
         apiKeyField.setBackground(new Color(0, 0, 0));
@@ -74,12 +77,11 @@ public class MyMovieList extends JFrame {
         searchSubPanel.add(searchField);
         searchSubPanel.add(searchButton);
 
-
         // === Sort Panel ===
         JPanel sortSubPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         sortSubPanel.setBackground(new Color(40, 40, 40));
-        sortColumnCombo = new JComboBox<>(new String[]{"Year", "Title", "Director", "Rating"});
-        sortOrderCombo = new JComboBox<>(new String[]{"Ascending", "Descending"});
+        sortColumnCombo = new JComboBox<>(new String[] { "Year", "Title", "Director", "Rating" });
+        sortOrderCombo = new JComboBox<>(new String[] { "Ascending", "Descending" });
         sortButton = new JButton("Sort");
         JLabel sortLabel = new JLabel("Sort by:");
         sortSubPanel.add(sortLabel);
@@ -92,7 +94,7 @@ public class MyMovieList extends JFrame {
         mainPanel.add(topPanel, BorderLayout.NORTH);
 
         // === Movie Table ===
-        tableModel = new DefaultTableModel(new String[]{"Year", "Title", "Director", "IMDBRating"}, 0);
+        tableModel = new DefaultTableModel(new String[] { "Year", "Title", "Director", "IMDBRating" }, 0);
         movieTable = new JTable(tableModel);
         movieTable.setForeground(Color.WHITE);
         movieTable.setBackground(new Color(40, 40, 40));
@@ -119,7 +121,8 @@ public class MyMovieList extends JFrame {
         filterInput.setForeground(Color.WHITE);
         filterInput.setBackground(new Color(60, 60, 60));
         filterButton = new JButton("Filter");
-        filterFieldCombo = new JComboBox<>(new String[]{"Title", "Year", "Director", "Genre", "Actors", "Rating", "Runtime", "Country"});
+        filterFieldCombo = new JComboBox<>(
+                new String[] { "Title", "Year", "Director", "Genre", "Actors", "Rating", "Runtime", "Country" });
         filterPanel.add(new JLabel("Filter by:"));
         filterPanel.add(filterFieldCombo);
         filterPanel.add(filterInput);
@@ -131,7 +134,7 @@ public class MyMovieList extends JFrame {
         loadButton = new JButton("Load All Movies");
         addToWatchListButton = new JButton("Add to Watchlist");
         removeFromWatchListButton = new JButton("Remove from Watchlist");
-        clearButton = new JButton("Clear Movie Table");   // maybe should be moved to top??
+        clearButton = new JButton("Clear Movie Table"); // maybe should be moved to top??
         saveOutButton = new JButton("Save WatchList");
         buttonPanel.add(loadButton);
         buttonPanel.add(addToWatchListButton);
@@ -186,7 +189,8 @@ public class MyMovieList extends JFrame {
                 List<IMovieModel.MRecord> filtered = controller.filterMovieList(field.toLowerCase(), input);
                 tableModel.setRowCount(0);
                 for (IMovieModel.MRecord record : filtered) {
-                    tableModel.addRow(new Object[]{record.Year(), record.Title(), record.Director(), record.imdbRating()});
+                    tableModel.addRow(
+                            new Object[] { record.Year(), record.Title(), record.Director(), record.imdbRating() });
                 }
             }
         });
@@ -203,8 +207,7 @@ public class MyMovieList extends JFrame {
                                 MyMovieList.this,
                                 "Enter your personal rating for: " + title,
                                 "Rate Movie",
-                                JOptionPane.PLAIN_MESSAGE
-                        );
+                                JOptionPane.PLAIN_MESSAGE);
                         if (newRating != null && !newRating.isBlank()) {
                             controller.setMyRating(title, newRating.trim());
                             updateWatchlistPanel();
@@ -214,12 +217,12 @@ public class MyMovieList extends JFrame {
             }
         });
 
-
         loadButton.addActionListener(e -> loadMovies());
         addToWatchListButton.addActionListener(e -> addSelectedMovieToWatchlist());
         removeFromWatchListButton.addActionListener(e -> removeSelectedMovieFromWatchlist());
         sortButton.addActionListener(e -> sortMovieList());
         clearButton.addActionListener(e -> clearTable());
+        saveOutButton.addActionListener(e -> saveOut());
 
         this.add(mainPanel);
         updateWatchlistPanel();
@@ -230,16 +233,18 @@ public class MyMovieList extends JFrame {
         List<IMovieModel.MRecord> updateMovies = controller.getAllMovies();
         System.out.println("🔄 Refreshing table with " + updateMovies.size() + " records");
         for (IMovieModel.MRecord mRecord : updateMovies) {
-            tableModel.addRow(new Object[]{mRecord.Year(), mRecord.Title(), mRecord.Director(), mRecord.imdbRating()});
+            tableModel
+                    .addRow(new Object[] { mRecord.Year(), mRecord.Title(), mRecord.Director(), mRecord.imdbRating() });
         }
     }
 
     private void loadMovies() {
-        if (controller == null) return;
+        if (controller == null)
+            return;
         List<IMovieModel.MRecord> movies = controller.getAllMovies();
         tableModel.setRowCount(0);
         for (IMovieModel.MRecord movie : movies) {
-            tableModel.addRow(new Object[]{movie.Year(), movie.Title(), movie.Director(), movie.imdbRating()});
+            tableModel.addRow(new Object[] { movie.Year(), movie.Title(), movie.Director(), movie.imdbRating() });
         }
     }
 
@@ -266,14 +271,15 @@ public class MyMovieList extends JFrame {
     }
 
     private void sortMovieList() {
-        if (controller == null) return;
+        if (controller == null)
+            return;
         String column = (String) sortColumnCombo.getSelectedItem();
         String order = (String) sortOrderCombo.getSelectedItem();
         String ascOrDesc = order.equals("Ascending") ? "asc" : "desc";
         List<IMovieModel.MRecord> sorted = controller.sortMovieList(column, ascOrDesc);
         tableModel.setRowCount(0);
         for (IMovieModel.MRecord movie : sorted) {
-            tableModel.addRow(new Object[]{movie.Year(), movie.Title(), movie.Director(), movie.imdbRating()});
+            tableModel.addRow(new Object[] { movie.Year(), movie.Title(), movie.Director(), movie.imdbRating() });
         }
     }
 
@@ -282,16 +288,24 @@ public class MyMovieList extends JFrame {
     }
 
     private void updateWatchlistPanel() {
-        if (controller == null) return;
+        if (controller == null)
+            return;
         List<IMovieModel.MRecord> watchlist = controller.getWatchList();
         watchlistModel.clear();
         for (IMovieModel.MRecord record : watchlist) {
             String rating = controller.getMyRating(record.Title());
             String imdb = record.imdbRating();
-            String display = (rating != null && !rating.isEmpty()) ?
-                    String.format("%s (%s, IMDB: %s, My Rating: ⭐ %s)", record.Title(), record.Year(), imdb, rating) :
-                    String.format("%s (%s, IMDB: %s)", record.Title(), record.Year(), imdb);
+            String display = (rating != null && !rating.isEmpty())
+                    ? String.format("%s (%s, IMDB: %s, My Rating: ⭐ %s)", record.Title(), record.Year(), imdb, rating)
+                    : String.format("%s (%s, IMDB: %s)", record.Title(), record.Year(), imdb);
             watchlistModel.addElement(display);
         }
+    }
+
+    private void saveOut() {
+        if (controller == null)
+            return;
+        controller.saveWatchList();
+        JOptionPane.showMessageDialog(this, "WatchList saved successfully!");
     }
 }
