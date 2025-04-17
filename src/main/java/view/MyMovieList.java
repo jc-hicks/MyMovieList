@@ -178,15 +178,19 @@ public class MyMovieList extends JFrame {
         });
 
 
+        // === Adding ComboBox for operations as it pertains to Filtering ===
+        String[] options = {">", "<", ">=", "<=", "="};
+        JComboBox<String> filterOperation = new JComboBox<>(options);
+        filterOperation.setVisible(false);  // initially hidden
+        filterPanel.add(filterOperation);
+
+
         filterFieldCombo.addActionListener(e -> {
-
             String field = (String) filterFieldCombo.getSelectedItem();
-
             if (field.equals("Year") || field.equals("Rating")){
-                JComboBox<String> filterOperation = new JComboBox<>(new String[]{">","<",">=","<=","="});
-                filterPanel.add(filterOperation);
-
                 filterOperation.setVisible(true);
+            }else{
+                filterOperation.setVisible(false);
             }
         });
 
@@ -195,6 +199,8 @@ public class MyMovieList extends JFrame {
             String field = (String) filterFieldCombo.getSelectedItem();
 
             String input = filterInput.getText().trim();
+
+
             if (!input.isEmpty()) {
 
                 List<IMovieModel.MRecord> filtered = controller.filterMovieList(field.toLowerCase(), input);
