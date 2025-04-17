@@ -177,10 +177,26 @@ public class MyMovieList extends JFrame {
             apiKeyField.setText("");
         });
 
+
+        filterFieldCombo.addActionListener(e -> {
+
+            String field = (String) filterFieldCombo.getSelectedItem();
+
+            if (field.equals("Year") || field.equals("Rating")){
+                JComboBox<String> filterOperation = new JComboBox<>(new String[]{">","<",">=","<=","="});
+                filterPanel.add(filterOperation);
+
+                filterOperation.setVisible(true);
+            }
+        });
+
+
         filterButton.addActionListener(e -> {
             String field = (String) filterFieldCombo.getSelectedItem();
+
             String input = filterInput.getText().trim();
             if (!input.isEmpty()) {
+
                 List<IMovieModel.MRecord> filtered = controller.filterMovieList(field.toLowerCase(), input);
                 tableModel.setRowCount(0);
                 for (IMovieModel.MRecord record : filtered) {
