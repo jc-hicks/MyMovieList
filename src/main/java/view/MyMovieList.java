@@ -192,7 +192,7 @@ public class MyMovieList extends JFrame {
 
         filterFieldCombo.addActionListener(e -> {
             String field = (String) filterFieldCombo.getSelectedItem();
-            if (field.equals("Year") || field.equals("Rating")){
+            if (field.equals("Year") || field.equals("Rating") || field.equals("Runtime")){
                 filterOperation.setVisible(true);
             }else{
                 filterOperation.setVisible(false);
@@ -202,9 +202,14 @@ public class MyMovieList extends JFrame {
 
         filterButton.addActionListener(e -> {
             String field = (String) filterFieldCombo.getSelectedItem();
+            String input = "";
+            String operation = (String) filterOperation.getSelectedItem();
 
-            String input = filterInput.getText().trim();
-
+            if (operation.isEmpty()){
+                input = filterInput.getText().trim();
+            } else{
+                input = operation + " " + filterInput.getText().trim();
+            }
 
             if (!input.isEmpty()) {
 
