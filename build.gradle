@@ -16,7 +16,7 @@ repositories {
 }
 
 application {
-    mainClass.set("") /** Update with your main driver app location */
+    mainClass = 'view.MyMovieListLauncher'
 }
 
 dependencies {
@@ -29,6 +29,8 @@ dependencies {
     implementation 'com.github.javaparser:javaparser-symbol-solver-core:3.25.3'
     implementation 'org.apache.commons:commons-lang3:3.14.0'
     implementation 'com.opencsv:opencsv:5.8'
+    // JFreeChart
+    implementation 'org.jfree:jfreechart:1.5.3'
     // Jackson Core
     implementation 'com.fasterxml.jackson.core:jackson-core:2.16.0'
     // Jackson Annotations

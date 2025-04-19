@@ -116,11 +116,12 @@ public class MovieModel implements IMovieModel {
         }
         try {
             String url = NetUtils.getMovieUrl(title);
+            System.out.println("Trying API UR: " + url); // seeing why not pulling from API
             try (InputStream inputStream = NetUtils.getUrlContents(url)) {
                 JsonMapper mapper = new JsonMapper();
                 MRecord newRecord = mapper.readValue(inputStream, MRecord.class);
-                if (newRecord.Response().equals("True")) {
-                  addRecord(newRecord);
+                if ("True".equalsIgnoreCase(newRecord.Response())) {  // RUBEN: if response is 'null' will skip record, movie.json has "Title: Inception, Response: null" will not show in GUI
+                  addRecord(newRecord);                     // changed from (newRecord.Response().equals("True")) -> ("True".equalsIgnoreCase(newRecord.Response()))
                   return newRecord;
                 }
             }
@@ -129,6 +130,15 @@ public class MovieModel implements IMovieModel {
             return null;
         }
         return null;
+    }
+
+    /**
+     * Sets the API Key for core functionality
+     * @param apiKey
+     */
+    @Override
+    public void ApiKeySetter(String apiKey) {
+        NetUtils.setAPIKey(apiKey);
     }
 
     /**
@@ -178,6 +188,7 @@ public class MovieModel implements IMovieModel {
      * Removes a movie record from the watch list.
      * @param record the movie record to remove
      */
+    @Override
     public void removeFromWatchList(MRecord record) {
         if (record != null) {
             watchList.removeIf(r -> r.Title().equals(record.Title()));
@@ -188,14 +199,16 @@ public class MovieModel implements IMovieModel {
      * Removes a movie record from the watch list by title.
      * @param title the title of the movie to remove
      */
+    @Override
     public List<MRecord> getWatchList() {
         return this.watchList;
     }
 
     /**
-     * Adds a movie record to the watch list by title if it does not already
+     * Adds a movie record to the watch list by title if it is not already there
      * @param title - the title of the movie to add
      */
+    @Override
     public void addFromRecordsToWatchList(String title) {
         MRecord record = getRecord(title);
         if (record != null && watchList.stream().noneMatch(r -> r.Title().equals(record.Title()))) {
@@ -205,8 +218,9 @@ public class MovieModel implements IMovieModel {
 
     /**
      * Saves the watch list to a file in JSON format.
-     * 
+     *
      */
+    @Override
     public void saveWatchListToFile() {
         String filePath = IMovieModel.WATCHLIST_DATABASE;
         if (filePath == null || filePath.isEmpty()) {
@@ -222,6 +236,7 @@ public class MovieModel implements IMovieModel {
     /**
      * Loads the watch list from a file.
      */
+    @Override
     public void loadWatchListFromFile() {
         String filePath = IMovieModel.WATCHLIST_DATABASE;
         if (filePath == null || filePath.isEmpty()) {
@@ -242,6 +257,7 @@ public class MovieModel implements IMovieModel {
      * @param title the title of the movie
      * @param rating the new rating to set
      */
+    @Override
     public void setMovieRating(String title, String rating) {
         if (title == null || title.isEmpty() || rating == null || rating.isEmpty()) {
             throw new IllegalArgumentException("Title and rating cannot be null or empty");
@@ -266,6 +282,7 @@ public class MovieModel implements IMovieModel {
      * @param title the title of the movie to retrieve
      * @return the movie record, or null if not found
      */
+    @Override
     public MRecord getRecordFromWatchList(String title) {
         if (title == null || title.isEmpty()) {
             throw new IllegalArgumentException("Title cannot be null or empty");
@@ -287,6 +304,7 @@ public class MovieModel implements IMovieModel {
      * @param filterValue
      * @return Stream of movie records
      */
+    @Override
     public Stream<MRecord> filterWatchList(String filterType, String filterValue) {
 
         if (filterType == null || filterValue == null) {
@@ -295,7 +313,7 @@ public class MovieModel implements IMovieModel {
 
         switch (filterType.toLowerCase()) {
             case "title":
-                return records.stream().filter(m -> m.Title().equalsIgnoreCase(filterValue));
+                return records.stream().filter(m -> !m.Title().equals("N/A") && m.Title().equalsIgnoreCase(filterValue));
             case "year":
                 List<String> yearCommands = Arrays.asList(filterValue.split(" "));
                 System.out.println("Year Commands: " + yearCommands);
@@ -303,44 +321,44 @@ public class MovieModel implements IMovieModel {
                     String filterOperation = yearCommands.get(0);
                     return switch (filterOperation) {
                         case "=" ->
-                            records.stream().filter(m -> multiYearParse(m.Year()).equals(yearCommands.get(1)));
+                            records.stream().filter(m -> !m.Year().equals("N/A") && multiYearParse(m.Year()).equals(yearCommands.get(1)));
                         case ">" ->
-                            records.stream().filter(m -> parseInt(multiYearParse(m.Year())) > parseInt(yearCommands.get(1)));
+                            records.stream().filter(m -> !m.Year().equals("N/A") && parseInt(multiYearParse(m.Year())) > parseInt(yearCommands.get(1)));
                         case "<" ->
-                            records.stream().filter(m -> parseInt(multiYearParse(m.Year())) < parseInt(yearCommands.get(1)));
+                            records.stream().filter(m -> !m.Year().equals("N/A") && parseInt(multiYearParse(m.Year())) < parseInt(yearCommands.get(1)));
                         case ">=" ->
-                            records.stream().filter(m -> parseInt(multiYearParse(m.Year())) >= parseInt(yearCommands.get(1)));
+                            records.stream().filter(m -> !m.Year().equals("N/A") && parseInt(multiYearParse(m.Year())) >= parseInt(yearCommands.get(1)));
                         case "<=" ->
-                            records.stream().filter(m -> parseInt(multiYearParse(m.Year())) <= parseInt(yearCommands.get(1)));
+                            records.stream().filter(m -> !m.Year().equals("N/A") && parseInt(multiYearParse(m.Year())) <= parseInt(yearCommands.get(1)));
                         default ->
                             throw new IllegalStateException("Unexpected year filter value: " + yearCommands.get(1));
                     };
                 }
             case "director":
-                return records.stream().filter(m -> m.Director().toLowerCase().contains(filterValue.toLowerCase()));
+                return records.stream().filter(m -> !m.Director().equals("N/A") && m.Director().toLowerCase().contains(filterValue.toLowerCase()));
             case "genre":
-                return records.stream().filter(m -> m.Genre().toLowerCase().contains(filterValue.toLowerCase()));
+                return records.stream().filter(m -> !m.Genre().equals("N/A") && m.Genre().toLowerCase().contains(filterValue.toLowerCase()));
             case "actors":
-                return records.stream().filter(m -> m.Actors().toLowerCase().contains(filterValue.toLowerCase()));
+                return records.stream().filter(m -> !m.Actors().equals("N/A") && m.Actors().toLowerCase().contains(filterValue.toLowerCase()));
             case "rating":
                 List<String> ratingCommands = Arrays.stream(filterValue.split(" ")).toList();
                 if (ratingCommands.size() > 1) {
                     String filterOperation = ratingCommands.get(0);
                     return switch (filterOperation) {
                         case "=" ->
-                            records.stream().filter(m -> m.imdbRating().equals(ratingCommands.get(1)));
+                            records.stream().filter(m -> !m.imdbRating().equals("N/A") && m.imdbRating().equals(ratingCommands.get(1)));
                         case ">" ->
                             records.stream()
-                            .filter(m -> Double.parseDouble(m.imdbRating()) > Double.parseDouble(ratingCommands.get(1)));
+                            .filter(m -> !m.imdbRating().equals("N/A") && Double.parseDouble(m.imdbRating()) > Double.parseDouble(ratingCommands.get(1)));
                         case "<" ->
                             records.stream()
-                            .filter(m -> Double.parseDouble(m.imdbRating()) < Double.parseDouble(ratingCommands.get(1)));
+                            .filter(m -> !m.imdbRating().equals("N/A") && Double.parseDouble(m.imdbRating()) < Double.parseDouble(ratingCommands.get(1)));
                         case ">=" ->
                             records.stream()
-                            .filter(m -> Double.parseDouble(m.imdbRating()) >= Double.parseDouble(ratingCommands.get(1)));
+                            .filter(m -> !m.imdbRating().equals("N/A") && Double.parseDouble(m.imdbRating()) >= Double.parseDouble(ratingCommands.get(1)));
                         case "<=" ->
                             records.stream()
-                            .filter(m -> Double.parseDouble(m.imdbRating()) <= Double.parseDouble(ratingCommands.get(1)));
+                            .filter(m -> !m.imdbRating().equals("N/A") && Double.parseDouble(m.imdbRating()) <= Double.parseDouble(ratingCommands.get(1)));
                         default ->
                             throw new IllegalArgumentException("Invalid filter operation: " + filterOperation);
                     };
@@ -353,22 +371,22 @@ public class MovieModel implements IMovieModel {
                     String filterOperation = runtimeCommands.get(0);
                     return switch (filterOperation) {
                         case "=" ->
-                            records.stream().filter(m -> m.Runtime().split(" ")[0].equals(runtimeCommands.get(1)));
+                            records.stream().filter(m -> !m.Runtime().equals("N/A") && m.Runtime().split(" ")[0].equals(runtimeCommands.get(1)));
                         case ">" ->
                             records.stream()
-                            .filter(m -> Double.parseDouble(m.Runtime().split(" ")[0])
+                            .filter(m -> !m.Runtime().equals("N/A") && Double.parseDouble(m.Runtime().split(" ")[0])
                             > Double.parseDouble(runtimeCommands.get(1)));
                         case "<" ->
                             records.stream()
-                            .filter(m -> Double.parseDouble(m.Runtime().split(" ")[0])
+                            .filter(m -> !m.Runtime().equals("N/A") && Double.parseDouble(m.Runtime().split(" ")[0])
                             < Double.parseDouble(runtimeCommands.get(1)));
                         case ">=" ->
                             records.stream()
-                            .filter(m -> Double.parseDouble(m.Runtime().split(" ")[0])
+                            .filter(m -> !m.Runtime().equals("N/A") && Double.parseDouble(m.Runtime().split(" ")[0])
                             >= Double.parseDouble(runtimeCommands.get(1)));
                         case "<=" ->
                             records.stream()
-                            .filter(m -> Double.parseDouble(m.Runtime().split(" ")[0])
+                            .filter(m -> !m.Runtime().equals("N/A") && Double.parseDouble(m.Runtime().split(" ")[0])
                             <= Double.parseDouble(runtimeCommands.get(1)));
                         default ->
                             throw new IllegalArgumentException("Invalid filter operation: " + filterOperation);
@@ -377,7 +395,7 @@ public class MovieModel implements IMovieModel {
                     throw new IllegalArgumentException("Runtime criteria Invalid");
                 }
             case "country":
-                return records.stream().filter(m -> m.Country().toLowerCase().contains(filterValue.toLowerCase()));
+                return records.stream().filter(m -> !m.Country().equals("N/A") && m.Country().toLowerCase().contains(filterValue.toLowerCase()));
             default:
                 return records.stream(); // Return all records if filter type is not recognized
         }
@@ -392,6 +410,7 @@ public class MovieModel implements IMovieModel {
      * @param column
      * @return List of movie records sorted in the appropriate order.
      */
+    @Override
     public List<MRecord> sortMovieList(Stream<MRecord> movieStream, String ascOrDesc, String column) {
 
         // Error handling for null parameters passed
@@ -410,6 +429,14 @@ public class MovieModel implements IMovieModel {
                     break;
                 } else if (ascOrDesc.equals("asc")) {
                     comparator = Comparator.comparing(MRecord::Title).reversed();
+                    break;
+                }
+            case "director":
+                if (ascOrDesc.equals("desc")) {
+                    comparator = Comparator.comparing(MRecord::Director);
+                    break;
+                } else if (ascOrDesc.equals("asc")) {
+                    comparator = Comparator.comparing(MRecord::Director).reversed();
                     break;
                 }
             case "year":

@@ -10,22 +10,30 @@ import java.nio.charset.StandardCharsets;
  * 
  * You can read more about the API at https://www.omdbapi.com.
  */
-public final class NetUtils {
+public class NetUtils {
     /**
      * Format required for the API request. There are many options, but keeping it simple for now.
      */
     private static final String API_URL_FORMAT = "https://www.omdbapi.com/?apikey=%s&t=%s";
     
     /**
-     * The API key for the OMDb API.
+     * The API key for the OMDb API. This may be overwritten with a users own key.
      */
-    private static final String API_KEY = "OMDB_KEY_REDACTED";
+    private static String API_KEY;
 
     /**
      * Prevent instantiation.
      */
     private NetUtils() {
         // Prevent instantiation
+    }
+
+    /**
+     * Sets the API key for core functionality
+     * @param apiKey
+     */
+    public static void setAPIKey(String apiKey) {
+        API_KEY = apiKey;
     }
 
     /**
@@ -58,7 +66,7 @@ public final class NetUtils {
             URL url = new URL(urlStr);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
-            con.setRequestProperty("Content-Type", "application/xml");
+            con.setRequestProperty("Content-Type", "application/json");  // RUBEN: changed to JSON from XML
             con.setConnectTimeout(5000);
             con.setReadTimeout(5000);
             con.setRequestProperty("User-Agent",
