@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import model.MovieModel;
 import controller.Controller;
@@ -81,6 +82,23 @@ public class ControllerTests {
 
     movieController.removeFromWatchList("Rango");
     assertEquals(expected - 1, watchList.size());
+  }
+
+  @Test
+  public void testSortMovieList(){
+    List<MRecord> movieList = movieModel.getRecords();
+    System.out.println(movieList);
+    List<MRecord> sortedMovieList = movieController.sortMovieList("Title", "asc");
+
+    System.out.println("");
+
+    assertTrue(sortedMovieList.get(0).Title().equals("City of God"));
+    System.out.println(sortedMovieList);
+
+    sortedMovieList = movieController.sortMovieList("year", "desc");
+    assertTrue(sortedMovieList.get(0).Title().equals("Stranger Things"));
+    System.out.println(sortedMovieList);
+
   }
 
 }
