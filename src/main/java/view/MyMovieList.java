@@ -204,6 +204,7 @@ public class MyMovieList extends JFrame {
 
 
         filterButton.addActionListener(e -> {
+
             String field = (String) filterFieldCombo.getSelectedItem();
             String input = "";
             String operation = (String) filterOperation.getSelectedItem();

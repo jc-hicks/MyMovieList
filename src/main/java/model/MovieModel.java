@@ -313,7 +313,7 @@ public class MovieModel implements IMovieModel {
 
         switch (filterType.toLowerCase()) {
             case "title":
-                return records.stream().filter(m -> !m.Title().equals("N/A") && m.Title().equalsIgnoreCase(filterValue));
+                return records.stream().filter(m -> !m.Title().equals("N/A") && m.Title().toLowerCase().contains(filterValue.toLowerCase()));
             case "year":
                 List<String> yearCommands = Arrays.asList(filterValue.split(" "));
                 System.out.println("Year Commands: " + yearCommands);

@@ -58,6 +58,32 @@ public class MovieModelTest {
     assertEquals("Stranger Things", result.Title());
   }
 
+
+  @Test
+  public void testfilterName() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("title", "inception");
+    List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
+    List<String> expected = List.of("Inception");
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testfilterNamePartial() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("title", "i");
+    List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
+    List<String> expected = List.of("Inception", "Titanic", "The Matrix", "City of God", "Stranger Things");
+    assertEquals(expected, actual);
+  }
+
+
+  @Test
+  public void testFilterNameEmpty() {
+    Stream<MRecord> recordStream = movieModel.filterWatchList("title", "");
+    List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
+    List<String> expected = List.of("Inception", "Titanic", "The Matrix", "City of God","Rango", "Stranger Things");
+    assertEquals(expected, actual);
+  }
+
   @Test
   public void testFilterDefault() {
     Stream<MRecord> recordStream = movieModel.filterWatchList("nonExistant Type", "NON existent");
