@@ -33,7 +33,6 @@ public class GraphView  extends JFrame {
 
         setTitle("Bar Chart Example");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
 
         List<MRecord> records = controller.getAllMovies();
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -65,8 +64,19 @@ public class GraphView  extends JFrame {
         // Create JTable for movie list and indices and add to Panel
         JTable movieTable = new JTable(data, headings);
         movieTable.setFillsViewportHeight(true);
-        
-        
+        movieTable.setBackground(Color.DARK_GRAY);
+        movieTable.setForeground(Color.WHITE);
+
+        movieTable.setGridColor(Color.DARK_GRAY);
+
+        // Enable automatic resizing
+        movieTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+
+        // Set preferred column widths
+        movieTable.getColumnModel().getColumn(0).setPreferredWidth(200);
+        movieTable.getColumnModel().getColumn(1).setPreferredWidth(10);
+
+
         JScrollPane movieScroll = new JScrollPane(movieTable);
         movieScroll.setPreferredSize(new Dimension(400, 700));
 
@@ -75,14 +85,12 @@ public class GraphView  extends JFrame {
             public void windowOpened(java.awt.event.WindowEvent e) {
                 int rows = movieTable.getRowCount();
                 int height = movieScroll.getViewport().getHeight();
-        
                 if (rows > 0 && height > 0) {
                     int rowHeight = height / rows;
                     movieTable.setRowHeight(rowHeight);
                 }
             }
         });
-        
 
 
         keyPanel.add(movieScroll);
@@ -102,6 +110,7 @@ public class GraphView  extends JFrame {
         add(chartPanel);
 
         pack();
+        setLocationRelativeTo(null);
         setVisible(true);
 
     }
