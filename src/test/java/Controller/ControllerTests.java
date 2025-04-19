@@ -62,4 +62,14 @@ public class ControllerTests {
         System.out.println(record);
     }
   }
+
+  @Test
+  public void testAddToWatchList(){
+    List<MRecord> watchList = movieController.getWatchList();
+    int expected = watchList.size();
+
+    movieController.addToWatchList("Stranger Things");
+    assertEquals(expected + 1, watchList.size());
+  }
+
 }
