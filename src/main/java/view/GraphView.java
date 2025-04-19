@@ -19,7 +19,6 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.BoxLayout;
 
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
@@ -27,28 +26,28 @@ import java.awt.BorderLayout;
 import controller.Controller;
 import controller.IMovieController;
 
-public class GraphView  extends JFrame {
+public class GraphView extends JFrame {
 
-    public GraphView(IMovieController controller){
+    public GraphView(IMovieController controller) {
 
         setTitle("Bar Chart Example");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        List<MRecord> records = controller.getAllMovies();
+        List<MRecord> records = controller.getWatchList();
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         String[][] data = new String[(records.size())][2];
-        String[] headings = {"Title", "Index"};
+        String[] headings = { "Title", "Index" };
 
         // Add data to a dataset for the chart
-        for(int i = 0; i < records.size(); i++){
+        for (int i = 0; i < records.size(); i++) {
             double rating = 0;
-            try{
+            try {
                 rating = Double.parseDouble(records.get(i).imdbRating());
-            } catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.out.println("Cannot parse ratings to double");
             }
-            String title =  records.get(i).Title();
+            String title = records.get(i).Title();
             String indexString = String.valueOf(i);
             dataset.addValue(rating, "Rating", indexString);
 
@@ -76,7 +75,6 @@ public class GraphView  extends JFrame {
         movieTable.getColumnModel().getColumn(0).setPreferredWidth(200);
         movieTable.getColumnModel().getColumn(1).setPreferredWidth(10);
 
-
         JScrollPane movieScroll = new JScrollPane(movieTable);
         movieScroll.setPreferredSize(new Dimension(400, 700));
 
@@ -91,7 +89,6 @@ public class GraphView  extends JFrame {
                 }
             }
         });
-
 
         keyPanel.add(movieScroll);
 
@@ -115,12 +112,11 @@ public class GraphView  extends JFrame {
 
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         IMovieModel model = IMovieModel.getInstance();
         IMovieController controller = new Controller(model);
         new GraphView(controller);
     }
-
 
 }
