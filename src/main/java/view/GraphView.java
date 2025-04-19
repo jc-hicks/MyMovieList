@@ -29,7 +29,6 @@ public class GraphView  extends JFrame {
     public GraphView(IMovieController controller){
 
         setTitle("Bar Chart Example");
-        setSize(700, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -58,12 +57,12 @@ public class GraphView  extends JFrame {
 
         // Create Key panel
         JPanel keyPanel = new JPanel();
-        keyPanel.setBackground(Color.BLUE);
-        keyPanel.setPreferredSize(new Dimension(200, 500));
+        keyPanel.setPreferredSize(new Dimension(400, 700));
 
         // Create JTable for movie list and indices and add to Panel
         JTable movieTable = new JTable(data, headings);
         JScrollPane movieScroll = new JScrollPane(movieTable);
+        movieScroll.setPreferredSize(new Dimension(400, 700));
         keyPanel.add(movieScroll);
 
         // Create Bar Graph
@@ -73,12 +72,14 @@ public class GraphView  extends JFrame {
 
         // Wrap it in a ChartPanel
         ChartPanel chartPanel = new ChartPanel(barGraph);
-        chartPanel.setPreferredSize(new java.awt.Dimension(200, 100));
+        chartPanel.setPreferredSize(new Dimension(800, 700));
 
         // Add the chart to the frame
         setLayout(new BorderLayout());
         add(keyPanel, BorderLayout.WEST);
         add(chartPanel);
+
+        pack();
         setVisible(true);
 
     }
