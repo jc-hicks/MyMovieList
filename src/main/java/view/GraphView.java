@@ -16,6 +16,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
+import javax.swing.BoxLayout;
+
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -33,7 +36,6 @@ public class GraphView  extends JFrame {
         setLocationRelativeTo(null);
 
         List<MRecord> records = controller.getAllMovies();
-        System.out.println(records);
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         String[][] data = new String[(records.size())][2];
@@ -58,11 +60,31 @@ public class GraphView  extends JFrame {
         // Create Key panel
         JPanel keyPanel = new JPanel();
         keyPanel.setPreferredSize(new Dimension(400, 700));
+        keyPanel.setLayout(new BoxLayout(keyPanel, BoxLayout.Y_AXIS));
 
         // Create JTable for movie list and indices and add to Panel
         JTable movieTable = new JTable(data, headings);
+        movieTable.setFillsViewportHeight(true);
+        
+        
         JScrollPane movieScroll = new JScrollPane(movieTable);
         movieScroll.setPreferredSize(new Dimension(400, 700));
+
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowOpened(java.awt.event.WindowEvent e) {
+                int rows = movieTable.getRowCount();
+                int height = movieScroll.getViewport().getHeight();
+        
+                if (rows > 0 && height > 0) {
+                    int rowHeight = height / rows;
+                    movieTable.setRowHeight(rowHeight);
+                }
+            }
+        });
+        
+
+
         keyPanel.add(movieScroll);
 
         // Create Bar Graph
