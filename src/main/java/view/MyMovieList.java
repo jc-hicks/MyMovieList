@@ -28,7 +28,7 @@ public class MyMovieList extends JFrame {
     public MyMovieList() {
         super("My Movie List");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(900, 500);
+        setSize(1000, 500);
         setLocationRelativeTo(null);
         initUI();
     }
