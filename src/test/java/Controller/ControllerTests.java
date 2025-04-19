@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -49,6 +50,16 @@ public class ControllerTests {
     }
   }
 
+  @Test
+  public void testLoadWatchListOnStartUp(){
+    movieController.loadWatchlistOnStartup();
+    List<MRecord> watchlist = movieController.getWatchList(); // or however you access it
 
+    assertNotNull(watchlist);
+    assertFalse(watchlist.isEmpty());
 
+    for (MRecord record : watchlist) {
+        System.out.println(record);
+    }
+  }
 }
