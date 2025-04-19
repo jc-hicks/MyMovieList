@@ -22,6 +22,22 @@ public class GraphView  extends JFrame {
         frame.setSize(600, 400);
         frame.setLocationRelativeTo(null);
 
+        List<MRecord> records = controller.getAllMovies();
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        // Add data to a dataset for the chart
+        for(MRecord record : records){
+            double rating = 0;
+            try{
+                rating = Double.parseDouble(record.imdbRating());
+            } catch (NumberFormatException e){
+                System.out.println("Cannot parse ratings to double");
+            }
+            dataset.addValue(rating, "Rating", record.Title());
+        }
+
+        frame.setVisible(true);
+
     }
 
     public static void main(String[] args){
