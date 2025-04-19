@@ -14,6 +14,8 @@ import model.IMovieModel;
 import model.IMovieModel.MRecord;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -32,23 +34,37 @@ public class GraphView  extends JFrame {
         setLocationRelativeTo(null);
 
         List<MRecord> records = controller.getAllMovies();
+        System.out.println(records);
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
+        String[][] data = new String[(records.size())][2];
+        String[] headings = {"Title", "Index"};
+
         // Add data to a dataset for the chart
-        for(MRecord record : records){
+        for(int i = 0; i < records.size(); i++){
             double rating = 0;
             try{
-                rating = Double.parseDouble(record.imdbRating());
+                rating = Double.parseDouble(records.get(i).imdbRating());
             } catch (NumberFormatException e){
                 System.out.println("Cannot parse ratings to double");
             }
-            dataset.addValue(rating, "Rating", record.Title());
+            String title =  records.get(i).Title();
+            String indexString = String.valueOf(i);
+            dataset.addValue(rating, "Rating", indexString);
+
+            data[i][0] = title;
+            data[i][1] = indexString;
         }
 
         // Create Key panel
         JPanel keyPanel = new JPanel();
         keyPanel.setBackground(Color.BLUE);
         keyPanel.setPreferredSize(new Dimension(200, 500));
+
+        // Create JTable for movie list and indices and add to Panel
+        JTable movieTable = new JTable(data, headings);
+        JScrollPane movieScroll = new JScrollPane(movieTable);
+        keyPanel.add(movieScroll);
 
         // Create Bar Graph
         JFreeChart barGraph = ChartFactory.createBarChart("Ratings Graph", "Movie", "Rating", dataset);
