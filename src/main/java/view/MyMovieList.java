@@ -225,6 +225,7 @@ public class MyMovieList extends JFrame {
         sortButton.addActionListener(e -> sortMovieList());
         clearButton.addActionListener(e -> clearTable());
         saveOutButton.addActionListener(e -> saveOut());
+        viewGraph.addActionListener(e -> showGraph());
 
         this.add(mainPanel);
         updateWatchlistPanel();
@@ -309,5 +310,11 @@ public class MyMovieList extends JFrame {
             return;
         controller.saveWatchList();
         JOptionPane.showMessageDialog(this, "WatchList saved successfully!");
+    }
+
+    private void showGraph(){
+        if (controller == null)
+            return;
+        new GraphView(controller);
     }
 }
