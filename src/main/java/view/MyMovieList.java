@@ -77,6 +77,13 @@ public class MyMovieList extends JFrame {
         searchSubPanel.add(searchField);
         searchSubPanel.add(searchButton);
 
+
+        // === Adding ComboBox for operations as it pertains to Filtering ===
+        String[] options = {"",">", "<", ">=", "<=", "="};
+        JComboBox<String> filterOperation = new JComboBox<>(options);
+        filterOperation.setVisible(false);  // initially hidden
+
+
         // === Filter Panel ===
         JPanel filterPanel = new JPanel();
         filterPanel.setBackground(new Color(40, 40, 40));
@@ -88,6 +95,7 @@ public class MyMovieList extends JFrame {
                 new String[] { "Title", "Year", "Director", "Genre", "Actors", "Rating", "Runtime", "Country" });
         filterPanel.add(new JLabel("Filter by:"));
         filterPanel.add(filterFieldCombo);
+        filterPanel.add(filterOperation);
         filterPanel.add(filterInput);
         filterPanel.add(filterButton);
 
@@ -189,11 +197,7 @@ public class MyMovieList extends JFrame {
         });
 
 
-        // === Adding ComboBox for operations as it pertains to Filtering ===
-        String[] options = {"",">", "<", ">=", "<=", "="};
-        JComboBox<String> filterOperation = new JComboBox<>(options);
-        filterOperation.setVisible(false);  // initially hidden
-        filterPanel.add(filterOperation);
+
 
 
         filterFieldCombo.addActionListener(e -> {
