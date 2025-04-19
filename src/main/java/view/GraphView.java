@@ -24,4 +24,12 @@ public class GraphView  extends JFrame {
 
     }
 
+    public static void main(String[] args){
+
+        IMovieModel model = IMovieModel.getInstance();
+        IMovieController controller = new Controller(model);
+        new GraphView(controller);
+    }
+
+
 }
