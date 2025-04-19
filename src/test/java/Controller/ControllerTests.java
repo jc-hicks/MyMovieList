@@ -37,6 +37,7 @@ public class ControllerTests {
     // Initialize the MovieModel with mock records
     movieModel = new MovieModel("data/testmovies.json");
     movieController = new Controller(movieModel);
+    movieController.loadWatchlistOnStartup();
   }
 
   @Test
@@ -52,8 +53,7 @@ public class ControllerTests {
 
   @Test
   public void testLoadWatchListOnStartUp(){
-    movieController.loadWatchlistOnStartup();
-    List<MRecord> watchlist = movieController.getWatchList(); // or however you access it
+    List<MRecord> watchlist = movieController.getWatchList();
 
     assertNotNull(watchlist);
     assertFalse(watchlist.isEmpty());
@@ -70,6 +70,17 @@ public class ControllerTests {
 
     movieController.addToWatchList("Stranger Things");
     assertEquals(expected + 1, watchList.size());
+  }
+
+
+  @Test
+  public void testRemoveFromWatchList(){
+    List<MRecord> watchList = movieController.getWatchList();
+    System.out.println(watchList);
+    int expected = watchList.size();
+
+    movieController.removeFromWatchList("Rango");
+    assertEquals(expected - 1, watchList.size());
   }
 
 }
