@@ -42,7 +42,13 @@ public class ControllerTests {
   public void testGetAllMovies() {
     List<MRecord> movies = movieController.getAllMovies();
 
+    assertEquals(6, movies.size());
+
+    for(MRecord movie : movies){
+      System.out.println(movie);
+    }
   }
+
 
 
 }
