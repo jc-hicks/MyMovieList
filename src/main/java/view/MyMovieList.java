@@ -159,11 +159,12 @@ public class MyMovieList extends JFrame {
                 searchButton, sortButton, clearButton, loadButton, filterButton,
                 addToWatchListButton, removeFromWatchListButton, saveOutButton, viewGraph
         };
+
         for (JButton b : allButtons) {
-            b.setBackground(buttonBg);
-            b.setForeground(buttonFg);
+            // b.setBackground(buttonBg);
+            // b.setForeground(buttonFg);
             b.setFocusPainted(false);
-            b.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+            // b.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
         }
 
         // === Action Listeners ===
