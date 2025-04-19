@@ -28,7 +28,7 @@ public class MyMovieList extends JFrame {
     public MyMovieList() {
         super("My Movie List");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(900, 500);
+        setSize(1000, 500);
         setLocationRelativeTo(null);
         initUI();
     }
@@ -77,6 +77,13 @@ public class MyMovieList extends JFrame {
         searchSubPanel.add(searchField);
         searchSubPanel.add(searchButton);
 
+
+        // === Adding ComboBox for operations as it pertains to Filtering ===
+        String[] options = {"",">", "<", ">=", "<=", "="};
+        JComboBox<String> filterOperation = new JComboBox<>(options);
+        filterOperation.setVisible(false);  // initially hidden
+
+
         // === Filter Panel ===
         JPanel filterPanel = new JPanel();
         filterPanel.setBackground(new Color(40, 40, 40));
@@ -88,6 +95,7 @@ public class MyMovieList extends JFrame {
                 new String[] { "Title", "Year", "Director", "Genre", "Actors", "Rating", "Runtime", "Country" });
         filterPanel.add(new JLabel("Filter by:"));
         filterPanel.add(filterFieldCombo);
+        filterPanel.add(filterOperation);
         filterPanel.add(filterInput);
         filterPanel.add(filterButton);
 
@@ -188,10 +196,35 @@ public class MyMovieList extends JFrame {
             apiKeyField.setText("");
         });
 
-        filterButton.addActionListener(e -> {
+
+
+
+
+        filterFieldCombo.addActionListener(e -> {
             String field = (String) filterFieldCombo.getSelectedItem();
-            String input = filterInput.getText().trim();
+            if (field.equals("Year") || field.equals("Rating") || field.equals("Runtime")){
+                filterOperation.setVisible(true);
+            }else{
+                filterOperation.setVisible(false);
+            }
+        });
+
+
+        filterButton.addActionListener(e -> {
+
+            String field = (String) filterFieldCombo.getSelectedItem();
+            String input = "";
+            String operation = (String) filterOperation.getSelectedItem();
+
+            if (operation.isEmpty()){
+                input = filterInput.getText().trim();
+            } else{
+                input = operation + " " + filterInput.getText().trim();
+            }
+
             if (!input.isEmpty()) {
+                System.out.println("DEBUG: PASSING INPUT: " + input + "PASSING FIELD: " + field);
+
                 List<IMovieModel.MRecord> filtered = controller.filterMovieList(field.toLowerCase(), input);
                 tableModel.setRowCount(0);
                 for (IMovieModel.MRecord record : filtered) {
