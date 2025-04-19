@@ -1,0 +1,25 @@
+[ {
+  "Title" : "Inception",
+  "Year" : "2010",
+  "Director" : "Christopher Nolan",
+  "Actors" : "Leonardo DiCaprio, Joseph Gordon-Levitt, Elliot Page",
+  "Plot" : "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to disaster.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
+  "imdbRating" : "8.8",
+  "Genre" : "Action, Adventure, Sci-Fi",
+  "Runtime" : "148 min",
+  "Country" : "United States, United Kingdom",
+  "Response" : "True"
+}, {
+  "Title" : "Titanic",
+  "Year" : "1997",
+  "Director" : "James Cameron",
+  "Actors" : "Leonardo DiCaprio, Kate Winslet, Billy Zane",
+  "Plot" : "A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious, ill-fated R.M.S. Titanic.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BYzYyN2FiZmUtYWYzMy00MzViLWJkZTMtOGY1ZjgzNWMwN2YxXkEyXkFqcGc@._V1_SX300.jpg",
+  "imdbRating" : "7.9",
+  "Genre" : "Drama, Romance",
+  "Runtime" : "194 min",
+  "Country" : "United States, Mexico",
+  "Response" : "True"
+} ]

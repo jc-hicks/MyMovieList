@@ -17,7 +17,7 @@ public class MyMovieList extends JFrame {
     private IMovieController controller;
     private JTable movieTable;
     private DefaultTableModel tableModel;
-    private JButton loadButton, addToWatchListButton, removeFromWatchListButton, saveOutButton;
+    private JButton loadButton, addToWatchListButton, removeFromWatchListButton, saveOutButton, viewGraph;
     private JButton sortButton, clearButton, filterButton, searchButton, submitApiKeyButton;
     private JComboBox<String> sortColumnCombo, sortOrderCombo, filterFieldCombo;
     private JTextField searchField, filterInput, apiKeyField;
@@ -136,6 +136,8 @@ public class MyMovieList extends JFrame {
         removeFromWatchListButton = new JButton("Remove from Watchlist");
         clearButton = new JButton("Clear Movie Table"); // maybe should be moved to top??
         saveOutButton = new JButton("Save WatchList");
+        viewGraph = new JButton("View Graph");
+        buttonPanel.add(viewGraph);
         buttonPanel.add(loadButton);
         buttonPanel.add(addToWatchListButton);
         buttonPanel.add(removeFromWatchListButton);
@@ -155,13 +157,14 @@ public class MyMovieList extends JFrame {
         Color buttonFg = Color.WHITE;
         JButton[] allButtons = {
                 searchButton, sortButton, clearButton, loadButton, filterButton,
-                addToWatchListButton, removeFromWatchListButton, saveOutButton
+                addToWatchListButton, removeFromWatchListButton, saveOutButton, viewGraph
         };
+
         for (JButton b : allButtons) {
-            b.setBackground(buttonBg);
-            b.setForeground(buttonFg);
+            // b.setBackground(buttonBg);
+            // b.setForeground(buttonFg);
             b.setFocusPainted(false);
-            b.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+            // b.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
         }
 
         // === Action Listeners ===
@@ -250,6 +253,7 @@ public class MyMovieList extends JFrame {
         sortButton.addActionListener(e -> sortMovieList());
         clearButton.addActionListener(e -> clearTable());
         saveOutButton.addActionListener(e -> saveOut());
+        viewGraph.addActionListener(e -> showGraph());
 
         this.add(mainPanel);
         updateWatchlistPanel();
@@ -334,5 +338,11 @@ public class MyMovieList extends JFrame {
             return;
         controller.saveWatchList();
         JOptionPane.showMessageDialog(this, "WatchList saved successfully!");
+    }
+
+    private void showGraph(){
+        if (controller == null)
+            return;
+        new GraphView(controller);
     }
 }

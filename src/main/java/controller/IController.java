@@ -42,5 +42,4 @@ public class IController {
         // removes a movie record from the view, and the controller
         // tells the model to remove it from the watchlist
     }
-
 }
