@@ -32,7 +32,7 @@ public class GraphView  extends JFrame {
     public GraphView(IMovieController controller){
 
         setTitle("Bar Chart Example");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         List<MRecord> records = controller.getAllMovies();
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
