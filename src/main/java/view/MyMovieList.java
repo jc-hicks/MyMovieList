@@ -187,7 +187,7 @@ public class MyMovieList extends JFrame {
 
 
         // === Adding ComboBox for operations as it pertains to Filtering ===
-        String[] options = {">", "<", ">=", "<=", "="};
+        String[] options = {"",">", "<", ">=", "<=", "="};
         JComboBox<String> filterOperation = new JComboBox<>(options);
         filterOperation.setVisible(false);  // initially hidden
         filterPanel.add(filterOperation);
@@ -216,6 +216,7 @@ public class MyMovieList extends JFrame {
             }
 
             if (!input.isEmpty()) {
+                System.out.println("DEBUG: PASSING INPUT: " + input + "PASSING FIELD: " + field);
 
                 List<IMovieModel.MRecord> filtered = controller.filterMovieList(field.toLowerCase(), input);
                 tableModel.setRowCount(0);

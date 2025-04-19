@@ -262,4 +262,16 @@
   "Runtime" : "131 min",
   "Country" : "Italy, United States",
   "Response" : "True"
+}, {
+  "Title" : "Hocus Pocus",
+  "Year" : "1993",
+  "Director" : "Kenny Ortega",
+  "Actors" : "Bette Midler, Sarah Jessica Parker, Kathy Najimy",
+  "Plot" : "A teenage boy named Max and his little sister move to Salem, where he struggles to fit in before awakening a trio of diabolical witches that were executed in the 17th century.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BYWRhOThjM2UtNmRhMi00YzFiLWI4MDYtOGQwNGY0ZjFlOGFkXkEyXkFqcGc@._V1_SX300.jpg",
+  "imdbRating" : "6.9",
+  "Genre" : "Comedy, Family, Fantasy",
+  "Runtime" : "96 min",
+  "Country" : "United States",
+  "Response" : "True"
 } ]
