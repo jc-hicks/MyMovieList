@@ -15,6 +15,10 @@ import model.IMovieModel.MRecord;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.BorderLayout;
+
 import controller.Controller;
 import controller.IMovieController;
 
@@ -23,7 +27,7 @@ public class GraphView  extends JFrame {
     public GraphView(IMovieController controller){
 
         setTitle("Bar Chart Example");
-        setSize(600, 400);
+        setSize(700, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -41,17 +45,24 @@ public class GraphView  extends JFrame {
             dataset.addValue(rating, "Rating", record.Title());
         }
 
-        // Create Graph
+        // Create Key panel
+        JPanel keyPanel = new JPanel();
+        keyPanel.setBackground(Color.BLUE);
+        keyPanel.setPreferredSize(new Dimension(200, 500));
+
+        // Create Bar Graph
         JFreeChart barGraph = ChartFactory.createBarChart("Ratings Graph", "Movie", "Rating", dataset);
 
-        // Add graph to frame
+        // Add Components to frame
 
         // Wrap it in a ChartPanel
         ChartPanel chartPanel = new ChartPanel(barGraph);
         chartPanel.setPreferredSize(new java.awt.Dimension(200, 100));
 
         // Add the chart to the frame
-        setContentPane(chartPanel);
+        setLayout(new BorderLayout());
+        add(keyPanel, BorderLayout.WEST);
+        add(chartPanel);
         setVisible(true);
 
     }
