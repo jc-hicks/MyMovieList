@@ -140,7 +140,7 @@ public class MyMovieList extends JFrame {
         removeFromWatchListButton = new JButton("Remove from Watchlist");
         clearButton = new JButton("Clear Movie Table"); // maybe should be moved to top??
         saveOutButton = new JButton("Save WatchList");
-        viewGraph = new JButton("View Graph");
+        viewGraph = new JButton("Ratings Graph");
         buttonPanel.add(viewGraph);
         buttonPanel.add(loadButton);
         buttonPanel.add(addToWatchListButton);
