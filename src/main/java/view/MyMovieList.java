@@ -77,8 +77,23 @@ public class MyMovieList extends JFrame {
         searchSubPanel.add(searchField);
         searchSubPanel.add(searchButton);
 
+        // === Filter Panel ===
+        JPanel filterPanel = new JPanel();
+        filterPanel.setBackground(new Color(40, 40, 40));
+        filterInput = new JTextField(15);
+        filterInput.setForeground(Color.WHITE);
+        filterInput.setBackground(new Color(60, 60, 60));
+        filterButton = new JButton("Filter");
+        filterFieldCombo = new JComboBox<>(
+                new String[] { "Title", "Year", "Director", "Genre", "Actors", "Rating", "Runtime", "Country" });
+        filterPanel.add(new JLabel("Filter by:"));
+        filterPanel.add(filterFieldCombo);
+        filterPanel.add(filterInput);
+        filterPanel.add(filterButton);
+
         // === Sort Panel ===
-        JPanel sortSubPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel sortSubPanel = new JPanel();
+        sortSubPanel.setLayout(new BoxLayout(sortSubPanel, BoxLayout.X_AXIS));
         sortSubPanel.setBackground(new Color(40, 40, 40));
         sortColumnCombo = new JComboBox<>(new String[] { "Year", "Title", "Director", "Rating" });
         sortOrderCombo = new JComboBox<>(new String[] { "Ascending", "Descending" });
@@ -88,7 +103,9 @@ public class MyMovieList extends JFrame {
         sortSubPanel.add(sortColumnCombo);
         sortSubPanel.add(sortOrderCombo);
         sortSubPanel.add(sortButton);
-
+        sortSubPanel.add(Box.createHorizontalStrut(50));
+        sortSubPanel.add(filterPanel);
+        
         topPanel.add(searchSubPanel);
         topPanel.add(sortSubPanel);
         mainPanel.add(topPanel, BorderLayout.NORTH);
@@ -114,19 +131,6 @@ public class MyMovieList extends JFrame {
         watchlistScrollPane.setPreferredSize(new Dimension(400, 0));
         mainPanel.add(watchlistScrollPane, BorderLayout.EAST);
 
-        // === Filter Panel ===
-        JPanel filterPanel = new JPanel();
-        filterPanel.setBackground(new Color(40, 40, 40));
-        filterInput = new JTextField(15);
-        filterInput.setForeground(Color.WHITE);
-        filterInput.setBackground(new Color(60, 60, 60));
-        filterButton = new JButton("Filter");
-        filterFieldCombo = new JComboBox<>(
-                new String[] { "Title", "Year", "Director", "Genre", "Actors", "Rating", "Runtime", "Country" });
-        filterPanel.add(new JLabel("Filter by:"));
-        filterPanel.add(filterFieldCombo);
-        filterPanel.add(filterInput);
-        filterPanel.add(filterButton);
 
         // === Bottom Button Panel ===
         JPanel buttonPanel = new JPanel();
@@ -148,7 +152,6 @@ public class MyMovieList extends JFrame {
         bottomPanel = new JPanel();
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
         buttonPanel.setBackground(new Color(40, 40, 40));
-        bottomPanel.add(filterPanel);
         bottomPanel.add(buttonPanel);
         mainPanel.add(bottomPanel, BorderLayout.SOUTH);
 
