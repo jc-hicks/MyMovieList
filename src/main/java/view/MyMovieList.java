@@ -198,8 +198,6 @@ public class MyMovieList extends JFrame {
 
 
 
-
-
         filterFieldCombo.addActionListener(e -> {
             String field = (String) filterFieldCombo.getSelectedItem();
             if (field.equals("Year") || field.equals("Rating") || field.equals("Runtime")){
@@ -300,9 +298,10 @@ public class MyMovieList extends JFrame {
     }
 
     private void removeSelectedMovieFromWatchlist() {
-        int selectedRow = movieTable.getSelectedRow();
-        if (selectedRow >= 0) {
-            String title = (String) tableModel.getValueAt(selectedRow, 1);
+        int selectedIndex = watchListDisplay.getSelectedIndex();
+        if (selectedIndex >= 0) {
+            String selected = watchlistModel.getElementAt(selectedIndex);
+            String title = selected.split(" \\(")[0];
             controller.removeFromWatchList(title);
             controller.saveWatchList();
             JOptionPane.showMessageDialog(this, title + " removed from your watchlist!");

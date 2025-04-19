@@ -4,10 +4,10 @@
 This readme should contain the following information: 
 
 * The group member's names and link to their personal githubs
-* James Hicks
-* Ruben Salido
-* Nick Gjerasi
-* John Vernon
+* James Hicks:   https://github.com/Sp25-CS5004-Online-Lionelle/final-project-group-1/tree/jc-hicks-model
+* Ruben Salido:  https://github.com/Sp25-CS5004-Online-Lionelle/final-project-group-1/tree/ruben-view
+* Nick Gjerasi:  https://github.com/Sp25-CS5004-Online-Lionelle/final-project-group-1/tree/nick-gjerasi-model
+* John Vernon:   https://github.com/Sp25-CS5004-Online-Lionelle/final-project-group-1/tree/john-controller
 
 * A program with a GUI that allows users to utilize OMDb’s open API to find movies and their posters (if available) which they may then export into a file. This program could be used to maintain a movie watch list. Users may be able to add or remove movies from their watchlist within the GUI. The watchlist will be persistent and able to be accessed upon launch of the application automatically. We are planning on utilizing a GUI as the main interface for users to utilize our program. This GUI will provide the ability to make and manager lists and save them to an output file.
 
