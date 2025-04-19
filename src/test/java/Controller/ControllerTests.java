@@ -101,4 +101,51 @@ public class ControllerTests {
 
   }
 
+  @Test
+  public void testGetMyRating(){
+    List<MRecord> watchList = movieController.getWatchList();
+    String rating = movieController.getMyRating("Rango");
+
+    assertTrue(rating.equals("7.3"));
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
