@@ -107,6 +107,21 @@ classDiagram
         + static getInstance(String): IMovieModel
     }
 
+    class MRecord {
+        <<record>>
+        + Title: String
+        + Year: String
+        + Director: String
+        + Actors: String
+        + Plot: String
+        + Poster: String
+        + imdbRating: String
+        + Genre: String
+        + Runtime: String
+        + Country: String
+        + Response: String
+    }
+
     class MyMovieList {
         - IMovieController controller 
         - JTable movieTable
