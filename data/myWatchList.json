@@ -1,16 +1,4 @@
 [ {
-  "Title" : "Inception",
-  "Year" : "2010",
-  "Director" : "Christopher Nolan",
-  "Actors" : "Leonardo DiCaprio, Joseph Gordon-Levitt",
-  "Plot" : "A thief who steals corporate secrets...",
-  "Poster" : "https://m.media-amazon.com/images/M/...",
-  "imdbRating" : "10",
-  "Genre" : "Action, Adventure, Sci-Fi",
-  "Runtime" : "148 min",
-  "Country" : "USA",
-  "Response" : "True"
-}, {
   "Title" : "Rango",
   "Year" : "2011",
   "Director" : "Gore Verbinski",
@@ -57,5 +45,29 @@
   "Genre" : "Comedy, Drama, Romance",
   "Runtime" : "131 min",
   "Country" : "Italy, United States",
+  "Response" : "True"
+}, {
+  "Title" : "Alien",
+  "Year" : "1979",
+  "Director" : "Ridley Scott",
+  "Actors" : "Sigourney Weaver, Tom Skerritt, John Hurt",
+  "Plot" : "After investigating a mysterious transmission of unknown origin, the crew of a commercial spacecraft encounters a deadly lifeform.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BN2NhMDk2MmEtZDQzOC00MmY5LThhYzAtMDdjZGFjOGZjMjdjXkEyXkFqcGc@._V1_SX300.jpg",
+  "imdbRating" : "8.5",
+  "Genre" : "Horror, Sci-Fi",
+  "Runtime" : "117 min",
+  "Country" : "United Kingdom, United States",
+  "Response" : "True"
+}, {
+  "Title" : "The Lord of the Rings: The Fellowship of the Ring",
+  "Year" : "2001",
+  "Director" : "Peter Jackson",
+  "Actors" : "Elijah Wood, Ian McKellen, Orlando Bloom",
+  "Plot" : "A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.",
+  "Poster" : "https://m.media-amazon.com/images/M/MV5BNzIxMDQ2YTctNDY4MC00ZTRhLTk4ODQtMTVlOWY4NTdiYmMwXkEyXkFqcGc@._V1_SX300.jpg",
+  "imdbRating" : "8.9",
+  "Genre" : "Adventure, Drama, Fantasy",
+  "Runtime" : "178 min",
+  "Country" : "New Zealand, United States, United Kingdom",
   "Response" : "True"
 } ]
