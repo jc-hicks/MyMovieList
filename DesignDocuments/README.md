@@ -209,3 +209,14 @@ classDiagram
         + filterMovieList(String, String): List~IMovieModel.MRecord~
         + modelSetAPIKey(String): void
     }
+
+    class NetUtils {
+        - static final String API_URL_FORMAT: String
+        - static API_KEY: String
+        - NetUtils()
+        + setAPIKey(String): void
+        + getMovieUrl(String): String
+        + getUrlContents(String): InputStream
+        + getMovieDetails(String): InputStream
+        + main(String[]): void
+    }
