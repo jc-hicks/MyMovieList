@@ -52,3 +52,35 @@ classDiagram
     movieRecord --> NetUtils: uses
 
 ```
+
+# Final Design 
+
+```mermaid 
+classDiagram 
+
+    class Main {
+        + main(String [] args) : void 
+    }
+
+    class MovieModel{
+        - records: List~MRecord~
+        - watchList: List~MRecord~
+        - databasePath: String
+        + MovieModel()
+        + MovieModel(String)
+        + addRecord(MRecord): Void 
+        + getRecord(String): MRecord 
+        + ApiKeySetter(String): void 
+        + addToWatchList(MRecord): void
+        + removeFromWatchList(MRecord): void 
+        + getWatchList() : List~MRecord~
+        + addFromRecordsToWatchList(String): void 
+        + saveWatchListToFile(): void
+        + loadWatchListFromFile(): void
+        + setMovieRating(String, String): void 
+        + getRecordFromWatchList(String): MRecord 
+        + filterWatchList (String, String): Stream~MRecord~
+        - loadFromDatabase(String): void 
+        - saveToDatabase(): void
+        - saveToDatabase(String): void
+    }
