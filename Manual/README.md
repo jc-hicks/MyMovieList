@@ -94,6 +94,15 @@ Once you click this button, a window will appear which allows you to select a de
 
 For ease of use, your Watchlist, and the database of movies are also saved locally and persist throughout sessions, so if you forget to save a list, you can still access it by restarting the program. 
 
+
+### Work In Progress: Graph of Ratings
+
+To get a visual distribution of the ratings you have added, you can click the "Ratings Graph" button. 
+
+![alt text](../DesignDocuments/ManualScreenshots/GraphButton.png)
+
+![alt text](../DesignDocuments/ManualScreenshots/GraphView.png)
+
 # Thank you!
 
 ### Thank you for trying out our MyMovieList application, and we hope you have a fun movie night! 🎥🎥🎥
