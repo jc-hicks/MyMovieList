@@ -182,6 +182,7 @@ classDiagram
     }
 
     class IController {
+        <<interface>>
         - IMovieModel model
         + IController(IMovieModel)
         + start(): void
@@ -192,4 +193,19 @@ classDiagram
         + filterMovieList(): void
         + addMovieToMovieList(): void
         + removeMovieFromMovieList(): void
+    }
+
+    class IMovieController {
+        <<interface>>
+        + searchMovie(String): void
+        + addToWatchList(String): void
+        + removeFromWatchList(string): void
+        + saveWatchList(): void
+        + getWatchList(): List~IMovieModel.MRecord~
+        + getAllMovies(): List~IMovieModel.MRecord~
+        + sortMovieList(String, String): List~IMovieModel.MRecord~
+        + setMyRating(String, String): void
+        + getMyRating(String): String
+        + filterMovieList(String, String): List~IMovieModel.MRecord~
+        + modelSetAPIKey(String): void
     }
