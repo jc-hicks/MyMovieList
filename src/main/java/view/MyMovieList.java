@@ -233,6 +233,7 @@ public class MyMovieList extends JFrame {
                 filterOperation.setVisible(true);
             }else{
                 filterOperation.setVisible(false);
+                filterOperation.setSelectedItem("");
             }
         });
 
@@ -244,7 +245,7 @@ public class MyMovieList extends JFrame {
 
             if (operation.isEmpty()){
                 input = filterInput.getText().trim();
-            } else{
+            } else {
                 input = operation + " " + filterInput.getText().trim();
             }
 
@@ -276,7 +277,7 @@ public class MyMovieList extends JFrame {
                         if (newRating != null && !newRating.isBlank()) {
                             controller.setMyRating(title, newRating.trim());
                             updateWatchlistPanel();
-                        } else {
+                        } else if (newRating == null || newRating.isBlank()){
                             JOptionPane.showMessageDialog(MyMovieList.this, "Invalid rating. Please enter a rating 1-10.");
                         }
                     }
