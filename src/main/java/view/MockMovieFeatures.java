@@ -1,10 +1,10 @@
 package view;
 
-import controller.IController;
-import controller.IMovieController;
-import model.IMovieModel;
 import java.util.ArrayList;
 import java.util.List;
+
+import controller.IMovieController;
+import model.IMovieModel;
 
 public class MockMovieFeatures implements IMovieController {
 
@@ -89,5 +89,10 @@ public class MockMovieFeatures implements IMovieController {
     public List<IMovieModel.MRecord> filterMovieList(String field, String criteria) {
         System.out.println("Pretending to filter movies by " + field + " with " + criteria);
         return new ArrayList<>();
+    }
+
+    @Override
+    public void saveWatchListToFilepath(String filePath) {
+        System.out.println("Pretending to save watchlist to: " + filePath);
     }
 }

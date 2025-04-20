@@ -1,33 +1,32 @@
 package view;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.axis.CategoryLabelPositions;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.data.category.DefaultCategoryDataset;
-
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.util.List;
 
-import model.IMovieModel;
-import model.IMovieModel.MRecord;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
-import javax.swing.BoxLayout;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.BorderLayout;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 import controller.Controller;
 import controller.IMovieController;
+import model.IMovieModel;
+import model.IMovieModel.MRecord;
 
 public class GraphView extends JFrame {
 
+    /**
+     * Constructor for the GraphView class.
+     * @param controller the controller to interact with the model
+     */
     public GraphView(IMovieController controller) {
 
         setTitle("Bar Chart Example");
