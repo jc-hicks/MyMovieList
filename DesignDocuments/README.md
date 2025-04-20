@@ -144,3 +144,17 @@ classDiagram
         - saveOut(): void
         - showGraph(): void
     }
+
+    class MockMovieFeatures {
+        + searchMovie(String): void
+        + addToWatchList(String): void
+        + getWatchList(): List~IMovieModel.MRecord~
+        + modelSetAPIKey(String): void
+        + getAllMovies(): List~IMovieModel.MRecord~
+        + removeFromWatchList(String): void
+        + sortMovieList(String, String): List~IMovieModel.MRecord~
+        + saveWatchList(): void
+        + setMyRating(String, String): void 
+        + getMyRating(String): String
+        + filterMovieList(String, String): List~IMovieModel.MRecord~
+    }
