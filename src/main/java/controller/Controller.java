@@ -165,7 +165,11 @@ public class Controller implements IMovieController {
      */
     @Override
     public List<IMovieModel.MRecord> filterMovieList(String field, String criteria) {
-        return model.filterWatchList(field, criteria).toList();
+        try {
+            return model.filterWatchList(field, criteria).toList();
+        } catch (IllegalArgumentException e) {
+            return List.of(); // Return an empty list when an exception occurs
+        }
     }
 
 }
