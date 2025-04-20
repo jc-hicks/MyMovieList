@@ -235,3 +235,23 @@ classDiagram
         + getMovieDetails(String): InputStream
         + main(String[]): void
     }
+
+    MovieModel ..|> IMovieModel
+    Controller ..|> IMovieController
+    Controller --> IMovieModel
+    MyMovieList --> IMovieController
+    GraphView --> IMovieController
+    MockMovieFeatures --> IMovieModel
+    Main --> MyMovieList
+    MovieModel --> MRecord
+    MyMovieList --> JTable
+    MyMovieList --> DefaultTableModel
+    MyMovieList --> JButton
+    MyMovieList --> JComboBox~String~
+    MyMovieList --> JTextField
+    MyMovieList --> JList~String~
+    MyMovieList --> DefaultListModel~String~
+    MyMovieList --> JPanel
+    NetUtils --> MRecord
+
+    ```
