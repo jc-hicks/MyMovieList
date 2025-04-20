@@ -1,17 +1,15 @@
 package model;
 
-import controller.IMovieController;
 import java.io.OutputStream;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
-import java.util.stream.Stream;
-import net.NetUtils;
 
 /**
  * Interface representing a movie record with its details.
@@ -85,6 +83,8 @@ public interface IMovieModel {
      *
      */
     void saveWatchListToFile();
+
+    void saveWatchListToFilepath(String filePath);
 
     /**
      * Removes a movie record from the watch list by title.

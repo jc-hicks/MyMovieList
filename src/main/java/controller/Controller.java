@@ -104,6 +104,19 @@ public class Controller implements IMovieController {
         model.saveWatchListToFile();
     }
 
+    /**
+     * Saves watchlist as json file to user specified location
+     * @param filePath path to save the file
+     */
+    @Override
+    public void saveWatchListToFilepath(String filePath) {
+        try {
+            model.saveWatchListToFilepath(filePath);
+        } catch (IllegalArgumentException e) {
+            System.err.println("IllegalArgumentException: " + e.getMessage());
+        }
+    }
+
 
     /**
      * right click option to add personal rating to watchlist json

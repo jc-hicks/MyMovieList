@@ -233,6 +233,17 @@ public class MovieModel implements IMovieModel {
         }
     }
 
+    public void saveWatchListToFilepath(String filePath) {
+        if (filePath == null || filePath.isEmpty()) {
+            throw new IllegalArgumentException("Invalid file path for watch list");
+        }
+        try (OutputStream out = new FileOutputStream(filePath)) {
+            IMovieModel.writeRecords(watchList, out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Loads the watch list from a file.
      */

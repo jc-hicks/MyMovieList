@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.io.File;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -11,6 +12,7 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -20,7 +22,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 import javax.swing.UIManager;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 import controller.Controller;
@@ -260,7 +264,7 @@ public class MyMovieList extends JFrame {
                             controller.setMyRating(title, newRating.trim());
                             updateWatchlistPanel();
                         } else {
-                            JOptionPane.showMessageDialog(MyMovieList.this, "Invalid rating. Please try again.");
+                            JOptionPane.showMessageDialog(MyMovieList.this, "Invalid rating. Please enter a rating 1-10.");
                         }
                     }
                 }
@@ -356,8 +360,29 @@ public class MyMovieList extends JFrame {
     private void saveOut() {
         if (controller == null)
             return;
-        controller.saveWatchList();
-        JOptionPane.showMessageDialog(this, "WatchList saved successfully!");
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Save Watchlist to File");
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("JSON Format", "json"));
+
+        if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            String path = file.getAbsolutePath();
+            
+            SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+                final String finalPath = path + ".json";
+                @Override
+                protected Void doInBackground() throws Exception {
+                    controller.saveWatchListToFilepath(finalPath);
+                    return null;
+                }
+
+                @Override
+                protected void done() {
+                    JOptionPane.showMessageDialog(MyMovieList.this, "Watchlist saved to " + path);
+                }
+            };
+            worker.execute();
+        }
     }
 
     private void showGraph(){

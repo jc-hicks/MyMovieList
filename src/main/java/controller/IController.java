@@ -42,4 +42,11 @@ public class IController {
         // removes a movie record from the view, and the controller
         // tells the model to remove it from the watchlist
     }
+
+    public void saveWatchListToFile() {
+        // save the watchlist to a file
+    }
+    public void saveWatchListToFilepath(String filePath) {
+        // save the watchlist to a file at the specified path
+    }
 }

@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.List;
+
 import model.IMovieModel;
 
 /**
@@ -17,6 +18,8 @@ public interface IMovieController {
     void setMyRating(String title, String rating);
     String getMyRating(String title);
     List<IMovieModel.MRecord> filterMovieList(String field, String criteria);
+    void saveWatchListToFilepath(String filePath);
+
 
     /**
      * Calls the model to set the users API Key.
