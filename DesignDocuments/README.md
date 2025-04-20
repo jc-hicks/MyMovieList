@@ -62,7 +62,7 @@ classDiagram
         + main(String [] args) : void 
     }
 
-    class MovieModel{
+    class MovieModel {
         - records: List~MRecord~
         - watchList: List~MRecord~
         - databasePath: String
@@ -83,4 +83,64 @@ classDiagram
         - loadFromDatabase(String): void 
         - saveToDatabase(): void
         - saveToDatabase(String): void
+    }
+
+    class IMovieModel {
+        <<interface>>
+        + String DATABASE = "data/movie.json"
+        + String WATCHLIST_DATABASE = "data/myWatchList.json"
+        + getRecords(): List~MRecord~ 
+        + getRecords(String): MRecord
+        + static writeRecords(Collection~MRecord~, OutputStream): void
+        + loadWatchListFromFile(): void 
+        + setMovieRating(String, String): void 
+        + sortMovieList(Stream~MRecord~, String, String): List~MRecord~
+        + filterWatchList(String, String): Stream~MRecord~
+        + saveWatchListToFile(): void
+        + getWatchList(): List~MRecord~
+        + getRecordFromWatchList(String): MRecord
+        + removeFromWatchList(MRecord): void
+        + ApiKeySetter(String): void
+        + addFromRecordsToWatchList(String): void
+        + static exportRecordAsJson(MRecord): String
+        + static getInstance(): IMovieModel
+        + static getInstance(String): IMovieModel
+    }
+
+    class MyMovieList {
+        - IMovieController controller 
+        - JTable movieTable
+        - DefaultTableModel tableModel
+        - JButton loadButton
+        - JButton addToWatchListButton
+        - JButton removeFromWatchListButton
+        - JButton saveOutButton
+        - JButton viewGraph
+        - JButton sortButton
+        - JButton clearButton
+        - JButton filterButton 
+        - JButton searchButton
+        - JButton submitApiKeyButton
+        - JComboBox~String~ sortColumnCombo
+        - JComboBox~String~ sortOrderCombo
+        - JComboBox~String~ filterFieldCombo 
+        - JTextField searchField
+        - JTextField filterInput
+        - JTextField apiKeyField
+        - JList~String~ watchListDisplay
+        - DefaultListModel~String~ watchlistModel
+        - JPanel bottomPanel
+
+        + MyMovieList()
+        + setController(controller): void 
+        - initUI(): void
+        - refreshMovieTable(): void
+        - loadMovies(): void 
+        - addSelectedMovieToWatchList(): void
+        - removeSelectedMovieFromWatchList(): void 
+        - sortMovieList(): void
+        - clearTable(): void 
+        - updateWatchlistPanel(): void
+        - saveOut(): void
+        - showGraph(): void
     }
