@@ -330,6 +330,10 @@ public class MyMovieList extends JFrame {
         int selectedRow = movieTable.getSelectedRow();
         if (selectedRow >= 0) {
             String title = (String) tableModel.getValueAt(selectedRow, 1);
+            if (controller.getWatchList().stream().anyMatch(m -> m.Title().equals(title))) {
+                JOptionPane.showMessageDialog(this, title + " is already in your watchlist!");
+                return;
+            }
             controller.addToWatchList(title);
             controller.saveWatchList();
             JOptionPane.showMessageDialog(this, title + " added to your watchlist!");
