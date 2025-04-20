@@ -132,7 +132,7 @@ classDiagram
         - JPanel bottomPanel
 
         + MyMovieList()
-        + setController(controller): void 
+        + setController(IMovieController): void 
         - initUI(): void
         - refreshMovieTable(): void
         - loadMovies(): void 
@@ -158,3 +158,10 @@ classDiagram
         + getMyRating(String): String
         + filterMovieList(String, String): List~IMovieModel.MRecord~
     }
+
+    class GraphView {
+        + GraphView(IMovieController)
+        + main(String[]): void
+    }
+
+    
