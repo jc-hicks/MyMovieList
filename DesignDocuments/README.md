@@ -164,4 +164,19 @@ classDiagram
         + main(String[]): void
     }
 
-    
+    class Controller {
+        - IMovieModel model
+        + Controller(IMovieModel)
+        + loadWatchlistOnStartup(): void
+        + searchMovie(String): void
+        + addToWatchList(String): void
+        + removeFromWatchList(String): void
+        + getWatchList(): List~IMovieModel.MRecord~
+        + getAllMovies(): List~IMovieModel.MRecord~
+        + sortMovieList(String, String): List~IMovieModel.MRecord~
+        + saveWatchList(): void
+        + setMyRating(String, String): void
+        + modelSetAPIKey(String): void
+        + getMyRating(String): String
+        + filterMovieList(String, String): List~IMovieModel.MRecord~
+    }
