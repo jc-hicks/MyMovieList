@@ -1,25 +1,34 @@
-# Final Project for CS 5004 - (APPLICATION NAME/Update)
+# Final Project for CS 5004 - MyMovieList
 
-(remove this and add your sections/elements)
-This readme should contain the following information: 
+MyMovieList is an application that allows users to manage a watchlist of movies.
 
-* The group member's names and link to their personal githubs
-* James Hicks
-* Ruben Salido
-* Nick Gjerasi
-* John Vernon
+# Description
 
-* A program with a GUI that allows users to utilize OMDb’s open API to find movies and their posters (if available) which they may then export into a file. This program could be used to maintain a movie watch list. Users may be able to add or remove movies from their watchlist within the GUI. The watchlist will be persistent and able to be accessed upon launch of the application automatically. We are planning on utilizing a GUI as the main interface for users to utilize our program. This GUI will provide the ability to make and manager lists and save them to an output file.
+MyMovieList is a program with that allows users to utilize OMDb’s open API to find movies which they may then export into a file. Through the GUI, users can update ratings, sort movies, filter movies, and manage their personal watchlist. The watchlist is persistent and accessed upon launch of the application automatically. The watchlist can also be exported in JSON format for ease of use. The application begins with a minimum set of 25 preloaded movies, but any movie that exists within the OMDb Api can be added. 
 
-* Implementation Phases
-1. Completion of the model - 4/06
-2. Prototype of the Controller / View - 4/11
-3. Completion of the Model /Controller / View (project done) - 4/13
-4. Completion of ALL documentation by 4/15
+# Getting started
+
+## Prerequisites
+To use MyMovieList, you will need:
+
+1. Java Runtime Environment (JRE) installed on your computer
+2. A free API key from [OMDb API](https://www.omdbapi.com/)
+
+## Installation
+1. Clone this repository or download the latest release
+2. Enter your API key in the top left corner when you launch the program.
+
+## Usage
+The application includes a preloaded list of 25 movies to get you started.
+
+For detailed instructions on how to use all features, please refer to our [User Manual](Manual/README.md).
+ 
 
 
-* Links to design documents and manuals
-* Instructions on how to run the application
-* [API Website](https://www.omdbapi.com/)
+## Authors
+* [James Hicks](https://github.com/jc-hicks)
+* [Ruben Salido](https://github.com/ElGavaOriginal)
+* [Nick Gjerasi](https://github.com/GjerasiNicholas)
+* [John Vernon](https://github.com/albertusvernon)
 
 Ask yourself, if you started here in the readme, would you have what you need to work on this project and/or use the application?

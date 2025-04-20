@@ -1,9 +1,10 @@
 package controller;
 
 
+import java.util.List;
+
 import model.IMovieModel;
 import model.MovieModel;
-import java.util.List;
 
 
 /**
@@ -21,13 +22,16 @@ public class Controller implements IMovieController {
         this.model = model;  // Loads from movie.json
     }
 
-
+    /**
+     * Loads the watchlist from a file on startup.
+     * This is called in the main method of the GUI.
+     */
     public void loadWatchlistOnStartup() {
         ((MovieModel) model).loadWatchListFromFile();
     }
 
 
-    /**(
+    /**
      * Searches record for specific title
      * @param title
      */
@@ -103,6 +107,19 @@ public class Controller implements IMovieController {
         model.saveWatchListToFile();
     }
 
+    /**
+     * Saves watchlist as json file to user specified location
+     * @param filePath path to save the file
+     */
+    @Override
+    public void saveWatchListToFilepath(String filePath) {
+        try {
+            model.saveWatchListToFilepath(filePath);
+        } catch (IllegalArgumentException e) {
+            System.err.println("IllegalArgumentException: " + e.getMessage());
+        }
+    }
+
 
     /**
      * right click option to add personal rating to watchlist json
@@ -111,7 +128,12 @@ public class Controller implements IMovieController {
      */
     @Override
     public void setMyRating(String title, String rating) {
-        model.setMovieRating(title, rating);
+        try {
+            model.setMovieRating(title, rating);
+        } catch (IllegalArgumentException e) {
+            System.err.println("IllegalArgumentException: " + e.getMessage());
+        }
+        
     }
 
     /**

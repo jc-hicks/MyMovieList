@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import static java.lang.Integer.parseInt;
 
-import java.sql.SQLOutput;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -23,8 +23,19 @@ import net.NetUtils;
 
 public class MovieModel implements IMovieModel {
 
+    /**
+     * The list of movie records.
+     */
     private final List<MRecord> records = new ArrayList<>();
+
+    /**
+     * The list of movie records in the watch list.
+     */
     private final List<MRecord> watchList = new ArrayList<>();
+
+    /**
+     * The path to the database file, which contains the default set of movies.
+     */
     private String databasePath;
 
     /**
@@ -234,6 +245,21 @@ public class MovieModel implements IMovieModel {
     }
 
     /**
+     * Saves the watch list to a file at the specified file path.
+     * @param filePath the path to save the file
+     */
+    public void saveWatchListToFilepath(String filePath) {
+        if (filePath == null || filePath.isEmpty()) {
+            throw new IllegalArgumentException("Invalid file path for watch list");
+        }
+        try (OutputStream out = new FileOutputStream(filePath)) {
+            IMovieModel.writeRecords(watchList, out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Loads the watch list from a file.
      */
     @Override
@@ -259,6 +285,10 @@ public class MovieModel implements IMovieModel {
      */
     @Override
     public void setMovieRating(String title, String rating) {
+        double numRating = Double.parseDouble(rating);
+        if (numRating > 10 || numRating < 0) {
+            throw new IllegalArgumentException("Rating must be between 0 and 10");
+        }
         if (title == null || title.isEmpty() || rating == null || rating.isEmpty()) {
             throw new IllegalArgumentException("Title and rating cannot be null or empty");
         }
@@ -502,7 +532,10 @@ public class MovieModel implements IMovieModel {
         return ratings.stream().sorted().collect(Collectors.toList());
     }
 
-
+    /**
+     * Utilized to get listing of all ratings of current movies in the list.
+     * @return List of movies
+     */
     @Override
     public List<MRecord> getRecords() {
         return records;

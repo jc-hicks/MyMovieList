@@ -1,17 +1,35 @@
 package view;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.io.File;
+import java.util.List;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
+import javax.swing.UIManager;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+
 import controller.Controller;
 import controller.IMovieController;
 import model.IMovieModel;
-
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.awt.*;
-import java.io.File;
-import java.util.List;
 
 public class MyMovieList extends JFrame {
     private IMovieController controller;
@@ -25,6 +43,10 @@ public class MyMovieList extends JFrame {
     private DefaultListModel<String> watchlistModel;
     private JPanel bottomPanel;
 
+    /**
+     * Constructor for the MyMovieList GUI.
+     * Sets up the main frame and initializes the UI components.
+     */
     public MyMovieList() {
         super("My Movie List");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,6 +55,10 @@ public class MyMovieList extends JFrame {
         initUI();
     }
 
+    /**
+     * Sets the controller for the GUI.
+     * @param controller the controller to set
+     */
     public void setController(IMovieController controller) {
         this.controller = controller;
         if (controller instanceof Controller real) {
@@ -41,6 +67,10 @@ public class MyMovieList extends JFrame {
         updateWatchlistPanel();
     }
 
+    /**
+     * Initializes the UI components and layout.
+     * Sets up the main frame, panels, buttons, and action listeners.
+     */
     private void initUI() {
         UIManager.put("Label.foreground", Color.WHITE);
 
@@ -196,10 +226,6 @@ public class MyMovieList extends JFrame {
             apiKeyField.setText("");
         });
 
-
-
-
-
         filterFieldCombo.addActionListener(e -> {
             String field = (String) filterFieldCombo.getSelectedItem();
             if (field.equals("Year") || field.equals("Rating") || field.equals("Runtime")){
@@ -208,7 +234,6 @@ public class MyMovieList extends JFrame {
                 filterOperation.setVisible(false);
             }
         });
-
 
         filterButton.addActionListener(e -> {
 
@@ -250,6 +275,8 @@ public class MyMovieList extends JFrame {
                         if (newRating != null && !newRating.isBlank()) {
                             controller.setMyRating(title, newRating.trim());
                             updateWatchlistPanel();
+                        } else {
+                            JOptionPane.showMessageDialog(MyMovieList.this, "Invalid rating. Please enter a rating 1-10.");
                         }
                     }
                 }
@@ -268,6 +295,9 @@ public class MyMovieList extends JFrame {
         updateWatchlistPanel();
     }
 
+    /**
+     * Refreshes the movie table with the latest data from the controller.
+     */
     private void refreshMovieTable() {
         tableModel.setRowCount(0);
         List<IMovieModel.MRecord> updateMovies = controller.getAllMovies();
@@ -278,6 +308,9 @@ public class MyMovieList extends JFrame {
         }
     }
 
+    /**
+     * Loads all movies from the controller and populates the movie table.
+     */
     private void loadMovies() {
         if (controller == null)
             return;
@@ -288,6 +321,9 @@ public class MyMovieList extends JFrame {
         }
     }
 
+    /**
+     * Adds the selected movie from the table to the watchlist.
+     */
     private void addSelectedMovieToWatchlist() {
         int selectedRow = movieTable.getSelectedRow();
         if (selectedRow >= 0) {
@@ -299,6 +335,9 @@ public class MyMovieList extends JFrame {
         }
     }
 
+    /**
+     * Removes the selected movie from the watchlist.
+     */
     private void removeSelectedMovieFromWatchlist() {
         int selectedRow = movieTable.getSelectedRow();
         if (selectedRow >= 0) {
@@ -310,6 +349,9 @@ public class MyMovieList extends JFrame {
         }
     }
 
+    /**
+     * Sorts the movie list based on the selected column and order.
+     */
     private void sortMovieList() {
         if (controller == null)
             return;
@@ -323,10 +365,16 @@ public class MyMovieList extends JFrame {
         }
     }
 
+    /**
+     * Clears the movie table.
+     */
     private void clearTable() {
         tableModel.setRowCount(0);
     }
 
+    /**
+     * Updates the watchlist panel with the latest data from the controller.
+     */
     private void updateWatchlistPanel() {
         if (controller == null)
             return;
@@ -342,13 +390,40 @@ public class MyMovieList extends JFrame {
         }
     }
 
+    /**
+     * Saves the watchlist to a file.
+     */
     private void saveOut() {
         if (controller == null)
             return;
-        controller.saveWatchList();
-        JOptionPane.showMessageDialog(this, "WatchList saved successfully!");
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Save Watchlist to File");
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("JSON Format", "json"));
+
+        if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            String path = file.getAbsolutePath();
+            
+            SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+                final String finalPath = path + ".json";
+                @Override
+                protected Void doInBackground() throws Exception {
+                    controller.saveWatchListToFilepath(finalPath);
+                    return null;
+                }
+
+                @Override
+                protected void done() {
+                    JOptionPane.showMessageDialog(MyMovieList.this, "Watchlist saved to " + path);
+                }
+            };
+            worker.execute();
+        }
     }
 
+    /**
+     * Displays the graph view of the movie ratings.
+     */
     private void showGraph(){
         if (controller == null)
             return;
