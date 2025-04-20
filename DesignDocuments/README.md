@@ -180,3 +180,16 @@ classDiagram
         + getMyRating(String): String
         + filterMovieList(String, String): List~IMovieModel.MRecord~
     }
+
+    class IController {
+        - IMovieModel model
+        + IController(IMovieModel)
+        + start(): void
+        + printMovies(): void
+        + lookupMovie(): void
+        + lookupWatchlist(): void
+        + sortMovieList(): void
+        + filterMovieList(): void
+        + addMovieToMovieList(): void
+        + removeMovieFromMovieList(): void
+    }
