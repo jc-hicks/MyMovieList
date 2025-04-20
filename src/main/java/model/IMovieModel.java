@@ -84,6 +84,10 @@ public interface IMovieModel {
      */
     void saveWatchListToFile();
 
+    /**
+     * Saves the watch list to a file at the specified file path.
+     * @param filePath the path to save the file
+     */
     void saveWatchListToFilepath(String filePath);
 
     /**
@@ -136,10 +140,19 @@ public interface IMovieModel {
         }
     }
 
+    /**
+     * Gets an instance of the movie model.
+     * * @return an instance of IMovieModel
+     */
     static IMovieModel getInstance() {
         return new MovieModel();
     }
 
+    /**
+     * Gets an instance of the movie model with a specified database.
+     * @param database the database to use
+     * @return an instance of IMovieModel
+     */
     static IMovieModel getInstance(String database) {
         try {
             return new MovieModel(database);

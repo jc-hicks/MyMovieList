@@ -23,8 +23,19 @@ import net.NetUtils;
 
 public class MovieModel implements IMovieModel {
 
+    /**
+     * The list of movie records.
+     */
     private final List<MRecord> records = new ArrayList<>();
+
+    /**
+     * The list of movie records in the watch list.
+     */
     private final List<MRecord> watchList = new ArrayList<>();
+
+    /**
+     * The path to the database file, which contains the default set of movies.
+     */
     private String databasePath;
 
     /**
@@ -233,6 +244,10 @@ public class MovieModel implements IMovieModel {
         }
     }
 
+    /**
+     * Saves the watch list to a file at the specified file path.
+     * @param filePath the path to save the file
+     */
     public void saveWatchListToFilepath(String filePath) {
         if (filePath == null || filePath.isEmpty()) {
             throw new IllegalArgumentException("Invalid file path for watch list");
@@ -517,7 +532,10 @@ public class MovieModel implements IMovieModel {
         return ratings.stream().sorted().collect(Collectors.toList());
     }
 
-
+    /**
+     * Utilized to get listing of all ratings of current movies in the list.
+     * @return List of movies
+     */
     @Override
     public List<MRecord> getRecords() {
         return records;

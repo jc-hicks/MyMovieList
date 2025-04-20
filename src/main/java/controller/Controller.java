@@ -22,13 +22,16 @@ public class Controller implements IMovieController {
         this.model = model;  // Loads from movie.json
     }
 
-
+    /**
+     * Loads the watchlist from a file on startup.
+     * This is called in the main method of the GUI.
+     */
     public void loadWatchlistOnStartup() {
         ((MovieModel) model).loadWatchListFromFile();
     }
 
 
-    /**(
+    /**
      * Searches record for specific title
      * @param title
      */
