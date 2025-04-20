@@ -1,17 +1,31 @@
 package view;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.util.List;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
+
 import controller.Controller;
 import controller.IMovieController;
 import model.IMovieModel;
-
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.awt.*;
-import java.io.File;
-import java.util.List;
 
 public class MyMovieList extends JFrame {
     private IMovieController controller;
@@ -196,10 +210,6 @@ public class MyMovieList extends JFrame {
             apiKeyField.setText("");
         });
 
-
-
-
-
         filterFieldCombo.addActionListener(e -> {
             String field = (String) filterFieldCombo.getSelectedItem();
             if (field.equals("Year") || field.equals("Rating") || field.equals("Runtime")){
@@ -208,7 +218,6 @@ public class MyMovieList extends JFrame {
                 filterOperation.setVisible(false);
             }
         });
-
 
         filterButton.addActionListener(e -> {
 
@@ -250,6 +259,8 @@ public class MyMovieList extends JFrame {
                         if (newRating != null && !newRating.isBlank()) {
                             controller.setMyRating(title, newRating.trim());
                             updateWatchlistPanel();
+                        } else {
+                            JOptionPane.showMessageDialog(MyMovieList.this, "Invalid rating. Please try again.");
                         }
                     }
                 }

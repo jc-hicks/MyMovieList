@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import static java.lang.Integer.parseInt;
 
-import java.sql.SQLOutput;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -259,6 +259,10 @@ public class MovieModel implements IMovieModel {
      */
     @Override
     public void setMovieRating(String title, String rating) {
+        double numRating = Double.parseDouble(rating);
+        if (numRating > 10 || numRating < 0) {
+            throw new IllegalArgumentException("Rating must be between 0 and 10");
+        }
         if (title == null || title.isEmpty() || rating == null || rating.isEmpty()) {
             throw new IllegalArgumentException("Title and rating cannot be null or empty");
         }

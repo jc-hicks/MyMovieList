@@ -1,9 +1,10 @@
 package controller;
 
 
+import java.util.List;
+
 import model.IMovieModel;
 import model.MovieModel;
-import java.util.List;
 
 
 /**
@@ -111,7 +112,12 @@ public class Controller implements IMovieController {
      */
     @Override
     public void setMyRating(String title, String rating) {
-        model.setMovieRating(title, rating);
+        try {
+            model.setMovieRating(title, rating);
+        } catch (IllegalArgumentException e) {
+            System.err.println("IllegalArgumentException: " + e.getMessage());
+        }
+        
     }
 
     /**
