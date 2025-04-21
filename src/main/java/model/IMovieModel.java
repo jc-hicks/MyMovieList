@@ -44,61 +44,10 @@ public interface IMovieModel {
     }
 
     /**
-     * Loads the watch list from a file.
-     */
-    void loadWatchListFromFile();
-
-    /**
-     * Sets the rating of a movie in the watch list by title.
-     * @param title the title of the movie
-     * @param rating the new rating to set
-     */
-    void setMovieRating(String title, String rating);
-
-    /**
-     * Saves the watch list to a file in JSON format.
-     *
-     */
-    void saveWatchListToFile();
-
-    /**
-     * Saves the watch list to a file at the specified file path.
-     * @param filePath the path to save the file
-     */
-    void saveWatchListToFilepath(String filePath);
-
-    /**
-     * Removes a movie record from the watch list by title.
-     * @param title the title of the movie to remove
-     */
-    List<MRecord> getWatchList();
-
-    /**
-     * Retrieves a movie record from the watch list by title.
-     * @param title the title of the movie to retrieve
-     * @return the movie record, or null if not found
-     */
-    MRecord getRecordFromWatchList(String watchListTitle);
-
-    /**
-     * Removes a movie record from the watch list.
-     * @param record the movie record to remove
-     */
-    void removeFromWatchList(MRecord record);
-
-
-    /**
      * Sets the API Key for core functionality.
      * @param apiKey
      */
     void ApiKeySetter(String apiKey);
-
-
-    /**
-     * Adds a movie record to the watch list by title if it is not already there.
-     * @param title
-     */
-    void addFromRecordsToWatchList(String title);
 
     /**
      * Method to convert a record to JSON string.
