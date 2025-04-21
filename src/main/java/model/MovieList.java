@@ -2,6 +2,8 @@ package model;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
@@ -11,6 +13,35 @@ import net.NetUtils;
 public class MovieList {
 
     /**
+     * The list of movie records.
+     */
+    private final List<MRecord> records = new ArrayList<>();
+
+    /**
+     * The path to the database file, which contains the default set of movies.
+     */
+    private String databasePath;
+    
+    /**
+     * Creates a MovieList with an empty records list and loads records from
+     * the default database.
+     * @see IMovieModel#DATABASE
+     */
+    public MovieList() {
+        this(IMovieModel.DATABASE);
+    }
+
+    /**
+     * Creates a MovieList with an empty records list and loads records from
+     * the specified database.
+     * @param databasePath the path to the database file
+     */
+    public MovieList(String databasePath) {
+        this.databasePath = databasePath;
+        MovieData.loadFromDatabase(databasePath, this);
+    }
+    
+    /**
      * Adds a movie record to the records list if it does not already exist.
      * @param record
      * 
@@ -19,7 +50,7 @@ public class MovieList {
         if (record != null && records.stream().noneMatch(r -> r.Title().equals(record.Title()))) {
             records.add(record);
             try {
-                saveToDatabase(this);
+                MovieData.saveToDatabase(this);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -33,7 +64,6 @@ public class MovieList {
      * @param title the title of the movie to retrieve
      * @return the movie record, or null if not found.
      */
-    @Override
     public MRecord getRecord(String title) {
         if (title == null || title.isEmpty()) {
             return null;
@@ -59,5 +89,21 @@ public class MovieList {
             return null;
         }
         return null;
+    }
+
+    /**
+     * Retrieves all movie records.
+     * @return the list of movie records
+     */
+    public List<MRecord> getRecords() {
+        return records;
+    }
+    
+    /**
+     * Gets the database path.
+     * @return the database path
+     */
+    public String getDatabasePath() {
+        return databasePath;
     }
 }

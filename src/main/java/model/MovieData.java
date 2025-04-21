@@ -24,7 +24,7 @@ public class MovieData {
      * @param records the collection of records to write
      * @param out     the output stream to write to
      */
-    static void writeRecords(Collection<MRecord> records, OutputStream out) {
+    public static void writeRecords(Collection<MRecord> records, OutputStream out) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             mapper.enable(SerializationFeature.INDENT_OUTPUT);
@@ -39,7 +39,7 @@ public class MovieData {
      * records list.
      * @param databasePath the path to the database file
      */
-    void loadFromDatabase(String databasePath, MovieModel movieModel) throws IOException {
+    public static void loadFromDatabase(String databasePath, MovieList movieList) throws IOException {
         File file = new File(databasePath);
         if (file.length() == 0) {
             return;
@@ -48,7 +48,7 @@ public class MovieData {
             JsonMapper mapper = new JsonMapper();
             List<MRecord> movieRecords = mapper.readValue(existingRecords, new TypeReference<List<MRecord>>() {
             });
-            movieModel.records.addAll(movieRecords);
+            movieList.getRecords().addAll(movieRecords);
         } catch (Exception e) {
             throw new IOException("Error loading records from database: " + e.getMessage(), e);
         }
@@ -58,9 +58,9 @@ public class MovieData {
      * Saves all records to the default database file in JSON format.
      *
      */
-    void saveToDatabase(MovieModel movieModel) throws IOException {
-        if (movieModel.databasePath != null) {
-            saveToDatabase(movieModel.databasePath);
+    public static void saveToDatabase(MovieList movieList) throws IOException {
+        if (movieList.getDatabasePath() != null) {
+            saveToDatabase(MovieList.getDatabasePath(), movieList.getRecords());
         } else {
             saveToDatabase(IMovieModel.DATABASE);
         }
@@ -71,14 +71,14 @@ public class MovieData {
      *
      * @param filePath the path to the database file
      */
-    private void saveToDatabase(String filePath, MovieModel movieModel) throws IOException {
+    private static void saveToDatabase(String filePath, List<MRecord> records) throws IOException {
         File dbFile = new File(filePath);
         File parentDir = dbFile.getParentFile();
         if (parentDir != null && !parentDir.exists()) {
             throw new IOException("Cannot save to database: directory " + parentDir.getAbsolutePath() + " does not exist");
         }
         try (OutputStream out = new FileOutputStream(dbFile)) {
-            IMovieModel.writeRecords(movieModel.records, out);
+            IMovieModel.writeRecords(records, out);
         } catch (IOException e) {
             throw new IOException("Error saving records to database: " + e.getMessage(), e);
         }
@@ -88,13 +88,13 @@ public class MovieData {
      * Saves the watch list to a file in JSON format.
      *
      */
-    public void saveWatchListToFile(WatchList watchList1) {
+    public static void saveWatchListToFile(WatchList watchList) {
         String filePath = IMovieModel.WATCHLIST_DATABASE;
         if (filePath == null || filePath.isEmpty()) {
             throw new IllegalArgumentException("Invalid file path for watch list");
         }
         try (OutputStream out = new FileOutputStream(filePath)) {
-            IMovieModel.writeRecords(watchList1.watchList, out);
+            IMovieModel.writeRecords(watchList.getWatchList(), out);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -104,12 +104,12 @@ public class MovieData {
      * Saves the watch list to a file at the specified file path.
      * @param filePath the path to save the file
      */
-    public void saveWatchListToFilepath(String filePath, WatchList watchList1) {
+    public static void saveWatchListToFilepath(String filePath, WatchList watchList) {
         if (filePath == null || filePath.isEmpty()) {
             throw new IllegalArgumentException("Invalid file path for watch list");
         }
         try (OutputStream out = new FileOutputStream(filePath)) {
-            IMovieModel.writeRecords(watchList1.watchList, out);
+            IMovieModel.writeRecords(watchList.getWatchList(), out);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -118,7 +118,7 @@ public class MovieData {
     /**
      * Loads the watch list from a file.
      */
-    public void loadWatchListFromFile(WatchList watchList1) {
+    public static void loadWatchListFromFile(WatchList watchList) {
         String filePath = IMovieModel.WATCHLIST_DATABASE;
         if (filePath == null || filePath.isEmpty()) {
             throw new IllegalArgumentException("Invalid file path for watch list");
@@ -127,7 +127,7 @@ public class MovieData {
             JsonMapper mapper = new JsonMapper();
             List<MRecord> watchListRecords = mapper.readValue(in, new TypeReference<List<MRecord>>() {
             });
-            watchList1.watchList.addAll(watchListRecords);
+            watchList.getWatchList().addAll(watchListRecords);
         } catch (IOException e) {
             e.printStackTrace();
         }
