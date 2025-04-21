@@ -1,6 +1,6 @@
 # Manual 
 
-Welcome to the MyMovieList applicaton. This manual will show you how to interact with the program, and use it's features, which include sorting a list, filtering a list, and changing ratings.
+Welcome to the MyMovieList application. This manual will show you how to interact with the program, and use it's features, which include sorting a list, filtering a list, and changing ratings.
 
 # API Key
 To get started, enter your email at the link below, and follow the instructions to obtain a free API key.
