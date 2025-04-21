@@ -38,7 +38,11 @@ public class MovieList {
      */
     public MovieList(String databasePath) {
         this.databasePath = databasePath;
-        MovieData.loadFromDatabase(databasePath, this);
+        try {
+            MovieData.loadFromDatabase(this.databasePath, this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     /**

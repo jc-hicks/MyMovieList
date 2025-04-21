@@ -25,5 +25,5 @@ public interface ISortandFilter {
      * @param filterValue
      * @return Stream of movie records
      */
-    Stream<IMovieModel.MRecord> filterWatchList(String filterType, String filterValue, MovieModel movieModel, List<MRecord> records);
+    Stream<IMovieModel.MRecord> filterWatchList(String filterType, String filterValue, MovieList movieList, List<MRecord> records);
 }

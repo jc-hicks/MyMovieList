@@ -60,9 +60,10 @@ public class MovieData {
      */
     public static void saveToDatabase(MovieList movieList) throws IOException {
         if (movieList.getDatabasePath() != null) {
-            saveToDatabase(MovieList.getDatabasePath(), movieList.getRecords());
+            saveToDatabase(movieList.getDatabasePath(), movieList.getRecords());
         } else {
-            saveToDatabase(IMovieModel.DATABASE);
+            String filepath = IMovieModel.DATABASE;
+            saveToDatabase(filepath, movieList.getRecords());
         }
     }
 

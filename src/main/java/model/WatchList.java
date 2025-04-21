@@ -1,15 +1,7 @@
 package model;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import model.IMovieModel.MRecord;
 
@@ -18,7 +10,14 @@ public class WatchList {
     /**
      * The list of movie records in the watch list.
      */
-    private final List<MRecord> watchList = new ArrayList<>();
+    protected final List<MRecord> watchList = new ArrayList<>();
+
+    private MovieList movieList;
+
+    public WatchList(MovieList movieList) {
+        this.movieList = movieList;
+        MovieData.loadWatchListFromFile(this);
+    }
 
     /**
      * Adds a movie record to the watch list if it does not already exist.
@@ -44,7 +43,7 @@ public class WatchList {
      * Removes a movie record from the watch list by title.
      * @param title the title of the movie to remove
      */
-    public List getWatchList() {
+    public List<MRecord> getWatchList() {
         return this.watchList;
     }
 
@@ -57,6 +56,10 @@ public class WatchList {
         if (record != null && watchList.stream().noneMatch(r -> r.Title().equals(record.Title()))) {
             watchList.add(record);
         }
+    }
+
+    private MRecord getRecord(String title) {
+        return movieList.getRecord(title);
     }
 
 
