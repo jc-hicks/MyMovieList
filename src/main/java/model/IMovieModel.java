@@ -3,7 +3,6 @@ package model;
 import java.io.OutputStream;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Stream;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -55,28 +54,6 @@ public interface IMovieModel {
      * @param rating the new rating to set
      */
     void setMovieRating(String title, String rating);
-
-
-    /**
-     * Method for sorting movies based on user passed column and ordering
-     * criteria.
-     *
-     * @param movieStream
-     * @param ascOrDesc
-     * @param column
-     * @return List of movie records sorted in the appropriate order.
-     */
-    List<MRecord> sortMovieList(Stream<MRecord> movieStream, String ascOrDesc, String column);
-
-    /**
-     * Method to filter through the current list of movies based on passed
-     * criteria.
-     *
-     * @param filterType
-     * @param filterValue
-     * @return Stream of movie records
-     */
-    Stream<MRecord> filterWatchList(String filterType, String filterValue);
 
     /**
      * Saves the watch list to a file in JSON format.
