@@ -64,7 +64,7 @@ public interface IMovieModel {
      */
     static IMovieModel getInstance(String database) {
         try {
-            return new MovieModel(database);
+            return new MovieModel();
         } catch (Exception e) {
             return new MovieModel();
         }
