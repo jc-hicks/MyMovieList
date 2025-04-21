@@ -11,7 +11,9 @@ import java.util.List;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
-public class WatchList extends MovieModel {
+import model.IMovieModel.MRecord;
+
+public class WatchList {
 
     /**
      * The list of movie records in the watch list.
@@ -57,54 +59,6 @@ public class WatchList extends MovieModel {
         }
     }
 
-    /**
-     * Saves the watch list to a file in JSON format.
-     *
-     */
-    public void saveWatchListToFile() {
-        String filePath = IMovieModel.WATCHLIST_DATABASE;
-        if (filePath == null || filePath.isEmpty()) {
-            throw new IllegalArgumentException("Invalid file path for watch list");
-        }
-        try (OutputStream out = new FileOutputStream(filePath)) {
-            IMovieModel.writeRecords(watchList, out);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Saves the watch list to a file at the specified file path.
-     * @param filePath the path to save the file
-     */
-    public void saveWatchListToFilepath(String filePath) {
-        if (filePath == null || filePath.isEmpty()) {
-            throw new IllegalArgumentException("Invalid file path for watch list");
-        }
-        try (OutputStream out = new FileOutputStream(filePath)) {
-            IMovieModel.writeRecords(watchList, out);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Loads the watch list from a file.
-     */
-    public void loadWatchListFromFile() {
-        String filePath = IMovieModel.WATCHLIST_DATABASE;
-        if (filePath == null || filePath.isEmpty()) {
-            throw new IllegalArgumentException("Invalid file path for watch list");
-        }
-        try (InputStream in = new FileInputStream(filePath)) {
-            JsonMapper mapper = new JsonMapper();
-            List<MRecord> watchListRecords = mapper.readValue(in, new TypeReference<List<MRecord>>() {
-            });
-            watchList.addAll(watchListRecords);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * Retrieves a movie record from the watch list by title.
@@ -142,7 +96,7 @@ public class WatchList extends MovieModel {
                 MRecord swapRecord = new MRecord(record.Title(), record.Year(), record.Director(), record.Actors(), record.Plot(), record.Poster(), rating, record.Genre(), record.Runtime(), record.Country(), record.Response());
                 watchList.remove(record);
                 watchList.add(swapRecord);
-                saveWatchListToFile();
+                MovieData.saveWatchListToFile(this);
                 return;
             }
         }

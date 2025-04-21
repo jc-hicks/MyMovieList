@@ -50,23 +50,6 @@ public interface IMovieModel {
     void ApiKeySetter(String apiKey);
 
     /**
-     * Method to convert a record to JSON string.
-     *
-     * @param record the movie record
-     * @return JSON formatted string
-     */
-    static String exportRecordAsJson(MRecord record) {
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.enable(SerializationFeature.INDENT_OUTPUT);
-            return mapper.writeValueAsString(record);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "";
-        }
-    }
-
-    /**
      * Gets an instance of the movie model.
      * * @return an instance of IMovieModel
      */
@@ -87,6 +70,7 @@ public interface IMovieModel {
         }
     }
 
+    
     @JsonIgnoreProperties(ignoreUnknown = true)
     @JacksonXmlRootElement(localName = "movie")
     @JsonPropertyOrder({"Title", "Year", "Director", "Actors", "Plot", "Poster",
