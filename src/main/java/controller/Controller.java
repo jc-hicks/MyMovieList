@@ -4,7 +4,6 @@ package controller;
 import java.util.List;
 
 import model.IMovieModel;
-import model.MovieModel;
 
 
 /**
@@ -27,7 +26,7 @@ public class Controller implements IMovieController {
      * This is called in the main method of the GUI.
      */
     public void loadWatchlistOnStartup() {
-        ((MovieModel) model).loadWatchListFromFile();
+        model.loadWatchListFromFile();
     }
 
 
@@ -114,7 +113,7 @@ public class Controller implements IMovieController {
     @Override
     public void saveWatchListToFilepath(String filePath) {
         try {
-            model.saveWatchListToFilepath(filePath);
+            model.saveWatchListToFilepath(filePath, model.getWatchList());
         } catch (IllegalArgumentException e) {
             System.err.println("IllegalArgumentException: " + e.getMessage());
         }

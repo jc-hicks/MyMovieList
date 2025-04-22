@@ -3,6 +3,7 @@ package model;
 import java.io.OutputStream;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -70,6 +71,27 @@ public interface IMovieModel {
         }
     }
 
+    MRecord getRecordFromWatchList(String title);
+
+    void addFromRecordsToWatchList(String title);
+
+    void removeFromWatchList(MRecord movie);
+
+    List<MRecord> sortMovieList(Stream<MRecord> stream, String ascOrDesc, String column);
+
+    void saveWatchListToFile();
+
+    void saveWatchListToFilepath(String filePath, List<MRecord> watchList);
+
+    void setMovieRating(String title, String rating);
+
+    Stream<MRecord> filterWatchList(String field, String criteria);
+
+    List<MRecord> getWatchList();
+
+    void loadWatchListFromFile(String filePath);
+
+    void loadWatchListFromFile();
     
     @JsonIgnoreProperties(ignoreUnknown = true)
     @JacksonXmlRootElement(localName = "movie")
