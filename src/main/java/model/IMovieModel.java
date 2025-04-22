@@ -16,7 +16,14 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
  */
 public interface IMovieModel {
 
+    /**
+     * The default database file path for movie records.
+     */
     String DATABASE = "data/movie.json";
+
+    /**
+     * The default database file path for the watch list.
+     */
     String WATCHLIST_DATABASE = "data/myWatchList.json";
      
     /**
@@ -26,6 +33,9 @@ public interface IMovieModel {
      */
     List<MRecord> getRecords();
 
+    /** 
+     * Get a single record by title.
+     */
     MRecord getRecord(String title);
 
     /**
@@ -45,100 +55,10 @@ public interface IMovieModel {
     }
 
     /**
-     * Loads the watch list from a file.
-     */
-    void loadWatchListFromFile();
-
-    /**
-     * Sets the rating of a movie in the watch list by title.
-     * @param title the title of the movie
-     * @param rating the new rating to set
-     */
-    void setMovieRating(String title, String rating);
-
-
-    /**
-     * Method for sorting movies based on user passed column and ordering
-     * criteria.
-     *
-     * @param movieStream
-     * @param ascOrDesc
-     * @param column
-     * @return List of movie records sorted in the appropriate order.
-     */
-    List<MRecord> sortMovieList(Stream<MRecord> movieStream, String ascOrDesc, String column);
-
-    /**
-     * Method to filter through the current list of movies based on passed
-     * criteria.
-     *
-     * @param filterType
-     * @param filterValue
-     * @return Stream of movie records
-     */
-    Stream<MRecord> filterWatchList(String filterType, String filterValue);
-
-    /**
-     * Saves the watch list to a file in JSON format.
-     *
-     */
-    void saveWatchListToFile();
-
-    /**
-     * Saves the watch list to a file at the specified file path.
-     * @param filePath the path to save the file
-     */
-    void saveWatchListToFilepath(String filePath);
-
-    /**
-     * Removes a movie record from the watch list by title.
-     * @param title the title of the movie to remove
-     */
-    List<MRecord> getWatchList();
-
-    /**
-     * Retrieves a movie record from the watch list by title.
-     * @param title the title of the movie to retrieve
-     * @return the movie record, or null if not found
-     */
-    MRecord getRecordFromWatchList(String watchListTitle);
-
-    /**
-     * Removes a movie record from the watch list.
-     * @param record the movie record to remove
-     */
-    void removeFromWatchList(MRecord record);
-
-
-    /**
      * Sets the API Key for core functionality.
      * @param apiKey
      */
     void ApiKeySetter(String apiKey);
-
-
-    /**
-     * Adds a movie record to the watch list by title if it is not already there.
-     * @param title
-     */
-    void addFromRecordsToWatchList(String title);
-
-    /**
-     * Method to convert a record to JSON string.
-     *
-     * @param record the movie record
-     * @return JSON formatted string
-     */
-    static String exportRecordAsJson(MRecord record) {
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.enable(SerializationFeature.INDENT_OUTPUT);
-            return mapper.writeValueAsString(record);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "";
-        }
-    }
 
     /**
      * Gets an instance of the movie model.
@@ -155,12 +75,92 @@ public interface IMovieModel {
      */
     static IMovieModel getInstance(String database) {
         try {
-            return new MovieModel(database);
+            return new MovieModel();
         } catch (Exception e) {
             return new MovieModel();
         }
     }
 
+    /**
+     * Retrieves a movie record from the watch list by title.
+     * @param title the title of the movie to retrieve
+     * @return the movie record, or null if not found
+     */
+    MRecord getRecordFromWatchList(String title);
+
+    /**
+     * Adds a movie record to the watch list by title if it is not already there.
+     * @param title
+     */
+    void addFromRecordsToWatchList(String title);
+
+    /**
+     * Removes a movie record from the watch list.
+     * @param record the movie record to remove
+     */
+    void removeFromWatchList(MRecord movie);
+
+    /**
+     * Method for sorting movies based on user passed column and ordering
+     * criteria.
+     *
+     * @param movieStream
+     * @param ascOrDesc
+     * @param column
+     * @return List of movie records sorted in the appropriate order.
+     */
+    List<MRecord> sortMovieList(Stream<MRecord> stream, String ascOrDesc, String column);
+
+     /**
+     * Saves the watch list to a file in JSON format.
+     *
+     */
+    void saveWatchListToFile();
+
+    /**
+     * Saves the watch list to a file at the specified file path.
+     * @param filePath the path to save the file
+     */
+    void saveWatchListToFilepath(String filePath, List<MRecord> watchList);
+
+    /**
+     * Sets the rating of a movie in the watch list by title.
+     * @param title the title of the movie
+     * @param rating the new rating to set
+     */
+    void setMovieRating(String title, String rating);
+
+     /**
+     * Method to filter through the current list of movies based on passed
+     * criteria.
+     *
+     * @param filterType
+     * @param filterValue
+     * @return Stream of movie records
+     */
+    Stream<MRecord> filterWatchList(String field, String criteria);
+
+    /**
+     * Removes a movie record from the watch list by title.
+     * @param title the title of the movie to remove
+     */
+    List<MRecord> getWatchList();
+
+    /**
+     * Loads the watch list from a file at the specified file path.
+     * @param filePath
+     */
+    void loadWatchListFromFile(String filePath);
+
+    /**
+     * Loads the watch list from the default file.
+     */
+    void loadWatchListFromFile();
+    
+    /**
+     * Movie record class representing a movie with various attributes.
+     * This class is used for JSON serialization and deserialization.
+     */
     @JsonIgnoreProperties(ignoreUnknown = true)
     @JacksonXmlRootElement(localName = "movie")
     @JsonPropertyOrder({"Title", "Year", "Director", "Actors", "Plot", "Poster",

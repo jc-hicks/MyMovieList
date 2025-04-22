@@ -63,48 +63,101 @@ classDiagram
     }
 
     class MovieModel {
-        - records: List~MRecord~
-        - watchList: List~MRecord~
-        - databasePath: String
-        + MovieModel()
-        + MovieModel(String)
-        + addRecord(MRecord): Void 
-        + getRecord(String): MRecord 
-        + ApiKeySetter(String): void 
-        + addToWatchList(MRecord): void
-        + removeFromWatchList(MRecord): void 
-        + getWatchList() : List~MRecord~
-        + addFromRecordsToWatchList(String): void 
-        + saveWatchListToFile(): void
-        + loadWatchListFromFile(): void
-        + setMovieRating(String, String): void 
-        + getRecordFromWatchList(String): MRecord 
-        + filterWatchList (String, String): Stream~MRecord~
-        - loadFromDatabase(String): void 
-        - saveToDatabase(): void
-        - saveToDatabase(String): void
+    - movieList: MovieList
+    - watchList: WatchList
+    - sortFilter: ISortandFilter
+    - records: List~MRecord~
+    - databasePath: String
+    + MovieModel()
+    + MovieModel(String)
+    + getRecord(String): MRecord 
+    + getWatchList(): List~MRecord~
+    + getRecordFromWatchList(String): MRecord
+    + removeFromWatchList(MRecord): void
+    + loadWatchListFromFile(): void
+    + loadWatchListFromFile(String): void
+    + addToWatchList(MRecord): void
+    + addToWatchList(String): void
+    + filterWatchList(String, String): Stream~MRecord~
+    + sortMovieList(Stream~MRecord~, String, String): List~MRecord~
+    + getRecords(): List~MRecord~
+    + ApiKeySetter(String): void
+    + saveWatchListToFile(): void
+    + saveWatchListToFilepath(String, List~MRecord~): void
+    + setMovieRating(String, String): void
+    + addFromRecordsToWatchList(String): void
+    + addRecord(MRecord): void
+    + getMovieDistributions(): List~Double~
     }
 
     class IMovieModel {
         <<interface>>
         + String DATABASE = "data/movie.json"
         + String WATCHLIST_DATABASE = "data/myWatchList.json"
+        + getRecord(String): MRecord
         + getRecords(): List~MRecord~ 
-        + getRecords(String): MRecord
         + static writeRecords(Collection~MRecord~, OutputStream): void
-        + loadWatchListFromFile(): void 
-        + setMovieRating(String, String): void 
-        + sortMovieList(Stream~MRecord~, String, String): List~MRecord~
-        + filterWatchList(String, String): Stream~MRecord~
-        + saveWatchListToFile(): void
-        + getWatchList(): List~MRecord~
-        + getRecordFromWatchList(String): MRecord
-        + removeFromWatchList(MRecord): void
         + ApiKeySetter(String): void
-        + addFromRecordsToWatchList(String): void
-        + static exportRecordAsJson(MRecord): String
         + static getInstance(): IMovieModel
         + static getInstance(String): IMovieModel
+        + getRecordFromWatchList(String): MRecord
+        + addFromRecordsToWatchList(String): void
+        + removeFromWatchList(MRecord): void
+        + sortMovieList(Stream~MRecord~, String, String): List~MRecord~
+        + saveWatchListToFile(): void
+        + saveWatchListToFilepath(String, List~MRecord~): void
+        + setMovieRating(String, String): void
+        + filterWatchList(String, String): Stream~MRecord~
+        + getWatchList(): List~MRecord~
+        + loadWatchListFromFile(String): void
+        + loadWatchListFromFile(): void
+    }
+
+    class WatchList {
+        - watchList: List~MRecord~
+        - movieList: MovieList
+        + WatchList(MovieList)
+        + addToWatchList(MRecord): void
+        + removeFromWatchList(MRecord): void
+        + getWatchList(): List~MRecord~
+        + addFromRecordsToWatchList(String): void
+        - getRecord(String): MRecord
+        + getRecordFromWatchList(String): MRecord
+        + setMovieRating(String, String): void
+    }
+
+    class MovieList {
+        - records: List~MRecord~
+        - databasePath: String
+        + MovieList()
+        + MovieList(String)
+        + addRecord(MRecord): void
+        + getRecord(String): MRecord
+        + getRecords(): List~MRecord~
+        + getDatabasePath(): String
+    }
+
+    class ISortandFilter {
+        <<interface>>
+        + sortMovieList(Stream~MRecord~, String, String): List~MRecord~
+        + filterWatchList(String, String, List~MRecord~): Stream~MRecord~
+    }
+
+    class MovieListSortFilter {
+        - multiYearParse(String): String
+        + filterWatchList(String, String, List~MRecord~): Stream~MRecord~
+        + sortMovieList(Stream~MRecord~, String, String): List~MRecord~
+    }
+
+    class MovieData {
+        <<utility>>
+        + static writeRecords(Collection~MRecord~, OutputStream): void
+        + static loadFromDatabase(String, MovieList): void
+        + static saveToDatabase(MovieList): void
+        - static saveToDatabase(String, List~MRecord~): void
+        + static saveWatchListToFile(WatchList): void
+        + static saveWatchListToFilepath(String, WatchList): void
+        + static loadWatchListFromFile(WatchList): void
     }
 
     class MRecord {
@@ -237,6 +290,11 @@ classDiagram
     }
 
     MovieModel ..|> IMovieModel
+    MovieListSortFilter ..|> ISortandFilter
+    MovieModel --> MovieList
+    MovieModel --> WatchList
+    MovieModel --> ISortandFilter
+    WatchList --> MovieList
     Controller ..|> IMovieController
     Controller --> IMovieModel
     MyMovieList --> IMovieController

@@ -396,9 +396,14 @@ public class MovieModelTest {
 
   @Test
   public void testGetMovieDistributions(){
+    movieModel.addToWatchList("Inception");
+    movieModel.addToWatchList("Titanic");
+    movieModel.addToWatchList("The Matrix");
+    movieModel.addToWatchList("City of God");
+    movieModel.addToWatchList("Rango");
+    movieModel.addToWatchList("Stranger Things");
     List<Double> actual = movieModel.getMovieDistributions();
     List<Double> expected = List.of(7.3, 7.9, 8.6, 8.7, 8.7, 8.8);
     assertEquals(expected, actual);
   }
-
 }
