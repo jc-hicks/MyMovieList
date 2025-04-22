@@ -1,7 +1,10 @@
 package model;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import net.NetUtils;
@@ -31,6 +34,27 @@ public class MovieModel implements IMovieModel {
         this.movieList = new MovieList(databasePath);
         this.watchList = new WatchList(movieList);
         this.sortFilter = new MovieListSortFilter();
+    }
+
+    public MovieModel(String databasePath) {
+        this.movieList = new MovieList(databasePath);
+        this.watchList = new WatchList(movieList);
+        this.sortFilter = new MovieListSortFilter();
+        this.databasePath = databasePath;
+        File file = new File(databasePath);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException("Error creating database file: " + e.getMessage(), e);
+            }
+        } else { 
+            try {
+                MovieData.loadFromDatabase(databasePath, movieList);
+            } catch (IOException e) {
+                throw new RuntimeException("Error loading database: " + e.getMessage(), e);
+            }
+        }
     }
 
     @Override
@@ -139,6 +163,25 @@ public class MovieModel implements IMovieModel {
         } else {
             throw new IllegalArgumentException("Movie not found in records: " + title);
         }
+    }
+
+    public void addRecord(MRecord record) {
+        movieList.addRecord(record);
+    }
+
+    /**
+     * Utilized to get listing of all ratings of current movies in watchlist.
+     * @return List of movie ratings
+     */
+    public List<Double> getMovieDistributions(){
+
+        List<Double> ratings = new ArrayList<>();
+
+        for (MRecord record : records) {
+            ratings.add(Double.parseDouble(record.imdbRating()));
+        }
+
+        return ratings.stream().sorted().collect(Collectors.toList());
     }
 }
 

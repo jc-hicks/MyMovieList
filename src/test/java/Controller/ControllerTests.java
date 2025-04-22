@@ -1,26 +1,20 @@
 package Controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import model.MovieModel;
-import controller.Controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.mock;
 
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
+import controller.Controller;
 import model.IMovieModel.MRecord;
+import model.MovieModel;
 import net.NetUtils;
 
 public class ControllerTests {
@@ -36,7 +30,7 @@ public class ControllerTests {
     netUtilsMock = mock(NetUtils.class);
     jsonMapperMock = mock(JsonMapper.class);
     // Initialize the MovieModel with mock records
-    movieModel = new MovieModel("data/testmovies.json");
+    movieModel = new MovieModel();
     movieController = new Controller(movieModel);
     movieController.loadWatchlistOnStartup();
   }
@@ -45,7 +39,7 @@ public class ControllerTests {
   public void testGetAllMovies() {
     List<MRecord> movies = movieController.getAllMovies();
 
-    assertEquals(6, movies.size());
+    assertEquals(23, movies.size());
 
     for(MRecord movie : movies){
       System.out.println(movie);
@@ -92,11 +86,11 @@ public class ControllerTests {
 
     System.out.println("");
 
-    assertTrue(sortedMovieList.get(0).Title().equals("City of God"));
+    assertTrue(sortedMovieList.get(0).Title().equals("Twilight"));
     System.out.println(sortedMovieList);
 
     sortedMovieList = movieController.sortMovieList("year", "desc");
-    assertTrue(sortedMovieList.get(0).Title().equals("Stranger Things"));
+    assertTrue(sortedMovieList.get(0).Title().equals("Challengers"));
     System.out.println(sortedMovieList);
 
   }
