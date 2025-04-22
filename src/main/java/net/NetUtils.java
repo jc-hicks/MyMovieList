@@ -102,6 +102,7 @@ public class NetUtils {
      */
     public static void main(String[] args) {
         try {
+            NetUtils.setAPIKey("OMDB_KEY_REDACTED");
             InputStream movieData = NetUtils.getMovieDetails("Stranger Things");
             System.out.println(new String(movieData.readAllBytes()));
         } catch (Exception e) {
