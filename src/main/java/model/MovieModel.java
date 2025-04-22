@@ -96,6 +96,11 @@ public class MovieModel implements IMovieModel {
     }
 
     public void addToWatchList(MRecord record) {
+        for (MRecord existingRecord : watchList.getWatchList()) {
+            if (existingRecord.Title().equals(record.Title())) {
+                return;
+            }
+        }
         watchList.addToWatchList(record);
     }
 

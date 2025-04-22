@@ -31,6 +31,12 @@ public class MovieModelTest {
     jsonMapperMock = mock(JsonMapper.class);
         // Initialize the MovieModel with mock records
         movieModel = new MovieModel("data/testmovies.json");
+        movieModel.addToWatchList("Inception");
+        movieModel.addToWatchList("Titanic");
+        movieModel.addToWatchList("The Matrix");
+        movieModel.addToWatchList("City of God");
+        movieModel.addToWatchList("Rango");
+        movieModel.addToWatchList("Stranger Things");
     }
 
   @Test
@@ -61,6 +67,7 @@ public class MovieModelTest {
 
   @Test
   public void testfilterName() {
+    movieModel.addToWatchList("Inception");
     Stream<MRecord> recordStream = movieModel.filterWatchList("title", "inception");
     List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
     List<String> expected = List.of("Inception");
@@ -69,6 +76,12 @@ public class MovieModelTest {
 
   @Test
   public void testfilterNamePartial() {
+    movieModel.addToWatchList("Inception");
+    movieModel.addToWatchList("Titanic");
+    movieModel.addToWatchList("The Matrix");
+    movieModel.addToWatchList("City of God");
+    movieModel.addToWatchList("Rango");
+    movieModel.addToWatchList("Stranger Things");
     Stream<MRecord> recordStream = movieModel.filterWatchList("title", "i");
     List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
     List<String> expected = List.of("Inception", "Titanic", "The Matrix", "City of God", "Stranger Things");
@@ -78,6 +91,12 @@ public class MovieModelTest {
 
   @Test
   public void testFilterNameEmpty() {
+    movieModel.addToWatchList("Inception");
+    movieModel.addToWatchList("Titanic");
+    movieModel.addToWatchList("The Matrix");
+    movieModel.addToWatchList("City of God");
+    movieModel.addToWatchList("Rango");
+    movieModel.addToWatchList("Stranger Things");
     Stream<MRecord> recordStream = movieModel.filterWatchList("title", "");
     List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
     List<String> expected = List.of("Inception", "Titanic", "The Matrix", "City of God","Rango", "Stranger Things");
@@ -86,6 +105,12 @@ public class MovieModelTest {
 
   @Test
   public void testFilterDefault() {
+    movieModel.addToWatchList("Inception");
+    movieModel.addToWatchList("Titanic");
+    movieModel.addToWatchList("The Matrix");
+    movieModel.addToWatchList("City of God");
+    movieModel.addToWatchList("Rango");
+    movieModel.addToWatchList("Stranger Things");
     Stream<MRecord> recordStream = movieModel.filterWatchList("nonExistant Type", "NON existent");
     List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
     List<String> expected = Arrays.asList("Inception", "Titanic", "The Matrix", "City of God", "Rango", "Stranger Things");
@@ -94,6 +119,12 @@ public class MovieModelTest {
 
   @Test
   public void testFilterWatchListYear() {
+    movieModel.addToWatchList("Inception");
+    movieModel.addToWatchList("Titanic");
+    movieModel.addToWatchList("The Matrix");
+    movieModel.addToWatchList("City of God");
+    movieModel.addToWatchList("Rango");
+    movieModel.addToWatchList("Stranger Things");
     Stream<MRecord> recordStream = movieModel.filterWatchList("year", "= 2016");
     List<String> actual = recordStream.map(m -> m.Title()).collect(Collectors.toList());
     List<String> expected = List.of("Stranger Things");
@@ -319,7 +350,7 @@ public class MovieModelTest {
 
   @Test
   public void testSortWatchListTitleDesc() {
-    Stream<MRecord> recordStream = movieModel.getRecords().stream();
+    Stream<MRecord> recordStream = movieModel.getWatchList().stream();
     List<MRecord> sortedRecords = movieModel.sortMovieList(recordStream, "desc", "title");
     List<String> actual = sortedRecords.stream().map(MRecord::Title).toList();
     List<String> expected = List.of("City of God", "Inception", "Rango", "Stranger Things", "The Matrix", "Titanic");
@@ -328,7 +359,7 @@ public class MovieModelTest {
 
   @Test
   public void testSortWatchListTitleAsc() {
-    Stream<MRecord> recordStream = movieModel.getRecords().stream();
+    Stream<MRecord> recordStream = movieModel.getWatchList().stream();
     List<MRecord> sortedRecords = movieModel.sortMovieList(recordStream, "asc", "title");
     List<String> actual = sortedRecords.stream().map(MRecord::Title).toList();
     List<String> expected = List.of("Titanic", "The Matrix", "Stranger Things", "Rango", "Inception", "City of God");
@@ -342,7 +373,7 @@ public class MovieModelTest {
 
   @Test
   public void testSortWatchListYearDesc() {
-    Stream<MRecord> recordStream = movieModel.getRecords().stream();
+    Stream<MRecord> recordStream = movieModel.getWatchList().stream();
     List<MRecord> sortedRecords = movieModel.sortMovieList(recordStream, "desc", "year");
     List<String> actual = sortedRecords.stream().map(MRecord::Title).toList();
     List<String> expected = List.of("Stranger Things","Rango", "Inception", "City of God", "The Matrix", "Titanic");
@@ -351,7 +382,7 @@ public class MovieModelTest {
 
   @Test
   public void testSortWatchListYearAsc() {
-    Stream<MRecord> recordStream = movieModel.getRecords().stream();
+    Stream<MRecord> recordStream = movieModel.getWatchList().stream();
     List<MRecord> sortedRecords = movieModel.sortMovieList(recordStream, "asc", "year");
     List<String> actual = sortedRecords.stream().map(MRecord::Title).toList();
     List<String> expected = List.of("Titanic", "The Matrix", "City of God", "Inception", "Rango", "Stranger Things");
@@ -360,7 +391,7 @@ public class MovieModelTest {
 
   @Test
   public void testSortWatchListRatingDesc() {
-    Stream<MRecord> recordStream = movieModel.getRecords().stream();
+    Stream<MRecord> recordStream = movieModel.getWatchList().stream();
     List<MRecord> sortedRecords = movieModel.sortMovieList(recordStream, "desc", "rating");
     List<String> actual = sortedRecords.stream().map(MRecord::Title).toList();
     List<String> expected = List.of("Inception", "The Matrix", "Stranger Things", "City of God", "Titanic", "Rango");
@@ -369,7 +400,7 @@ public class MovieModelTest {
 
   @Test
   public void testSortWatchListRatingAsc() {
-    Stream<MRecord> recordStream = movieModel.getRecords().stream();
+    Stream<MRecord> recordStream = movieModel.getWatchList().stream();
     List<MRecord> sortedRecords = movieModel.sortMovieList(recordStream, "asc", "rating");
     List<String> actual = sortedRecords.stream().map(MRecord::Title).toList();
     List<String> expected = List.of("Rango", "Titanic", "City of God", "The Matrix", "Stranger Things", "Inception");
@@ -378,7 +409,7 @@ public class MovieModelTest {
 
   @Test
   public void testSortWatchListRuntimeDesc() {
-    Stream<MRecord> recordStream = movieModel.getRecords().stream();
+    Stream<MRecord> recordStream = movieModel.getWatchList().stream();
     List<MRecord> sortedRecords = movieModel.sortMovieList(recordStream, "desc", "runtime");
     List<String> actual = sortedRecords.stream().map(MRecord::Title).toList();
     List<String> expected = List.of("Stranger Things","Titanic", "Inception", "The Matrix", "City of God", "Rango");
@@ -387,7 +418,7 @@ public class MovieModelTest {
 
   @Test
   public void testSortWatchListRuntimeAsc() {
-    Stream<MRecord> recordStream = movieModel.getRecords().stream();
+    Stream<MRecord> recordStream = movieModel.getWatchList().stream();
     List<MRecord> sortedRecords = movieModel.sortMovieList(recordStream, "asc", "runtime");
     List<String> actual = sortedRecords.stream().map(MRecord::Title).toList();
     List<String> expected = List.of("Rango", "City of God", "The Matrix", "Inception", "Titanic","Stranger Things");
@@ -400,5 +431,4 @@ public class MovieModelTest {
     List<Double> expected = List.of(7.3, 7.9, 8.6, 8.7, 8.7, 8.8);
     assertEquals(expected, actual);
   }
-
 }
