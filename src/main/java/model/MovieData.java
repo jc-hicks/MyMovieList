@@ -16,6 +16,11 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import model.IMovieModel.MRecord;
 
+/**
+ * The MovieData class provides methods for loading and saving movie records in
+ * JSON format. It is used to manage the movie database and watchlist
+ * functionality in the application.
+ */
 public class MovieData {
 
     /**

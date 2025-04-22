@@ -5,6 +5,11 @@ import java.util.stream.Stream;
 
 import model.IMovieModel.MRecord;
 
+/**
+ * The ISortandFilter interface defines methods for sorting and filtering movie
+ * records. It is used to manage the movie list and watchlist functionality in
+ * the application.
+ */
 public interface ISortandFilter {
      /**
      * Method for sorting movies based on user passed column and ordering

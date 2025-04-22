@@ -5,6 +5,10 @@ import java.util.List;
 
 import model.IMovieModel.MRecord;
 
+/**
+ * The WatchList class manages a list of movie records that the user wants to watch.
+ * It provides methods to add, remove, and retrieve movie records from the watch list.
+ */
 public class WatchList {
 
     /**

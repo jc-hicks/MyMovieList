@@ -10,6 +10,11 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import model.IMovieModel.MRecord;
 import net.NetUtils;
 
+/**
+ * The MovieList class manages a list of movie records. It provides methods to
+ * add, retrieve, and manage movie records, including loading them from a
+ * database and saving them back to the database.
+ */
 public class MovieList {
 
     /**

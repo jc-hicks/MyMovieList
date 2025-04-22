@@ -7,6 +7,12 @@ import java.util.stream.Stream;
 
 import net.NetUtils;
 
+/**
+ * The MovieModel class implements the IMovieModel interface and serves as the
+ * model for managing movie records and watchlists. It provides methods to
+ * interact with the movie database, including loading, filtering, sorting, and
+ * saving watchlists.
+ */
 public class MovieModel implements IMovieModel {
     private final MovieList movieList;
     private final WatchList watchList;

@@ -8,6 +8,12 @@ import java.util.stream.Stream;
 
 import model.IMovieModel.MRecord;
 
+/**
+ * The MovieListSortFilter class implements the ISortandFilter interface and
+ * provides methods for filtering and sorting movie records based on various
+ * criteria. It is used to manage the movie list and watchlist functionality in
+ * the application.
+ */
 public class MovieListSortFilter implements  ISortandFilter {
 
     /**
