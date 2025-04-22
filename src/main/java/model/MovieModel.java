@@ -1,7 +1,5 @@
 package model;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,20 +39,6 @@ public class MovieModel implements IMovieModel {
         this.watchList = new WatchList(movieList);
         this.sortFilter = new MovieListSortFilter();
         this.databasePath = databasePath;
-        File file = new File(databasePath);
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                throw new RuntimeException("Error creating database file: " + e.getMessage(), e);
-            }
-        } else { 
-            try {
-                MovieData.loadFromDatabase(databasePath, movieList);
-            } catch (IOException e) {
-                throw new RuntimeException("Error loading database: " + e.getMessage(), e);
-            }
-        }
     }
 
     @Override
@@ -113,7 +97,7 @@ public class MovieModel implements IMovieModel {
 
     @Override
     public Stream<MRecord> filterWatchList(String filterType, String filterValue) {
-        return sortFilter.filterWatchList(filterType, filterValue, watchList.getWatchList());
+        return sortFilter.filterWatchList(filterType, filterValue, movieList.getRecords());
     }
 
     @Override
@@ -182,7 +166,7 @@ public class MovieModel implements IMovieModel {
 
         List<Double> ratings = new ArrayList<>();
 
-        for (MRecord record : records) {
+        for (MRecord record : watchList.getWatchList()) {
             ratings.add(Double.parseDouble(record.imdbRating()));
         }
 
