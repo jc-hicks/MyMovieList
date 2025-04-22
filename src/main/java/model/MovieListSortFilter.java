@@ -33,7 +33,7 @@ public class MovieListSortFilter implements  ISortandFilter {
      * @return Stream of movie records
      */
     @Override
-    public Stream<IMovieModel.MRecord> filterWatchList(String filterType, String filterValue, MovieList movieList, List<MRecord> records) {
+    public Stream<IMovieModel.MRecord> filterWatchList(String filterType, String filterValue, List<MRecord> records) {
         if (filterType == null || filterValue == null) {
             throw new IllegalArgumentException("filterType and value cannot be null");
         }

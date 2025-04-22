@@ -16,7 +16,6 @@ public class WatchList {
 
     public WatchList(MovieList movieList) {
         this.movieList = movieList;
-        MovieData.loadWatchListFromFile(this);
     }
 
     /**

@@ -84,7 +84,7 @@ public class MovieModel implements IMovieModel {
 
     @Override
     public Stream<MRecord> filterWatchList(String filterType, String filterValue) {
-        return sortFilter.filterWatchList(filterType, filterValue, movieList, watchList.getWatchList());
+        return sortFilter.filterWatchList(filterType, filterValue, watchList.getWatchList());
     }
 
     @Override
