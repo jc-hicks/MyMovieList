@@ -96,19 +96,6 @@ public class NetUtils {
         String urlStr = getMovieUrl(title);
         return getUrlContents(urlStr);
     }
-    
-    /**
-     * Sample usage of the movie API.
-     */
-    public static void main(String[] args) {
-        try {
-            NetUtils.setAPIKey("OMDB_KEY_REDACTED");
-            InputStream movieData = NetUtils.getMovieDetails("Stranger Things");
-            System.out.println(new String(movieData.readAllBytes()));
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-        }
-    }
 }
 
 // https://www.geeksforgeeks.org/java-net-urlencoder-class-java/

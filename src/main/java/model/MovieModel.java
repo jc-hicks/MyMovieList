@@ -135,7 +135,6 @@ public class MovieModel implements IMovieModel {
         try {
             MovieData.saveWatchListToFilepath(filePath, watchList);
         } catch (Exception e) {
-            System.err.println("Error saving watchlist to filepath: " + e.getMessage());
             throw new IllegalArgumentException("Failed to save watchlist: " + e.getMessage());
         }
     }

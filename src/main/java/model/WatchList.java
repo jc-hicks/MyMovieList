@@ -80,7 +80,6 @@ public class WatchList {
                 return record;
             }
         }
-        System.out.println("Movie not found in watch list.");
         return null;
     }
 

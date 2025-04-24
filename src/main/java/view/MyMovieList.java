@@ -211,7 +211,6 @@ public class MyMovieList extends JFrame {
         // === Action Listeners ===
         searchButton.addActionListener(e -> {
             String query = searchField.getText().trim();
-            System.out.println("🧠 GUI triggered search for: " + query);
             if (!query.isEmpty()) {
                 controller.searchMovie(query);
                 refreshMovieTable();
@@ -250,8 +249,6 @@ public class MyMovieList extends JFrame {
             }
 
             if (!input.isEmpty()) {
-                System.out.println("DEBUG: PASSING INPUT: " + input + "PASSING FIELD: " + field);
-
                 List<IMovieModel.MRecord> filtered = controller.filterMovieList(field.toLowerCase(), input);
                 tableModel.setRowCount(0);
                 for (IMovieModel.MRecord record : filtered) {
@@ -303,7 +300,6 @@ public class MyMovieList extends JFrame {
     private void refreshMovieTable() {
         tableModel.setRowCount(0);
         List<IMovieModel.MRecord> updateMovies = controller.getAllMovies();
-        System.out.println("🔄 Refreshing table with " + updateMovies.size() + " records");
         for (IMovieModel.MRecord mRecord : updateMovies) {
             tableModel
                     .addRow(new Object[] { mRecord.Year(), mRecord.Title(), mRecord.Director(), mRecord.imdbRating() });

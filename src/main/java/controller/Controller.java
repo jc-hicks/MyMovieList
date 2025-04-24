@@ -36,7 +36,6 @@ public class Controller implements IMovieController {
      */
     @Override
     public void searchMovie(String title) {
-        System.out.println("searchMovie called with: " + title);
         IMovieModel.MRecord result = model.getRecord(title);
     }
 

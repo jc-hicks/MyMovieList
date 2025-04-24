@@ -84,7 +84,6 @@ public class MovieList {
         }
         try {
             String url = NetUtils.getMovieUrl(title);
-            System.out.println("Trying API UR: " + url); // seeing why not pulling from API
             try (InputStream inputStream = NetUtils.getUrlContents(url)) {
                 JsonMapper mapper = new JsonMapper();
                 MRecord newRecord = mapper.readValue(inputStream, MRecord.class);

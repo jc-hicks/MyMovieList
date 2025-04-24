@@ -48,7 +48,6 @@ public class MovieListSortFilter implements  ISortandFilter {
                 return records.stream().filter(m -> !m.Title().equals("N/A") && m.Title().toLowerCase().contains(filterValue.toLowerCase()));
             case "year":
                 List<String> yearCommands = Arrays.asList(filterValue.split(" "));
-                System.out.println("Year Commands: " + yearCommands);
                 if (yearCommands.size() > 1) {
                     String filterOperation = yearCommands.get(0);
                     return switch (filterOperation) {
@@ -167,5 +166,4 @@ public class MovieListSortFilter implements  ISortandFilter {
         }
         return movieStream.sorted(comparator).toList();
     }
-
 }
