@@ -22,12 +22,29 @@ public class MovieListSortFilter implements  ISortandFilter {
      * @return pilot year in string form.
      */
     private static String multiYearParse(String inputYear) {
-        if (inputYear.contains("\u2013")) {
-            List<String> years = Arrays.asList(inputYear.split("\u2013"));
-            return years.get(0);
-        } else {
-            return inputYear;
-        }
+        return inputYear.contains("\u2013") 
+            ? inputYear.split("\u2013")[0] 
+            : inputYear;
+    }
+
+    /**
+     * Applies a numeric comparison filter based on the operator and threshold.
+     * Supports operators: =, >, <, >=, <=
+     * @param operator the comparison operator
+     * @param value the threshold value
+     * @param predicate the comparison to perform
+     * @return true if the comparison is satisfied, false otherwise
+     * @throws IllegalArgumentException if the operator is invalid
+     */
+    private static boolean applyNumericComparison(String operator, double value, double threshold) {
+        return switch (operator) {
+            case "=" -> value == threshold;
+            case ">" -> value > threshold;
+            case "<" -> value < threshold;
+            case ">=" -> value >= threshold;
+            case "<=" -> value <= threshold;
+            default -> throw new IllegalArgumentException("Invalid filter operation: " + operator);
+        };
     }
 
     /**
@@ -43,63 +60,100 @@ public class MovieListSortFilter implements  ISortandFilter {
         if (filterType == null || filterValue == null) {
             throw new IllegalArgumentException("filterType and value cannot be null");
         }
-        switch (filterType.toLowerCase()) {
-            case "title":
-                return records.stream().filter(m -> !m.Title().equals("N/A") && m.Title().toLowerCase().contains(filterValue.toLowerCase()));
-            case "year":
-                List<String> yearCommands = Arrays.asList(filterValue.split(" "));
-                if (yearCommands.size() > 1) {
-                    String filterOperation = yearCommands.get(0);
-                    return switch (filterOperation) {
-                        case "=" -> records.stream().filter(m -> !m.Year().equals("N/A") && multiYearParse(m.Year()).equals(yearCommands.get(1)));
-                        case ">" -> records.stream().filter(m -> !m.Year().equals("N/A") && parseInt(multiYearParse(m.Year())) > parseInt(yearCommands.get(1)));
-                        case "<" -> records.stream().filter(m -> !m.Year().equals("N/A") && parseInt(multiYearParse(m.Year())) < parseInt(yearCommands.get(1)));
-                        case ">=" -> records.stream().filter(m -> !m.Year().equals("N/A") && parseInt(multiYearParse(m.Year())) >= parseInt(yearCommands.get(1)));
-                        case "<=" -> records.stream().filter(m -> !m.Year().equals("N/A") && parseInt(multiYearParse(m.Year())) <= parseInt(yearCommands.get(1)));
-                        default -> throw new IllegalStateException("Unexpected year filter value: " + yearCommands.get(1));
-                    };
-                }
-            case "director":
-                return records.stream().filter(m -> !m.Director().equals("N/A") && m.Director().toLowerCase().contains(filterValue.toLowerCase()));
-            case "genre":
-                return records.stream().filter(m -> !m.Genre().equals("N/A") && m.Genre().toLowerCase().contains(filterValue.toLowerCase()));
-            case "actors":
-                return records.stream().filter(m -> !m.Actors().equals("N/A") && m.Actors().toLowerCase().contains(filterValue.toLowerCase()));
-            case "rating":
-                List<String> ratingCommands = Arrays.stream(filterValue.split(" ")).toList();
-                if (ratingCommands.size() > 1) {
-                    String filterOperation = ratingCommands.get(0);
-                    return switch (filterOperation) {
-                        case "=" -> records.stream().filter(m -> !m.imdbRating().equals("N/A") && m.imdbRating().equals(ratingCommands.get(1)));
-                        case ">" -> records.stream().filter(m -> !m.imdbRating().equals("N/A") && Double.parseDouble(m.imdbRating()) > Double.parseDouble(ratingCommands.get(1)));
-                        case "<" -> records.stream().filter(m -> !m.imdbRating().equals("N/A") && Double.parseDouble(m.imdbRating()) < Double.parseDouble(ratingCommands.get(1)));
-                        case ">=" -> records.stream().filter(m -> !m.imdbRating().equals("N/A") && Double.parseDouble(m.imdbRating()) >= Double.parseDouble(ratingCommands.get(1)));
-                        case "<=" -> records.stream().filter(m -> !m.imdbRating().equals("N/A") && Double.parseDouble(m.imdbRating()) <= Double.parseDouble(ratingCommands.get(1)));
-                        default -> throw new IllegalArgumentException("Invalid filter operation: " + filterOperation);
-                    };
-                } else {
-                    throw new IllegalArgumentException("Rating criteria Invalid");
-                }
-            case "runtime":
-                List<String> runtimeCommands = Arrays.stream(filterValue.split(" ")).toList();
-                if (runtimeCommands.size() > 1) {
-                    String filterOperation = runtimeCommands.get(0);
-                    return switch (filterOperation) {
-                        case "=" -> records.stream().filter(m -> !m.Runtime().equals("N/A") && m.Runtime().split(" ")[0].equals(runtimeCommands.get(1)));
-                        case ">" -> records.stream().filter(m -> !m.Runtime().equals("N/A") && Double.parseDouble(m.Runtime().split(" ")[0]) > Double.parseDouble(runtimeCommands.get(1)));
-                        case "<" -> records.stream().filter(m -> !m.Runtime().equals("N/A") && Double.parseDouble(m.Runtime().split(" ")[0]) < Double.parseDouble(runtimeCommands.get(1)));
-                        case ">=" -> records.stream().filter(m -> !m.Runtime().equals("N/A") && Double.parseDouble(m.Runtime().split(" ")[0]) >= Double.parseDouble(runtimeCommands.get(1)));
-                        case "<=" -> records.stream().filter(m -> !m.Runtime().equals("N/A") && Double.parseDouble(m.Runtime().split(" ")[0]) <= Double.parseDouble(runtimeCommands.get(1)));
-                        default -> throw new IllegalArgumentException("Invalid filter operation: " + filterOperation);
-                    };
-                } else {
-                    throw new IllegalArgumentException("Runtime criteria Invalid");
-                }
-            case "country":
-                return records.stream().filter(m -> !m.Country().equals("N/A") && m.Country().toLowerCase().contains(filterValue.toLowerCase()));
-            default:
-                return records.stream(); // Return all records if filter type is not recognized
+        
+        return switch (filterType.toLowerCase()) {
+            case "title" -> records.stream()
+                .filter(m -> !m.Title().equals("N/A") && m.Title().toLowerCase().contains(filterValue.toLowerCase()));
+            
+            case "year" -> filterByYear(records, filterValue);
+            
+            case "director" -> records.stream()
+                .filter(m -> !m.Director().equals("N/A") && m.Director().toLowerCase().contains(filterValue.toLowerCase()));
+            
+            case "genre" -> records.stream()
+                .filter(m -> !m.Genre().equals("N/A") && m.Genre().toLowerCase().contains(filterValue.toLowerCase()));
+            
+            case "actors" -> records.stream()
+                .filter(m -> !m.Actors().equals("N/A") && m.Actors().toLowerCase().contains(filterValue.toLowerCase()));
+            
+            case "rating" -> filterByRating(records, filterValue);
+            
+            case "runtime" -> filterByRuntime(records, filterValue);
+            
+            case "country" -> records.stream()
+                .filter(m -> !m.Country().equals("N/A") && m.Country().toLowerCase().contains(filterValue.toLowerCase()));
+            
+            default -> records.stream(); // Return all records if filter type is not recognized
+        };
+    }
+
+    /**
+     * Helper method to filter movies by year with comparison operators.
+     * @param records the list of movie records
+     * @param filterValue the filter value in format "[operator] [year]"
+     * @return stream of filtered records
+     */
+    private Stream<IMovieModel.MRecord> filterByYear(List<MRecord> records, String filterValue) {
+        List<String> parts = Arrays.asList(filterValue.split(" "));
+        if (parts.size() < 2) {
+            throw new IllegalArgumentException("Year filter requires operator and value. Format: [operator] [year]");
         }
+        
+        String operator = parts.get(0);
+        int targetYear = parseInt(parts.get(1));
+        
+        return records.stream()
+            .filter(m -> !m.Year().equals("N/A"))
+            .filter(m -> {
+                int movieYear = parseInt(multiYearParse(m.Year()));
+                return applyNumericComparison(operator, movieYear, targetYear);
+            });
+    }
+
+    /**
+     * Helper method to filter movies by rating with comparison operators.
+     * @param records the list of movie records
+     * @param filterValue the filter value in format "[operator] [rating]"
+     * @return stream of filtered records
+     */
+    private Stream<IMovieModel.MRecord> filterByRating(List<MRecord> records, String filterValue) {
+        List<String> parts = Arrays.stream(filterValue.split(" ")).toList();
+        if (parts.size() < 2) {
+            throw new IllegalArgumentException("Rating filter requires operator and value. Format: [operator] [rating]");
+        }
+        
+        String operator = parts.get(0);
+        double targetRating = Double.parseDouble(parts.get(1));
+        
+        return records.stream()
+            .filter(m -> !m.imdbRating().equals("N/A"))
+            .filter(m -> {
+                double movieRating = Double.parseDouble(m.imdbRating());
+                return applyNumericComparison(operator, movieRating, targetRating);
+            });
+    }
+
+    /**
+     * Helper method to filter movies by runtime with comparison operators.
+     * @param records the list of movie records
+     * @param filterValue the filter value in format "[operator] [runtime]"
+     * @return stream of filtered records
+     */
+    private Stream<IMovieModel.MRecord> filterByRuntime(List<MRecord> records, String filterValue) {
+        List<String> parts = Arrays.stream(filterValue.split(" ")).toList();
+        if (parts.size() < 2) {
+            throw new IllegalArgumentException("Runtime filter requires operator and value. Format: [operator] [runtime]");
+        }
+        
+        String operator = parts.get(0);
+        double targetRuntime = Double.parseDouble(parts.get(1));
+        
+        return records.stream()
+            .filter(m -> !m.Runtime().equals("N/A"))
+            .filter(m -> {
+                double movieRuntime = Double.parseDouble(m.Runtime().split(" ")[0]);
+                return applyNumericComparison(operator, movieRuntime, targetRuntime);
+            });
     }
 
     /**
@@ -113,57 +167,44 @@ public class MovieListSortFilter implements  ISortandFilter {
      */
     @Override
     public List<IMovieModel.MRecord> sortMovieList(Stream<IMovieModel.MRecord> movieStream, String ascOrDesc, String column) {
-        // Error handling for null parameters passed
         if (movieStream == null || ascOrDesc == null || column == null) {
             throw new IllegalArgumentException("Invalid arguments for Sorting Movies");
         }
-        // Creating Comparator
-        Comparator<IMovieModel.MRecord> comparator;
-        // Switch statement to determine what kind of comparison we need
-        switch (column.toLowerCase()) {
-            case "title":
-                if (ascOrDesc.equals("desc")) {
-                    comparator = Comparator.comparing(IMovieModel.MRecord::Title);
-                    break;
-                } else if (ascOrDesc.equals("asc")) {
-                    comparator = Comparator.comparing(IMovieModel.MRecord::Title).reversed();
-                    break;
-                }
-            case "director":
-                if (ascOrDesc.equals("desc")) {
-                    comparator = Comparator.comparing(IMovieModel.MRecord::Director);
-                    break;
-                } else if (ascOrDesc.equals("asc")) {
-                    comparator = Comparator.comparing(IMovieModel.MRecord::Director).reversed();
-                    break;
-                }
-            case "year":
-                if (ascOrDesc.equals("desc")) {
-                    comparator = Comparator.comparing((IMovieModel.MRecord m) -> parseInt(multiYearParse(m.Year()))).reversed();
-                    break;
-                } else if (ascOrDesc.equals("asc")) {
-                    comparator = Comparator.comparing((IMovieModel.MRecord m) -> parseInt(multiYearParse(m.Year())));
-                    break;
-                }
-            case "rating":
-                if (ascOrDesc.equals("desc")) {
-                    comparator = Comparator.comparing(IMovieModel.MRecord::imdbRating).reversed();
-                    break;
-                } else if (ascOrDesc.equals("asc")) {
-                    comparator = Comparator.comparing(IMovieModel.MRecord::imdbRating);
-                    break;
-                }
-            case "runtime":
-                if (ascOrDesc.equals("desc")) {
-                    comparator = Comparator.comparing(IMovieModel.MRecord::Runtime).reversed();
-                    break;
-                } else if (ascOrDesc.equals("asc")) {
-                    comparator = Comparator.comparing(IMovieModel.MRecord::Runtime);
-                    break;
-                }
-            default:
-                throw new IllegalArgumentException("Invalid parameters for sorting movies...");
-        }
+        
+        boolean isDescending = ascOrDesc.equalsIgnoreCase("desc");
+        Comparator<IMovieModel.MRecord> comparator = createComparator(column, isDescending);
+        
         return movieStream.sorted(comparator).toList();
+    }
+
+    /**
+     * Helper method to create the appropriate comparator based on the column.
+     * @param column the column to sort by
+     * @param isDescending whether to sort in descending order
+     * @return the comparator to use for sorting
+     * @throws IllegalArgumentException if the column is invalid
+     */
+    private Comparator<IMovieModel.MRecord> createComparator(String column, boolean isDescending) {
+        Comparator<IMovieModel.MRecord> comparator = switch (column.toLowerCase()) {
+            case "title" -> Comparator.comparing(IMovieModel.MRecord::Title, String.CASE_INSENSITIVE_ORDER);
+            
+            case "director" -> Comparator.comparing(IMovieModel.MRecord::Director, String.CASE_INSENSITIVE_ORDER);
+            
+            case "year" -> Comparator.comparing((IMovieModel.MRecord m) -> 
+                parseInt(multiYearParse(m.Year()))
+            );
+            
+            case "rating" -> Comparator.comparing((IMovieModel.MRecord m) -> 
+                Double.parseDouble(m.imdbRating())
+            );
+            
+            case "runtime" -> Comparator.comparing((IMovieModel.MRecord m) -> 
+                Double.parseDouble(m.Runtime().split(" ")[0])
+            );
+            
+            default -> throw new IllegalArgumentException("Invalid column for sorting: " + column);
+        };
+        
+        return isDescending ? comparator.reversed() : comparator;
     }
 }

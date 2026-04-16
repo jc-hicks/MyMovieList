@@ -387,7 +387,7 @@ public class MyMovieList extends JFrame {
             String rating = controller.getMyRating(record.Title());
             String imdb = record.imdbRating();
             String display = (rating != null && !rating.isEmpty())
-                    ? String.format("%s (%s, IMDB: %s, My Rating: ⭐ %s)", record.Title(), record.Year(), imdb, rating)
+                    ? String.format("%s (%s, IMDB: %s, My Rating: [%s])", record.Title(), record.Year(), imdb, rating)
                     : String.format("%s (%s, IMDB: %s)", record.Title(), record.Year(), imdb);
             watchlistModel.addElement(display);
         }
